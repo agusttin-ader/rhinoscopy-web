@@ -22,10 +22,14 @@ function fold(value: string) {
     .toLowerCase();
 }
 
-function tokens(value: string) {
+function digits(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+function extraTokens(value: string) {
   return fold(value)
     .split(/[^a-z0-9]+/)
-    .filter((part) => part.length >= 2);
+    .filter((part) => part.length >= 2 && !/^\d+$/.test(part));
 }
 
 function eventLabel(folder: string) {
@@ -33,11 +37,13 @@ function eventLabel(folder: string) {
 }
 
 export async function searchConstancias(
-  nombre: string,
-  apellido: string,
+  matricula: string,
 ): Promise<ConstanciaMatch[]> {
-  const required = [...tokens(nombre), ...tokens(apellido)];
-  if (required.length === 0) return [];
+  const number = digits(matricula);
+  if (number.length < 3) return [];
+
+  const requiredExtras = extraTokens(matricula);
+  const numberPattern = new RegExp(`(?:^|[^0-9])${number}(?:$|[^0-9])`);
 
   let events: string[];
   try {
@@ -57,8 +63,8 @@ export async function searchConstancias(
       if (!fileName.toLowerCase().endsWith(".pdf")) continue;
 
       const haystack = fold(fileName.replace(/\.pdf$/i, "").replace(/[-_]+/g, " "));
-      const found = required.every((token) => haystack.includes(token));
-      if (!found) continue;
+      if (!numberPattern.test(haystack)) continue;
+      if (!requiredExtras.every((token) => haystack.includes(token))) continue;
 
       matches.push({
         eventId,

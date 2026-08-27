@@ -3,19 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as
-    | { nombre?: string; apellido?: string }
+    | { matricula?: string }
     | null;
 
-  const nombre = body?.nombre?.trim() ?? "";
-  const apellido = body?.apellido?.trim() ?? "";
+  const matricula = body?.matricula?.trim() ?? "";
+  const digits = matricula.replace(/\D/g, "");
 
-  if (nombre.length < 2 || apellido.length < 2) {
+  if (digits.length < 3) {
     return NextResponse.json(
-      { error: "Ingresá nombre y apellido." },
+      { error: "Ingresá el número de matrícula." },
       { status: 400 },
     );
   }
 
-  const results = await searchConstancias(nombre, apellido);
+  const results = await searchConstancias(matricula);
   return NextResponse.json({ results });
 }

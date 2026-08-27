@@ -10,8 +10,7 @@ type Match = {
 };
 
 export function CertificateSearch() {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
+  const [matricula, setMatricula] = useState("");
   const [results, setResults] = useState<Match[] | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +25,7 @@ export function CertificateSearch() {
       const response = await fetch("/api/constancias", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, apellido }),
+        body: JSON.stringify({ matricula }),
       });
       const data = (await response.json()) as {
         results?: Match[];
@@ -50,36 +49,21 @@ export function CertificateSearch() {
         onSubmit={onSubmit}
         className="border border-white/10 bg-white/[0.04] p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] backdrop-blur-sm md:p-10"
       >
-        <div className="grid gap-6 sm:grid-cols-2">
-          <label className="block">
-            <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
-              Nombre
-            </span>
-            <input
-              required
-              minLength={2}
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              placeholder="Juan"
-              autoComplete="given-name"
-              className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none placeholder:text-slate-600 focus:border-cyan-300"
-            />
-          </label>
-          <label className="block">
-            <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
-              Apellido
-            </span>
-            <input
-              required
-              minLength={2}
-              value={apellido}
-              onChange={(e) => setApellido(e.target.value)}
-              placeholder="Domínguez"
-              autoComplete="family-name"
-              className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none placeholder:text-slate-600 focus:border-cyan-300"
-            />
-          </label>
-        </div>
+        <label className="block">
+          <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
+            Número de matrícula
+          </span>
+          <input
+            required
+            minLength={3}
+            value={matricula}
+            onChange={(e) => setMatricula(e.target.value)}
+            placeholder="12345"
+            inputMode="numeric"
+            autoComplete="off"
+            className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none placeholder:text-slate-600 focus:border-cyan-300"
+          />
+        </label>
 
         <button
           type="submit"
@@ -98,7 +82,7 @@ export function CertificateSearch() {
         <div className="mt-12">
           {results.length === 0 ? (
             <p className="text-center text-slate-400">
-              No encontramos constancias con ese nombre y apellido.
+              No encontramos constancias con ese número de matrícula.
             </p>
           ) : (
             <ul className="space-y-4">
@@ -115,7 +99,7 @@ export function CertificateSearch() {
                       Constancia de asistencia
                     </p>
                     <p className="mt-1 text-sm text-slate-500">
-                      {nombre} {apellido}
+                      Matrícula {matricula}
                     </p>
                   </div>
                   <a

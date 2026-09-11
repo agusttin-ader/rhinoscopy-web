@@ -1,96 +1,150 @@
-import { Logo } from "@/components/logo";
-import { copy } from "@/data/copy";
-import { site } from "@/data/site";
+import { FooterFollow } from "@/components/footer-follow";
+import Image from "next/image";
+import Link from "next/link";
+import { footerCopy, footerNav } from "@/data/footer-copy";
+import { meet2026, site } from "@/data/site";
 
-const links = [
-  { href: "/#proyecto", label: "Proyecto" },
-  { href: "/#equipo", label: "Equipo" },
-  { href: "/#actividades", label: "Actividades" },
-  { href: "/constancias", label: "Constancias" },
-  { href: "/#contacto", label: "Contacto" },
-];
+const whatsappPrefill = `${site.whatsapp.href}?text=${encodeURIComponent(
+  "Hola, quisiera consultar sobre Rhinoscopy.",
+)}`;
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy px-6 pt-16 pb-8 text-slate-400">
-      <div className="mx-auto grid max-w-6xl gap-12 border-b border-white/10 pb-12 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <Logo />
-          <p className="mt-6 max-w-sm text-sm leading-relaxed">
-            {copy.footerBlurb}
-          </p>
-        </div>
-        <div>
-          <p className="text-[0.65rem] tracking-[0.22em] text-white uppercase">
-            Lorem
-          </p>
-          <ul className="mt-4 space-y-2">
-            {links.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} className="text-sm hover:text-white">
-                  {link.label}
+    <footer className="relative bg-navy text-slate-400">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="mx-auto max-w-6xl px-5 pb-8 pt-14 sm:px-6 sm:pt-16">
+        <div className="grid gap-10 border-b border-white/10 pb-12 sm:gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <Link
+              href="/"
+              className="inline-block transition-opacity duration-200 hover:opacity-90"
+              aria-label="Rhinoscopy, inicio"
+            >
+              <Image
+                src="/images/logo-fondooscuro.png"
+                alt="Rhinoscopy"
+                width={200}
+                height={200}
+                className="h-14 w-auto object-contain sm:h-16"
+              />
+            </Link>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-white/50">
+              {footerCopy.blurb}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-white/40">
+              {site.tagline}
+            </p>
+          </div>
+
+          <div className="lg:col-span-2">
+            <p className="text-[0.65rem] font-semibold tracking-[0.22em] text-white uppercase">
+              {footerCopy.navTitle}
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {footerNav.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/55 transition-colors duration-200 hover:text-cyan-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <p className="text-[0.65rem] font-semibold tracking-[0.22em] text-white uppercase">
+              {footerCopy.meetTitle}
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/55">
+              <li>{meet2026.dates}</li>
+              <li>{meet2026.venue}</li>
+              <li>{meet2026.city}</li>
+              <li>
+                <a
+                  href="/#congreso"
+                  className="text-cyan-300/90 transition-colors hover:text-cyan-200"
+                >
+                  Ver congreso
                 </a>
               </li>
-            ))}
-          </ul>
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <p className="text-[0.65rem] font-semibold tracking-[0.22em] text-white uppercase">
+              {footerCopy.contactTitle}
+            </p>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="text-white/55 transition-colors hover:text-white"
+                >
+                  {site.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={whatsappPrefill}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/55 transition-colors hover:text-[#25D366]"
+                >
+                  {site.whatsapp.display}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/55 transition-colors hover:text-white"
+                >
+                  {site.instagramHandle}
+                </a>
+              </li>
+            </ul>
+            <FooterFollow />
+          </div>
         </div>
-        <div>
-          <p className="text-[0.65rem] tracking-[0.22em] text-white uppercase">
-            Contacto
-          </p>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>
-              <a href={`mailto:${site.email}`} className="hover:text-white">
-                {site.email}
-              </a>
-            </li>
-            <li>
-              <a
-                href={site.whatsapp.href}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-white"
-              >
-                WhatsApp
-              </a>
-            </li>
-            <li>
-              <a
-                href={site.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-white"
-              >
-                Instagram
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="mx-auto mt-8 flex max-w-6xl flex-col items-start gap-3 text-xs md:flex-row md:items-center md:justify-between">
-        <p className="text-white/65">
-          © {year} {site.name}. Lorem ipsum dolor sit amet.
-        </p>
-        <a
-          href="https://www.agustinaderdev.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 text-white/65 transition hover:text-white/80"
+
+        <div
+          className="mt-8 flex flex-col gap-6 text-xs sm:gap-4 md:flex-row md:items-end md:justify-between"
         >
-          <img
-            src="/images/logo-dev/logo-dev.webp"
-            alt=""
-            width={256}
-            height={202}
-            className="h-7 w-auto object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
-          />
-          <span>
-            Desarrollado por{" "}
-            <span className="font-medium text-white/85">Agustin Ader</span>
-          </span>
-        </a>
+          <div className="max-w-xl space-y-2">
+            <p className="text-white/70">
+              © {year} {site.name}. Todos los derechos reservados.
+            </p>
+            <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
+          </div>
+          <a
+            href="https://www.agustinaderdev.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center gap-2.5 text-white/65 transition hover:text-white/80"
+          >
+            <img
+              src="/images/logo-dev/logo-dev.webp"
+              alt=""
+              width={256}
+              height={202}
+              className="h-7 w-auto object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
+            />
+            <span>
+              Desarrollado por{" "}
+              <span className="font-medium text-white/85">Agustin Ader</span>
+            </span>
+          </a>
+        </div>
       </div>
     </footer>
   );

@@ -1,0 +1,16 @@
+---
+description: Identidad visual de secciones Rhinoscopy (navy, script, cyan/fuchsia)
+globs: src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Secciones — identidad Rhinoscopy
+
+Al crear o rediseñar secciones de marketing en el sitio:
+
+- **Fondo navy:** usar `DarkSectionAtmosphere` (`section-atmosphere.tsx`) — orbes cyan/fuchsia, líneas degradé, grilla sutil. No bloques planos genéricos.
+- **Títulos:** usar `SectionHeading` con `titleScript` (fuente script, cyan) + `titleDisplay` (display uppercase). Copy en `src/data/*-copy.ts`.
+- **CTAs principales en navy:** `GradientCtaLink` (borde cyan → magenta, pill navy).
+- **Tarjetas / formularios sobre navy:** `rounded-2xl`, `border-white/10`, `bg-white/[0.04]`, línea superior `gradient` cyan–fuchsia.
+- **Animaciones:** livianas (200–300 ms, color/opacidad). Sin blur reveal ni stagger pesado salvo `speaker-reveal` en congreso.
+- **Marca:** navy `#262454`, acentos cyan y fuchsia; coherente con hero y webinars.

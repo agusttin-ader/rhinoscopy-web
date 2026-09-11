@@ -7,6 +7,7 @@ export const site = {
     href: "https://wa.me/5491172003461",
   },
   instagram: "https://www.instagram.com/rhinoscopyofficial/",
+  instagramHandle: "@rhinoscopyofficial",
 } as const;
 
 export const meet2026 = {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
 import { DoctorCard } from "@/components/doctor-card";
 import { SponsorLogos } from "@/components/sponsor-logos";
 import { congressCopy } from "@/data/congress-copy";
@@ -219,41 +220,22 @@ function CongressCommittee() {
 export function CongressSection() {
   return (
     <section id="congreso" className="scroll-mt-[4.5rem] bg-paper">
-      <div className="border-b border-navy/10 bg-white px-6 py-12 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
-            {congressCopy.kicker}
-          </p>
-          <h2 className="font-display mt-3 max-w-3xl text-4xl text-navy md:text-5xl">
-            {congressCopy.title}
-          </h2>
-          <p className="mt-4 max-w-2xl text-slate-600">{congressCopy.lead}</p>
+      <CongressMeetPresentation />
 
-          <dl className="mt-8 grid gap-6 sm:grid-cols-2">
-            <div className="border-t border-navy/10 pt-4">
-              <dt className="text-[0.65rem] font-semibold tracking-[0.24em] text-slate-400 uppercase">
-                Cuándo
-              </dt>
-              <dd className="mt-2 font-display text-xl text-navy">{congress.event.dates}</dd>
-            </div>
-            <div className="border-t border-navy/10 pt-4">
-              <dt className="text-[0.65rem] font-semibold tracking-[0.24em] text-slate-400 uppercase">
-                Dónde
-              </dt>
-              <dd className="mt-2 font-display text-xl text-navy">{congress.event.venue}</dd>
-              <dd className="mt-1 text-sm text-slate-500">{congress.event.address}</dd>
-              <dd className="mt-3">
-                <a
-                  href={congress.event.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-semibold text-cyan-700 hover:text-navy"
-                >
-                  {congressCopy.venue.mapsCta} →
-                </a>
-              </dd>
-            </div>
-          </dl>
+      <div className="border-b border-navy/10 bg-white px-6 py-10 sm:py-12">
+        <div className="mx-auto max-w-6xl">
+          <p className="max-w-2xl text-slate-600">{congressCopy.lead}</p>
+          <p className="mt-3 text-sm text-slate-500">
+            {congress.event.venue} · {congress.event.address}
+          </p>
+          <a
+            href={congress.event.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex text-sm font-semibold text-cyan-700 hover:text-navy"
+          >
+            {congressCopy.venue.mapsCta} →
+          </a>
         </div>
       </div>
 

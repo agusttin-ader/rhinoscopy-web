@@ -27,8 +27,8 @@ export const copy = {
   certTitleScript: "Descargá",
   certTitleDisplay: "tu certificado",
   certLead:
-    "Por ahora, las constancias disponibles son del Rhinoscopy Meet 2026. Ingresá tu matrícula y descargá el PDF.",
-  certCta: "Buscar por matrícula",
+    "Por ahora, las constancias disponibles son del Rhinoscopy Meet 2026. Buscá por nombre o apellido y descargá el PDF.",
+  certCta: "Buscar constancia",
   partnersKicker: "Lorem ipsum",
   contactKicker: "Contacto",
   contactTitle: "Lorem ipsum dolor sit amet.",

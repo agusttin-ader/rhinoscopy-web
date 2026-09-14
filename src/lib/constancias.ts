@@ -12,6 +12,7 @@ export type ConstanciaMatch = {
   eventId: string;
   eventLabel: string;
   fileName: string;
+  displayName: string;
   downloadUrl: string;
 };
 
@@ -22,28 +23,33 @@ function fold(value: string) {
     .toLowerCase();
 }
 
-function digits(value: string) {
-  return value.replace(/\D/g, "");
-}
-
-function extraTokens(value: string) {
+function queryTokens(value: string) {
   return fold(value)
     .split(/[^a-z0-9]+/)
-    .filter((part) => part.length >= 2 && !/^\d+$/.test(part));
+    .filter((part) => part.length >= 2);
 }
 
 function eventLabel(folder: string) {
   return folder.replace(/[-_]+/g, " ");
 }
 
-export async function searchConstancias(
-  matricula: string,
-): Promise<ConstanciaMatch[]> {
-  const number = digits(matricula);
-  if (number.length < 3) return [];
+/** Invierte el slug del PDF a un nombre legible (heurística). */
+export function displayNameFromCertificateFile(fileName: string): string {
+  const base = fileName.replace(/\.pdf$/i, "");
+  const parts = base.split("-").filter(Boolean);
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const p = parts.map(cap);
+  if (p.length === 4) return `${p[2]} ${p[3]} ${p[0]} ${p[1]}`;
+  if (p.length === 3) return `${p[2]} ${p[0]} ${p[1]}`;
+  if (p.length === 2) return `${p[1]} ${p[0]}`;
+  return p.join(" ");
+}
 
-  const requiredExtras = extraTokens(matricula);
-  const numberPattern = new RegExp(`(?:^|[^0-9])${number}(?:$|[^0-9])`);
+export async function searchConstancias(
+  query: string,
+): Promise<ConstanciaMatch[]> {
+  const tokens = queryTokens(query);
+  if (tokens.length === 0) return [];
 
   let events: string[];
   try {
@@ -62,18 +68,22 @@ export async function searchConstancias(
     for (const fileName of files) {
       if (!fileName.toLowerCase().endsWith(".pdf")) continue;
 
-      const haystack = fold(fileName.replace(/\.pdf$/i, "").replace(/[-_]+/g, " "));
-      if (!numberPattern.test(haystack)) continue;
-      if (!requiredExtras.every((token) => haystack.includes(token))) continue;
+      const haystack = fold(
+        fileName.replace(/\.pdf$/i, "").replace(/[-_]+/g, " "),
+      );
+      if (!tokens.every((token) => haystack.includes(token))) continue;
 
       matches.push({
         eventId,
         eventLabel: eventLabel(eventId),
         fileName,
+        displayName: displayNameFromCertificateFile(fileName),
         downloadUrl: `/${CONSTANCIAS_PUBLIC_DIR}/${eventId}/${encodeURIComponent(fileName)}`,
       });
     }
   }
 
-  return matches.sort((a, b) => a.eventLabel.localeCompare(b.eventLabel, "es"));
+  return matches.sort((a, b) =>
+    a.displayName.localeCompare(b.displayName, "es", { sensitivity: "base" }),
+  );
 }

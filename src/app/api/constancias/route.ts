@@ -3,19 +3,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as
-    | { matricula?: string }
+    | { nombre?: string; query?: string }
     | null;
 
-  const matricula = body?.matricula?.trim() ?? "";
-  const digits = matricula.replace(/\D/g, "");
+  const nombre = (body?.nombre ?? body?.query ?? "").trim();
 
-  if (digits.length < 3) {
+  if (nombre.length < 2) {
     return NextResponse.json(
-      { error: "Ingresá el número de matrícula." },
+      { error: "Ingresá al menos 2 letras del nombre o apellido." },
       { status: 400 },
     );
   }
 
-  const results = await searchConstancias(matricula);
+  const results = await searchConstancias(nombre);
   return NextResponse.json({ results });
 }

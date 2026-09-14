@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "constancia:meet": "node scripts/generate-meet-constancia.mjs",
-    "constancia:meet:batch": "node scripts/generate-meet-constancia-batch.mjs"
+    "constancia:meet:batch": "node scripts/generate-meet-constancia-batch.mjs",
+    "constancia:meet:bulk-franco": "node scripts/generate-meet-constancia-bulk-franco.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

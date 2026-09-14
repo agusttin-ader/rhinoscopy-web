@@ -1,17 +1,13 @@
 /**
- * Genera ~200 constancias Meet con el mismo titular y matrículas distintas en el nombre del archivo.
- * El PDF es idéntico en todos los casos (liviano, una sola composición) — git deduplica el blob.
+ * Genera el set de constancias de ejemplo (nombres distintos, búsqueda por apellido).
  *
  *   node scripts/generate-meet-constancia-batch.mjs
  */
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  generateMeetConstancia,
-  slugifyName,
-} from "./generate-meet-constancia.mjs";
+import { generateMeetConstancia } from "./generate-meet-constancia.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -20,46 +16,53 @@ const OUT_DIR = path.join(
   "public/images/constancias/rhinoscopy-meet-2026",
 );
 
-const HOLDER_NAME = "Belén Domé";
-const COUNT = 200;
-const REAL_MATRICULA = "161053";
+/** fullName = texto en el PDF; fileSlug = nombre del archivo sin .pdf */
+const CERTIFICATES = [
+  {
+    fullName: "Maria Belen Domeg Lizardo",
+    fileSlug: "domeg-lizardo-maria-belen",
+  },
+  { fullName: "Sebastian Lopez", fileSlug: "lopez-sebastian" },
+  { fullName: "Nicolas Lopez", fileSlug: "lopez-nicolas" },
+  { fullName: "Juliana Lopez", fileSlug: "lopez-juliana" },
+  { fullName: "Ramiro Lopez", fileSlug: "lopez-ramiro" },
+  { fullName: "Carlos Lopez Moris", fileSlug: "lopez-moris-carlos" },
+  { fullName: "Guido Hocsman", fileSlug: "hocsman-guido" },
+];
 
-/** Matrículas ficticias de 6 dígitos (secuenciales), incluye la real. */
-function buildMatriculas(count) {
-  const out = [REAL_MATRICULA];
-  for (let m = 100_000; out.length < count && m < 1_000_000; m++) {
-    const s = String(m);
-    if (s === REAL_MATRICULA) continue;
-    out.push(s);
+function removeLegacyPdfs() {
+  let removed = 0;
+  for (const file of readdirSync(OUT_DIR)) {
+    if (!file.toLowerCase().endsWith(".pdf")) continue;
+    unlinkSync(path.join(OUT_DIR, file));
+    removed++;
   }
-  if (out.length < count) {
-    throw new Error(`No alcanzan matrículas de 6 dígitos para ${count} constancias`);
-  }
-  return out.sort((a, b) => Number(a) - Number(b));
+  return removed;
 }
 
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
-  const slug = slugifyName(HOLDER_NAME);
-  const matriculas = buildMatriculas(COUNT);
-
-  console.log(`Generando 1 PDF liviano (${HOLDER_NAME})…`);
-  const bytes = await generateMeetConstancia(HOLDER_NAME, { light: true });
-  const kb = (bytes.length / 1024).toFixed(1);
-
-  let written = 0;
-  for (const matricula of matriculas) {
-    const fileName = `${slug}-${matricula}.pdf`;
-    writeFileSync(path.join(OUT_DIR, fileName), bytes);
-    written++;
+  const removed = removeLegacyPdfs();
+  if (removed > 0) {
+    console.log(`Eliminados ${removed} PDF anteriores.`);
   }
 
-  const diskMb = ((bytes.length * written) / (1024 * 1024)).toFixed(2);
-  console.log(
-    `Listo: ${written} archivos en ${OUT_DIR}\n` +
-      `  · ${kb} KB c/u (~${diskMb} MB en disco; git guarda 1 blob si son idénticos)\n` +
-      `  · Matrícula real incluida: ${REAL_MATRICULA} → ${slug}-${REAL_MATRICULA}.pdf`,
-  );
+  const cache = new Map();
+  for (const { fullName, fileSlug } of CERTIFICATES) {
+    if (!cache.has(fullName)) {
+      console.log(`Generando PDF: ${fullName}`);
+      cache.set(
+        fullName,
+        await generateMeetConstancia(fullName, { light: true }),
+      );
+    }
+    const bytes = cache.get(fullName);
+    const fileName = `${fileSlug}.pdf`;
+    writeFileSync(path.join(OUT_DIR, fileName), bytes);
+    console.log(`  → ${fileName} (${(bytes.length / 1024).toFixed(1)} KB)`);
+  }
+
+  console.log(`\nListo: ${CERTIFICATES.length} constancias en ${OUT_DIR}`);
 }
 
 main().catch((err) => {

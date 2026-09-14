@@ -9,6 +9,7 @@ type Match = {
   eventId: string;
   eventLabel: string;
   fileName: string;
+  displayName: string;
   downloadUrl: string;
 };
 
@@ -27,7 +28,7 @@ function PanelCard({ children }: { children: React.ReactNode }) {
 }
 
 export function CertificateSearch({ compact = false }: { compact?: boolean }) {
-  const [matricula, setMatricula] = useState("");
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState<Match[] | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ export function CertificateSearch({ compact = false }: { compact?: boolean }) {
       const response = await fetch("/api/constancias", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matricula }),
+        body: JSON.stringify({ query }),
       });
       const data = (await response.json()) as {
         results?: Match[];
@@ -75,22 +76,21 @@ export function CertificateSearch({ compact = false }: { compact?: boolean }) {
 
           <label className={compact ? "mt-4 block" : "mt-6 block"}>
             <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
-              {constanciasCopy.matriculaLabel}
+              {constanciasCopy.nameLabel}
             </span>
             <input
               required
-              minLength={3}
-              value={matricula}
-              onChange={(e) => setMatricula(e.target.value)}
-              placeholder={constanciasCopy.matriculaPlaceholder}
-              inputMode="numeric"
-              autoComplete="off"
+              minLength={2}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={constanciasCopy.namePlaceholder}
+              autoComplete="name"
               className={`mt-2 w-full rounded-lg border border-white/10 bg-white/[0.03] text-white outline-none ring-0 transition-[border-color,box-shadow] duration-200 placeholder:text-white/25 focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.12)] ${
                 compact ? "px-3.5 py-2.5 text-base" : "px-4 py-3.5 text-lg"
               }`}
             />
             <span className="mt-2 block text-xs text-white/40">
-              {constanciasCopy.matriculaHint}
+              {constanciasCopy.nameHint}
             </span>
           </label>
 
@@ -147,10 +147,10 @@ export function CertificateSearch({ compact = false }: { compact?: boolean }) {
                           {item.eventLabel}
                         </p>
                         <p className="font-display mt-1 text-xl text-white sm:text-2xl">
-                          {constanciasCopy.resultTitle}
+                          {item.displayName}
                         </p>
                         <p className="mt-1 text-sm text-white/45">
-                          {constanciasCopy.matriculaPrefix} {matricula}
+                          {constanciasCopy.resultTitle}
                         </p>
                       </div>
                       <a

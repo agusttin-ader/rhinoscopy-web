@@ -68,6 +68,26 @@ export function slugifyName(fullName) {
     .replace(/^-+|-+$/g, "");
 }
 
+const slugPart = (value) =>
+  value
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase();
+
+/** Slug de archivo: apellidos antes que nombres (ej. Maria Belen Domeg Lizardo → domeg-lizardo-maria-belen). */
+export function certificateFileSlug(fullName) {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  const join = (arr) => arr.map(slugPart).join("-");
+  if (parts.length >= 4) {
+    const names = parts.slice(0, parts.length - 2);
+    const surnames = parts.slice(-2);
+    return join([...surnames, ...names]);
+  }
+  if (parts.length === 3) return join([parts[1], parts[2], parts[0]]);
+  if (parts.length === 2) return join([parts[1], parts[0]]);
+  return slugifyName(fullName);
+}
+
 function cx(page, text, font, size) {
   return (page.getWidth() - font.widthOfTextAtSize(text, size)) / 2;
 }
@@ -403,9 +423,19 @@ export async function generateMeetConstancia(nombreCompleto, options = {}) {
   });
 
   const textMaxW = typoX - MARGIN_X - 28;
-  const displayName = nombreCompleto.trim().toUpperCase();
-  const nameSize =
-    displayName.length > 34 ? 19 : displayName.length > 26 ? 23 : 27;
+  const displayName = nombreCompleto
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .trim()
+    .toUpperCase();
+  let nameSize =
+    displayName.length > 34 ? 18 : displayName.length > 28 ? 20 : displayName.length > 24 ? 22 : 27;
+  while (
+    nameSize > 14 &&
+    fontBold.widthOfTextAtSize(displayName, nameSize) > textMaxW
+  ) {
+    nameSize -= 1;
+  }
 
   const scriptSize = 32;
   const bodySize = 11;
@@ -526,15 +556,10 @@ export async function generateMeetConstancia(nombreCompleto, options = {}) {
 }
 
 async function main() {
-  const nombre = process.argv[2] ?? "María Elena Restrepo";
-  const matricula = process.argv[3];
+  const nombre = process.argv[2] ?? "Maria Belen Domeg Lizardo";
 
   mkdirSync(OUT_DIR, { recursive: true });
-  const slug = slugifyName(nombre);
-  const fileName =
-    matricula && String(matricula).replace(/\D/g, "")
-      ? `${slug}-${String(matricula).replace(/\D/g, "")}.pdf`
-      : `${slug}.pdf`;
+  const fileName = `${certificateFileSlug(nombre)}.pdf`;
 
   const bytes = await generateMeetConstancia(nombre);
   writeFileSync(path.join(OUT_DIR, fileName), bytes);

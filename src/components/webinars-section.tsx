@@ -10,6 +10,10 @@ import {
   webinarsVisibleCount,
 } from "@/data/webinars";
 
+/** Mismo ancho de miniatura que las filas del listado (desktop). */
+const WEBINAR_THUMB_CLASS =
+  "w-full max-w-[min(100%,30rem)] shrink-0 sm:max-w-[28rem] md:max-w-[30rem] lg:w-[clamp(16.5rem,38vw,34rem)] lg:max-w-[34rem]";
+
 function PlayMark() {
   return (
     <svg
@@ -71,24 +75,31 @@ function WebinarRow({
   webinar,
   index,
   lazyImage,
+  placement = "list",
 }: {
   webinar: (typeof webinars)[number];
   index: number;
   lazyImage?: boolean;
+  placement?: "list" | "header";
 }) {
   const hasVideo = Boolean(webinar.youtubeUrl);
-  const flip = index % 2 === 1;
+  const isHeader = placement === "header";
+  const flip = !isHeader && index % 2 === 1;
   const thumbHref = hasVideo ? webinar.youtubeUrl : webinar.instagramUrl;
 
   return (
     <article
-      className={`group flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-12 ${
-        flip ? "lg:flex-row-reverse" : ""
-      }`}
+      className={
+        isHeader
+          ? "group flex flex-col gap-4 sm:gap-5"
+          : `group flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-12 ${
+              flip ? "lg:flex-row-reverse" : ""
+            }`
+      }
     >
       <div
-        className={`w-full max-w-[min(100%,30rem)] shrink-0 sm:max-w-[28rem] md:max-w-[30rem] lg:w-[clamp(16.5rem,38vw,34rem)] lg:max-w-[34rem] ${
-          flip ? "lg:ms-auto" : ""
+        className={`${WEBINAR_THUMB_CLASS} ${!isHeader && flip ? "lg:ms-auto" : ""} ${
+          isHeader ? "max-w-full" : ""
         }`}
       >
         <a
@@ -106,7 +117,13 @@ function WebinarRow({
         </a>
       </div>
 
-      <div className="min-w-0 flex-1 lg:max-w-[28rem] lg:pt-1 xl:max-w-[32rem]">
+      <div
+        className={
+          isHeader
+            ? "min-w-0 flex-1 md:pt-1 lg:max-w-none xl:max-w-none"
+            : "min-w-0 flex-1 lg:max-w-[28rem] lg:pt-1 xl:max-w-[32rem]"
+        }
+      >
         <p className="text-[0.68rem] font-medium tracking-[0.28em] text-cyan-300/75 uppercase">
           {webinar.dateLabel}
         </p>
@@ -145,13 +162,68 @@ function WebinarRow({
   );
 }
 
+function WebinarsDesktopHeader({
+  latestWebinar,
+}: {
+  latestWebinar: (typeof webinars)[number] | undefined;
+}) {
+  return (
+    <div
+      className="hidden md:grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-start md:gap-x-8 lg:gap-x-12"
+    >
+      <div className="min-w-0">
+        <p className="text-[0.72rem] font-semibold tracking-[0.38em] text-cyan-300/80 uppercase">
+          {webinarsCopy.kicker}
+        </p>
+
+        <h2 className="mt-5 leading-[0.95] sm:mt-6">
+          {webinarsCopy.titleScript ? (
+            <span
+              className="font-script block text-[clamp(3.5rem,12vw,6.5rem)] leading-none text-cyan-400"
+            >
+              {webinarsCopy.titleScript}
+            </span>
+          ) : null}
+          <span
+            className="font-display -mt-0.5 block text-[clamp(2.75rem,9vw,5.5rem)] uppercase tracking-[0.02em] text-white"
+          >
+            {webinarsCopy.titleDisplay}
+          </span>
+        </h2>
+
+        <p className="mt-8 max-w-lg text-lg font-light leading-relaxed text-white/55">
+          {webinarsCopy.lead}
+        </p>
+      </div>
+
+      {latestWebinar ? (
+        <div className="min-w-0 pt-6 sm:pt-[1.625rem]">
+          <div className="mx-auto w-full lg:max-w-[clamp(16.5rem,38vw,34rem)]">
+            <WebinarRow webinar={latestWebinar} index={0} placement="header" />
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function WebinarsSection() {
   const [expanded, setExpanded] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollPinY = useRef<number | null>(null);
+  const scrollToSectionTopRef = useRef(false);
+  const latestWebinar = webinars[0];
   const featured = webinars.slice(0, webinarsVisibleCount);
   const rest = webinars.slice(webinarsVisibleCount);
 
   useLayoutEffect(() => {
+    if (scrollToSectionTopRef.current) {
+      scrollToSectionTopRef.current = false;
+      scrollPinY.current = null;
+      sectionRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+      return;
+    }
+
     if (scrollPinY.current === null) return;
 
     const y = scrollPinY.current;
@@ -182,25 +254,35 @@ export function WebinarsSection() {
   }, [expanded]);
 
   const toggleWebinars = () => {
-    scrollPinY.current = window.scrollY;
-    setExpanded((open) => !open);
+    setExpanded((open) => {
+      if (open) {
+        scrollToSectionTopRef.current = true;
+      } else {
+        scrollPinY.current = window.scrollY;
+      }
+      return !open;
+    });
   };
 
   return (
     <section
+      ref={sectionRef}
       id="webinars"
       className="relative scroll-mt-24 overflow-hidden bg-navy text-white"
     >
       <DarkSectionAtmosphere />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32 md:py-36">
-        <SectionHeading
-          kicker={webinarsCopy.kicker}
-          titleScript={webinarsCopy.titleScript}
-          titleDisplay={webinarsCopy.titleDisplay}
-          lead={webinarsCopy.lead}
-          size="full"
-        />
+        <div className="md:hidden">
+          <SectionHeading
+            kicker={webinarsCopy.kicker}
+            titleScript={webinarsCopy.titleScript}
+            titleDisplay={webinarsCopy.titleDisplay}
+            lead={webinarsCopy.lead}
+            size="full"
+          />
+        </div>
+        <WebinarsDesktopHeader latestWebinar={latestWebinar} />
 
         <div className="mt-16 md:mt-24">
           <p className="text-[0.68rem] font-semibold tracking-[0.28em] text-white/35 uppercase">
@@ -212,7 +294,9 @@ export function WebinarsSection() {
               {featured.map((webinar, index) => (
                 <li
                   key={webinar.id}
-                  className="border-t border-white/[0.08] py-10 md:py-14"
+                  className={`border-t border-white/[0.08] py-10 md:py-14 ${
+                    webinar.id === latestWebinar?.id ? "md:hidden" : ""
+                  }`}
                 >
                   <WebinarRow webinar={webinar} index={index} />
                 </li>

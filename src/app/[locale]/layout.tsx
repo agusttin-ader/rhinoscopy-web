@@ -1,5 +1,8 @@
+import { ScrollToTopOnRefresh } from "@/components/scroll-to-top-on-refresh";
+import { SeoJsonLd } from "@/components/seo-json-ld";
 import { WhatsappFloat } from "@/components/whatsapp-float";
 import { routing } from "@/i18n/routing";
+import { rootMetadataBase } from "@/lib/seo";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -24,7 +27,7 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Rhinoscopy",
+  ...rootMetadataBase(),
   description: "Medical education in rhinology and nasal endoscopy.",
 };
 
@@ -46,7 +49,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${montserrat.variable} ${marckScript.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        <SeoJsonLd />
         <NextIntlClientProvider messages={messages}>
+          <ScrollToTopOnRefresh />
           {children}
           <WhatsappFloat />
         </NextIntlClientProvider>

@@ -1,4 +1,5 @@
 import { FooterFollow } from "@/components/footer-follow";
+import { Reveal } from "@/components/motion/reveal";
 import { getLocaleData } from "@/data/locales";
 import { site } from "@/data/site";
 import { Link } from "@/i18n/navigation";
@@ -22,7 +23,7 @@ export async function SiteFooter() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto max-w-6xl px-5 pb-8 pt-14 sm:px-6 sm:pt-16">
+      <Reveal className="mx-auto max-w-6xl px-5 pb-8 pt-14 sm:px-6 sm:pt-16" offset={14}>
         <div className="grid gap-10 border-b border-white/10 pb-12 sm:gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <Link
@@ -155,7 +156,7 @@ export async function SiteFooter() {
             </span>
           </a>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

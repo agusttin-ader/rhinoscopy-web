@@ -159,7 +159,7 @@ export const pt = {
     backToHome: "← Início",
     availableEvent: "Rhinoscopy Meet 2026",
     nameLabel: "Nome ou sobrenome",
-    nameHint: "Ex.: López, Belen, Domeg… Mostramos todas as coincidências.",
+    nameHint: "Ex.: López, Nicolás, Rodríguez… Mostramos todas as coincidências.",
     namePlaceholder: "Sobrenome ou nome",
     searchCta: "Buscar certificado",
     searching: "Buscando…",

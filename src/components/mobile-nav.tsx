@@ -1,5 +1,6 @@
 "use client";
 
+import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -105,13 +106,24 @@ export function MobileNav({
                 }`}
                 style={{ transitionDelay: open ? `${120 + index * 55}ms` : "0ms" }}
               >
-                <Link
-                  href={link.href}
-                  className="block border-b border-white/10 py-4 text-2xl font-bold tracking-[0.08em] text-white uppercase transition-colors hover:text-cyan-200"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
+                {link.href.startsWith("/#") ? (
+                  <SmoothNavLink
+                    href={link.href}
+                    className="block border-b border-white/10 py-4 text-2xl font-bold tracking-[0.08em] text-white uppercase transition-colors hover:text-cyan-200"
+                    onAfterNavigate={() => setOpen(false)}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </SmoothNavLink>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="block border-b border-white/10 py-4 text-2xl font-bold tracking-[0.08em] text-white uppercase transition-colors hover:text-cyan-200"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

@@ -159,7 +159,7 @@ export const en = {
     backToHome: "← Home",
     availableEvent: "Rhinoscopy Meet 2026",
     nameLabel: "First or last name",
-    nameHint: "E.g. Lopez, Belen, Domeg… We show all matches.",
+    nameHint: "E.g. Lopez, Nicolas, Rodriguez… We show all matches.",
     namePlaceholder: "Last or first name",
     searchCta: "Find certificate",
     searching: "Searching…",

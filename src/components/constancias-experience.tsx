@@ -1,5 +1,6 @@
 "use client";
 
+import { Reveal } from "@/components/motion/reveal";
 import { CertificateResultActions } from "@/components/certificate-result-actions";
 import { CertificateVisual } from "@/components/certificate-visual";
 import { GradientCtaButton } from "@/components/gradient-cta-button";
@@ -73,6 +74,7 @@ export function ConstanciasExperience() {
         className="mt-8 grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-start lg:gap-12 xl:gap-16"
       >
         <div className="min-w-0 lg:max-w-[26rem]">
+          <Reveal offset={14}>
           <SectionHeading
             as="h1"
             align="left"
@@ -84,11 +86,13 @@ export function ConstanciasExperience() {
             size="narrow"
             titleGap="relaxed"
           />
+          </Reveal>
 
-          <div className="mt-6 flex justify-center lg:hidden">
+          <Reveal delay={70} offset={16} className="mt-6 flex justify-center lg:hidden">
             <CertificateVisual layout="meet-logo" />
-          </div>
+          </Reveal>
 
+          <Reveal delay={90} offset={12}>
           <form onSubmit={onSubmit} className="mt-9 lg:mt-10">
             <p className="text-[0.62rem] font-medium tracking-[0.24em] text-cyan-300/75 uppercase">
               {constanciasCopy.availableEvent}
@@ -130,19 +134,24 @@ export function ConstanciasExperience() {
               {constanciasCopy.privacyNote}
             </p>
           </form>
+          </Reveal>
         </div>
 
-        <div
+        <Reveal
+          delay={90}
+          offset={22}
           className="hidden min-w-0 lg:flex lg:items-center lg:justify-end lg:pt-6 xl:pt-10"
           aria-hidden
         >
           <CertificateVisual layout="meet-logo" />
-        </div>
+        </Reveal>
       </div>
 
       {search ? (
-        <section
+        <Reveal
+          as="section"
           className="mt-14 sm:mt-16"
+          offset={16}
           aria-live="polite"
           aria-label="Resultados de búsqueda"
         >
@@ -212,7 +221,7 @@ export function ConstanciasExperience() {
               </ul>
             </>
           )}
-        </section>
+        </Reveal>
       ) : null}
 
       <p className="mt-12 max-w-md text-[0.75rem] font-light leading-relaxed text-white/75">

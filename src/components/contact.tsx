@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/contact-form";
 import { SectionHeading } from "@/components/section-heading";
 import { getLocaleData } from "@/data/locales";
@@ -12,7 +13,7 @@ export async function Contact() {
       <div
         className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-14 lg:gap-16"
       >
-        <div id="quienes-somos" className="min-w-0">
+        <Reveal as="div" id="quienes-somos" className="min-w-0" offset={14}>
           <SectionHeading
             as="h2"
             align="left"
@@ -50,9 +51,9 @@ export async function Contact() {
               {aboutCopy.instagramHandle}
             </span>
           </a>
-        </div>
+        </Reveal>
 
-        <div className="min-w-0">
+        <Reveal as="div" className="min-w-0" delay={70} offset={14}>
           <SectionHeading
             as="h2"
             align="left"
@@ -64,7 +65,7 @@ export async function Contact() {
             size="narrow"
           />
           <ContactForm />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

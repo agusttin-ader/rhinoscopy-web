@@ -7,7 +7,7 @@ export const constanciasCopy = {
   backToHome: "← Inicio",
   availableEvent: "Rhinoscopy Meet 2026",
   nameLabel: "Nombre o apellido",
-  nameHint: "Ej.: López, Belen, Domeg… Mostramos todas las coincidencias.",
+  nameHint: "Ej.: López, Nicolás, Rodríguez… Mostramos todas las coincidencias.",
   namePlaceholder: "Apellido o nombre",
   searchCta: "Buscar certificado",
   searching: "Buscando…",

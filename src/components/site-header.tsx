@@ -4,6 +4,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { MobileNav } from "@/components/mobile-nav";
 import { useLocaleData } from "@/hooks/use-locale-data";
+import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -82,26 +83,29 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
         </div>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {homeLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group relative px-3 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-navy/65 uppercase transition-colors hover:text-navy"
-            >
-              {link.label}
-              <span
-                className="absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-500/70 transition-transform duration-300 group-hover:scale-x-100"
-                aria-hidden="true"
-              />
-            </Link>
-          ))}
+          {homeLinks.map((link) => {
+            const NavLink = link.href.startsWith("/#") ? SmoothNavLink : Link;
+            return (
+              <NavLink
+                key={link.href}
+                href={link.href}
+                className="group relative px-3 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-navy/65 uppercase transition-colors hover:text-navy"
+              >
+                {link.label}
+                <span
+                  className="absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-500/70 transition-transform duration-300 group-hover:scale-x-100"
+                  aria-hidden="true"
+                />
+              </NavLink>
+            );
+          })}
           <LanguageSwitcher className="ml-1" />
-          <Link
+          <SmoothNavLink
             href="/#contacto"
             className="ml-2 rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-bold tracking-[0.16em] text-white uppercase shadow-[0_10px_24px_-12px_rgba(38,36,84,0.55)] transition hover:bg-navy/90"
           >
             {nav.contactCta}
-          </Link>
+          </SmoothNavLink>
         </nav>
       </div>
 

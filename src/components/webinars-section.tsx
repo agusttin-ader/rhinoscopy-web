@@ -5,6 +5,7 @@ import { localizeWebinars } from "@/data/webinars-i18n";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { useLocale } from "next-intl";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Reveal } from "@/components/motion/reveal";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SectionHeading } from "@/components/section-heading";
 import { webinars, webinarsVisibleCount, type Webinar } from "@/data/webinars";
@@ -285,7 +286,7 @@ export function WebinarsSection() {
       <DarkSectionAtmosphere />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32 md:py-36">
-        <div className="md:hidden">
+        <Reveal className="md:hidden">
           <SectionHeading
             kicker={webinarsCopy.kicker}
             titleScript={webinarsCopy.titleScript}
@@ -293,13 +294,17 @@ export function WebinarsSection() {
             lead={webinarsCopy.lead}
             size="full"
           />
-        </div>
-        <WebinarsDesktopHeader latestWebinar={latestWebinar} />
+        </Reveal>
+        <Reveal delay={50} offset={14}>
+          <WebinarsDesktopHeader latestWebinar={latestWebinar} />
+        </Reveal>
 
         <div className="mt-16 md:mt-24">
+          <Reveal offset={14}>
           <p className="text-[0.68rem] font-semibold tracking-[0.28em] text-white/35 uppercase">
             {webinarsCopy.visibleIntro}
           </p>
+          </Reveal>
 
           <div className="mt-10">
             <ul className="space-y-0 [overflow-anchor:none]">
@@ -310,7 +315,9 @@ export function WebinarsSection() {
                     webinar.id === latestWebinar?.id ? "md:hidden" : ""
                   }`}
                 >
-                  <WebinarRow webinar={webinar} index={index} />
+                  <Reveal delay={Math.min(index, 5) * 40} offset={12}>
+                    <WebinarRow webinar={webinar} index={index} />
+                  </Reveal>
                 </li>
               ))}
               {expanded
@@ -319,11 +326,13 @@ export function WebinarsSection() {
                       key={webinar.id}
                       className="border-t border-white/[0.08] py-10 md:py-14"
                     >
+                      <Reveal delay={Math.min(index, 8) * 38} offset={12}>
                       <WebinarRow
                         webinar={webinar}
                         index={webinarsVisibleCount + index}
                         lazyImage
                       />
+                      </Reveal>
                     </li>
                   ))
                 : null}
@@ -358,9 +367,11 @@ export function WebinarsSection() {
         </div>
 
         {webinarsCopy.sourceNote ? (
-          <p className="mt-10 max-w-2xl text-center text-xs leading-relaxed text-white/30 mx-auto">
-            {webinarsCopy.sourceNote}
-          </p>
+          <Reveal delay={100} offset={10}>
+            <p className="mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-white/30">
+              {webinarsCopy.sourceNote}
+            </p>
+          </Reveal>
         ) : null}
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
+import { Reveal } from "@/components/motion/reveal";
 import { DoctorCard } from "@/components/doctor-card";
 import { SponsorLogos } from "@/components/sponsor-logos";
 import { useLocaleData } from "@/hooks/use-locale-data";
@@ -19,14 +20,17 @@ function SectionIntro({
   children?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-6 border-b border-navy/10 pb-8 md:flex-row md:items-end md:justify-between">
+    <Reveal
+      as="div"
+      className="flex flex-col gap-6 border-b border-navy/10 pb-8 md:flex-row md:items-end md:justify-between"
+    >
       <div className="max-w-2xl">
         <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">{kicker}</p>
         <h3 className="font-display mt-3 text-4xl text-navy md:text-5xl">{title}</h3>
         {lead ? <p className="mt-4 text-slate-600">{lead}</p> : null}
       </div>
       {children}
-    </div>
+    </Reveal>
   );
 }
 
@@ -41,16 +45,20 @@ function CongressProgram() {
         lead={congressCopy.program.lead}
       />
 
-      <a
-        href={congress.assets.programPdf}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase transition hover:bg-navy/90"
-      >
-        {congressCopy.program.pdfCta}
-        <span aria-hidden="true">↗</span>
-      </a>
-      <p className="mt-4 max-w-xl text-sm text-slate-500">{congressCopy.program.pdfLead}</p>
+      <Reveal delay={80} offset={14}>
+        <a
+          href={congress.assets.programPdf}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase transition hover:bg-navy/90"
+        >
+          {congressCopy.program.pdfCta}
+          <span aria-hidden="true">↗</span>
+        </a>
+        <p className="mt-4 max-w-xl text-sm text-slate-500">
+          {congressCopy.program.pdfLead}
+        </p>
+      </Reveal>
     </section>
   );
 }
@@ -141,12 +149,14 @@ function CongressSpeakers() {
           <ul className="grid gap-3 sm:gap-3.5 lg:grid-cols-2 xl:grid-cols-3">
             {featured.map((speaker, index) => (
               <li key={speaker.id}>
+                <Reveal delay={Math.min(index, 6) * 42} offset={12}>
                 <DoctorCard
                   name={speaker.name}
                   subtitle={speaker.country}
                   photoSrc={speakerPhotoUrl(speaker.image)}
                   accentIndex={index}
                 />
+                </Reveal>
               </li>
             ))}
             {expanded
@@ -154,7 +164,7 @@ function CongressSpeakers() {
                   <li
                     key={speaker.id}
                     className="speaker-reveal"
-                    style={{ animationDelay: `${Math.min(index, 14) * 40}ms` }}
+                    style={{ animationDelay: `${Math.min(index, 12) * 36}ms` }}
                   >
                     <DoctorCard
                       name={speaker.name}
@@ -210,6 +220,7 @@ function CongressCommittee() {
       <ul className="mt-12 grid gap-4 sm:gap-5 md:grid-cols-3">
         {congress.organizingCommittee.map((member, index) => (
           <li key={member.id}>
+            <Reveal delay={index * 48} offset={12} className="h-full">
             <DoctorCard
               variant="large"
               name={member.name}
@@ -228,6 +239,7 @@ function CongressCommittee() {
               )}
               accentIndex={index}
             />
+            </Reveal>
           </li>
         ))}
       </ul>
@@ -240,8 +252,11 @@ export function CongressSection() {
 
   return (
     <section id="congreso" className="scroll-mt-[4.5rem] bg-paper">
-      <CongressMeetPresentation />
+      <Reveal offset={16}>
+        <CongressMeetPresentation />
+      </Reveal>
 
+      <Reveal delay={60} offset={12}>
       <div className="border-b border-navy/10 bg-white px-6 py-10 sm:py-12">
         <div className="mx-auto max-w-6xl">
           <p className="max-w-2xl text-slate-600">{congressCopy.lead}</p>
@@ -258,6 +273,7 @@ export function CongressSection() {
           </a>
         </div>
       </div>
+      </Reveal>
 
       <div className="mx-auto max-w-6xl space-y-24 px-6 py-20 sm:py-28">
         <CongressProgram />
@@ -265,7 +281,9 @@ export function CongressSection() {
         <CongressSpeakers />
       </div>
 
-      <SponsorLogos />
+      <Reveal offset={16}>
+        <SponsorLogos />
+      </Reveal>
     </section>
   );
 }

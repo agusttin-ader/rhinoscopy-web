@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getLocaleData } from "@/data/locales";
 import { Link } from "@/i18n/navigation";
+import { createLocalizedMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 
@@ -12,10 +13,12 @@ type Props = PageProps<"/[locale]/constancias">;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { meta } = getLocaleData(locale);
-  return {
+  return createLocalizedMetadata({
+    locale,
+    path: "/constancias",
     title: meta.constancias.title,
     description: meta.constancias.description,
-  };
+  });
 }
 
 export default async function ConstanciasPage({ params }: Props) {

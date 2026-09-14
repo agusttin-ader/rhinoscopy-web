@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { GradientCtaButton } from "@/components/gradient-cta-button";
+import { constanciasCopy } from "@/data/constancias-copy";
+import Link from "next/link";
 
 type Match = {
   eventId: string;
@@ -9,7 +12,21 @@ type Match = {
   downloadUrl: string;
 };
 
-export function CertificateSearch() {
+function PanelCard({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_40px_100px_-48px_rgba(0,0,0,0.85)] backdrop-blur-sm"
+    >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400/55 via-white/15 to-fuchsia-500/45"
+        aria-hidden="true"
+      />
+      {children}
+    </div>
+  );
+}
+
+export function CertificateSearch({ compact = false }: { compact?: boolean }) {
   const [matricula, setMatricula] = useState("");
   const [results, setResults] = useState<Match[] | null>(null);
   const [error, setError] = useState("");
@@ -32,87 +49,119 @@ export function CertificateSearch() {
         error?: string;
       };
       if (!response.ok) {
-        setError(data.error ?? "No se pudo completar la búsqueda.");
+        setError(data.error ?? constanciasCopy.searchError);
         return;
       }
       setResults(data.results ?? []);
     } catch {
-      setError("Hubo un problema de conexión. Intentá de nuevo.");
+      setError(constanciasCopy.connectionError);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
-      <form
-        onSubmit={onSubmit}
-        className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_40px_100px_-48px_rgba(0,0,0,0.85)] backdrop-blur-sm md:p-10"
-      >
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400/55 via-white/15 to-fuchsia-500/45"
-          aria-hidden="true"
-        />
-        <label className="block">
-          <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
-            Número de matrícula
-          </span>
-          <input
-            required
-            minLength={3}
-            value={matricula}
-            onChange={(e) => setMatricula(e.target.value)}
-            placeholder="12345"
-            inputMode="numeric"
-            autoComplete="off"
-            className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none placeholder:text-white/25 transition-colors duration-200 focus:border-cyan-400/80"
-          />
-        </label>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-10 w-full rounded-full bg-gradient-to-r from-white to-slate-100 py-3.5 text-[0.72rem] font-bold tracking-[0.2em] text-navy uppercase shadow-[0_16px_40px_-20px_rgba(255,255,255,0.45)] transition-opacity duration-200 hover:opacity-95 disabled:opacity-60"
+    <div className={`w-full ${compact ? "max-w-none" : "max-w-xl"}`}>
+      <PanelCard>
+        <form
+          onSubmit={onSubmit}
+          className={compact ? "p-5 sm:p-6" : "p-6 sm:p-8"}
         >
-          {loading ? "Buscando…" : "Buscar certificado"}
-        </button>
+          <p
+            className="inline-flex rounded-full border border-cyan-400/25 bg-cyan-400/10 px-2.5 py-0.5 text-[0.58rem] font-semibold tracking-[0.18em] text-cyan-200/90 uppercase"
+          >
+            {constanciasCopy.availableEvent}
+          </p>
 
-        {error ? (
-          <p className="mt-6 text-center text-sm text-rose-300">{error}</p>
-        ) : null}
-      </form>
+          <label className={compact ? "mt-4 block" : "mt-6 block"}>
+            <span className="text-[0.65rem] tracking-[0.22em] text-slate-400 uppercase">
+              {constanciasCopy.matriculaLabel}
+            </span>
+            <input
+              required
+              minLength={3}
+              value={matricula}
+              onChange={(e) => setMatricula(e.target.value)}
+              placeholder={constanciasCopy.matriculaPlaceholder}
+              inputMode="numeric"
+              autoComplete="off"
+              className={`mt-2 w-full rounded-lg border border-white/10 bg-white/[0.03] text-white outline-none ring-0 transition-[border-color,box-shadow] duration-200 placeholder:text-white/25 focus:border-cyan-400/50 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.12)] ${
+                compact ? "px-3.5 py-2.5 text-base" : "px-4 py-3.5 text-lg"
+              }`}
+            />
+            <span className="mt-2 block text-xs text-white/40">
+              {constanciasCopy.matriculaHint}
+            </span>
+          </label>
+
+          <GradientCtaButton
+            type="submit"
+            disabled={loading}
+            className={compact ? "mt-5 w-full" : "mt-8 w-full"}
+          >
+            {loading ? constanciasCopy.searching : constanciasCopy.searchCta}
+          </GradientCtaButton>
+
+          {error ? (
+            <p className="mt-6 text-center text-sm text-rose-300" role="alert">
+              {error}
+            </p>
+          ) : null}
+
+          <p className={`text-xs leading-relaxed text-white/35 ${compact ? "mt-4" : "mt-6"}`}>
+            {constanciasCopy.privacyNote}
+          </p>
+        </form>
+      </PanelCard>
 
       {results ? (
-        <div className="mt-12">
+        <div className="mt-8" role="region" aria-live="polite" aria-label="Resultados">
           {results.length === 0 ? (
-            <p className="text-center text-slate-400">
-              No encontramos certificados con ese número de matrícula.
-            </p>
+            <PanelCard>
+              <div className="p-6 text-center sm:p-8">
+                <p className="font-display text-xl text-white">
+                  {constanciasCopy.emptyTitle}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-white/50">
+                  {constanciasCopy.emptyBody}
+                </p>
+                <Link
+                  href="/#contacto"
+                  className="mt-6 inline-flex items-center gap-2 text-[0.68rem] font-semibold tracking-[0.18em] text-cyan-300 uppercase transition-colors hover:text-white"
+                >
+                  <span className="h-px w-6 bg-cyan-400/80" aria-hidden="true" />
+                  {constanciasCopy.contactCta}
+                </Link>
+              </div>
+            </PanelCard>
           ) : (
             <ul className="space-y-4">
               {results.map((item) => (
-                <li
-                  key={`${item.eventId}-${item.fileName}`}
-                  className="relative flex flex-col gap-4 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div>
-                    <p className="text-[0.65rem] tracking-[0.2em] text-cyan-200/80 uppercase">
-                      {item.eventLabel}
-                    </p>
-                    <p className="font-display mt-1 text-2xl text-white">
-                      Constancia de asistencia
-                    </p>
-                    <p className="mt-1 text-sm text-slate-500">
-                      Matrícula {matricula}
-                    </p>
-                  </div>
-                  <a
-                    href={item.downloadUrl}
-                    download
-                    className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-2.5 text-[0.68rem] tracking-[0.16em] text-white uppercase transition hover:border-white hover:bg-white/5"
-                  >
-                    Descargar PDF
-                  </a>
+                <li key={`${item.eventId}-${item.fileName}`}>
+                  <PanelCard>
+                    <div
+                      className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-[0.65rem] tracking-[0.2em] text-cyan-200/80 uppercase">
+                          {item.eventLabel}
+                        </p>
+                        <p className="font-display mt-1 text-xl text-white sm:text-2xl">
+                          {constanciasCopy.resultTitle}
+                        </p>
+                        <p className="mt-1 text-sm text-white/45">
+                          {constanciasCopy.matriculaPrefix} {matricula}
+                        </p>
+                      </div>
+                      <a
+                        href={item.downloadUrl}
+                        download
+                        className="inline-flex shrink-0 items-center justify-center rounded-full bg-white px-6 py-3 text-[0.68rem] font-bold tracking-[0.16em] text-navy uppercase transition hover:bg-cyan-50"
+                      >
+                        {constanciasCopy.downloadCta}
+                      </a>
+                    </div>
+                  </PanelCard>
                 </li>
               ))}
             </ul>

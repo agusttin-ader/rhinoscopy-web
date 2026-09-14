@@ -1,5 +1,8 @@
+"use client";
+
 import { Logo } from "@/components/logo";
 import { MobileNav } from "@/components/mobile-nav";
+import { useEffect, useRef, useState } from "react";
 
 const homeLinks = [
   { href: "/#congreso", label: "Congreso" },
@@ -8,14 +11,55 @@ const homeLinks = [
   { href: "/#contacto", label: "Contacto" },
 ];
 
+const SCROLL_THRESHOLD = 72;
+
 export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" }) {
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    const update = () => {
+      const y = window.scrollY;
+      const delta = y - lastScrollY.current;
+
+      if (y < SCROLL_THRESHOLD) {
+        setHidden(false);
+      } else if (delta > 8) {
+        setHidden(true);
+      } else if (delta < -8) {
+        setHidden(false);
+      }
+
+      lastScrollY.current = y;
+      ticking.current = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking.current) {
+        ticking.current = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    lastScrollY.current = window.scrollY;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const positionClass =
+    variant === "overlay"
+      ? "absolute inset-x-0 top-0"
+      : "sticky top-0";
+
   return (
     <header
-      className={
-        variant === "overlay"
-          ? "absolute inset-x-0 top-0 z-40 bg-white/90 shadow-[0_8px_32px_-24px_rgba(38,36,84,0.28)] backdrop-blur-xl"
-          : "sticky top-0 z-40 bg-white/90 shadow-[0_8px_32px_-24px_rgba(38,36,84,0.28)] backdrop-blur-xl"
-      }
+      className={`${positionClass} z-40 bg-white/90 shadow-[0_8px_32px_-24px_rgba(38,36,84,0.28)] backdrop-blur-xl transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
     >
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between px-5 sm:h-[4.5rem] sm:px-6">
         <Logo wordmark className="transition-opacity duration-200 hover:opacity-80" />

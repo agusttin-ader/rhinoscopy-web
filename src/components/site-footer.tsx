@@ -23,16 +23,22 @@ export function SiteFooter() {
           <div className="lg:col-span-5">
             <Link
               href="/"
-              className="inline-block transition-opacity duration-200 hover:opacity-90"
+              className="group inline-flex items-center gap-2.5 transition-opacity duration-200 hover:opacity-90 sm:gap-3"
               aria-label="Rhinoscopy, inicio"
             >
               <Image
-                src="/images/logo-fondooscuro.png"
-                alt="Rhinoscopy"
+                src="/images/rhinoscopy-logo-hero-sombra.png"
+                alt=""
                 width={200}
                 height={200}
-                className="h-14 w-auto object-contain sm:h-16"
+                className="h-16 w-16 object-contain drop-shadow-[0_0_2px_rgba(255,255,255,0.35),0_0_28px_rgba(95,198,238,0.2),0_8px_24px_rgba(0,0,0,0.35)] sm:h-[4.5rem] sm:w-[4.5rem]"
+                aria-hidden
               />
+              <span
+                className="font-brand text-[0.62rem] leading-none text-white transition-colors group-hover:text-white/85 sm:text-[0.72rem]"
+              >
+                Rhinoscopy
+              </span>
             </Link>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/50">
               {footerCopy.blurb}

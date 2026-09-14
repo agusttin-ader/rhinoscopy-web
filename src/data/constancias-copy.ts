@@ -20,7 +20,8 @@ export const constanciasCopy = {
   emptyBody:
     "No hay certificados con ese criterio. Probá con menos letras o otro apellido.",
   resultTitle: "Certificado de asistencia",
-  downloadCta: "PDF",
+  viewCta: "Ver certificado",
+  downloadCta: "Descargar PDF",
   resultsCount: (n: number) =>
     n === 1 ? "1 certificado" : `${n} certificados`,
   resultsTruncated: (shown: number, total: number) =>

@@ -1,6 +1,6 @@
 "use client";
 
-import { CertificatePdfIcon } from "@/components/certificate-pdf-icon";
+import { CertificateResultActions } from "@/components/certificate-result-actions";
 import { CertificateVisual } from "@/components/certificate-visual";
 import { GradientCtaButton } from "@/components/gradient-cta-button";
 import { SectionHeading } from "@/components/section-heading";
@@ -197,15 +197,10 @@ export function ConstanciasExperience() {
                           {item.eventLabel}
                         </p>
                       </div>
-                      <a
-                        href={item.downloadUrl}
-                        download
-                        title={constanciasCopy.downloadCta}
-                        aria-label={`${constanciasCopy.downloadCta} — ${item.displayName}`}
-                        className="shrink-0 text-cyan-400/75 transition-colors hover:text-cyan-300 focus-visible:text-white focus-visible:outline-none"
-                      >
-                        <CertificatePdfIcon className="h-6 w-6 sm:h-7 sm:w-7" />
-                      </a>
+                      <CertificateResultActions
+                        displayName={item.displayName}
+                        downloadUrl={item.downloadUrl}
+                      />
                     </div>
                   </li>
                 ))}
@@ -215,11 +210,11 @@ export function ConstanciasExperience() {
         </section>
       ) : null}
 
-      <p className="mt-12 max-w-md text-[0.75rem] font-light leading-relaxed text-white/38">
+      <p className="mt-12 max-w-md text-[0.75rem] font-light leading-relaxed text-white/75">
         {constanciasCopy.footnote}{" "}
         <Link
           href="/#contacto"
-          className="font-normal text-cyan-300/80 transition-colors hover:text-cyan-200"
+          className="font-normal text-cyan-300 transition-colors hover:text-cyan-200"
         >
           {constanciasCopy.contactCta}
         </Link>

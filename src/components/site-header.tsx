@@ -1,22 +1,29 @@
 "use client";
 
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { MobileNav } from "@/components/mobile-nav";
-import { useEffect, useRef, useState } from "react";
-
-const homeLinks = [
-  { href: "/#congreso", label: "Congreso" },
-  { href: "/#webinars", label: "Webinars" },
-  { href: "/constancias", label: "Certificados" },
-  { href: "/#contacto", label: "Contacto" },
-];
+import { useLocaleData } from "@/hooks/use-locale-data";
+import { Link } from "@/i18n/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const SCROLL_THRESHOLD = 72;
 
 export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" }) {
+  const { nav, mobileNav } = useLocaleData();
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+
+  const homeLinks = useMemo(
+    () => [
+      { href: "/#congreso", label: nav.congress },
+      { href: "/#webinars", label: nav.webinars },
+      { href: "/constancias", label: nav.certificates },
+      { href: "/#contacto", label: nav.contact },
+    ],
+    [nav],
+  );
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -61,16 +68,22 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between px-5 sm:h-[4.5rem] sm:px-6">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-3 px-5 sm:h-[4.5rem] sm:px-6">
         <Logo wordmark className="transition-opacity duration-200 hover:opacity-80" />
 
-        <div className="md:hidden">
-          <MobileNav links={homeLinks} />
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <MobileNav
+            links={homeLinks}
+            menuLabel={mobileNav.menu}
+            openLabel={mobileNav.open}
+            closeLabel={mobileNav.close}
+          />
         </div>
 
         <nav className="hidden items-center gap-1 md:flex">
           {homeLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="group relative px-3 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-navy/65 uppercase transition-colors hover:text-navy"
@@ -80,14 +93,15 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
                 className="absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-500/70 transition-transform duration-300 group-hover:scale-x-100"
                 aria-hidden="true"
               />
-            </a>
+            </Link>
           ))}
-          <a
+          <LanguageSwitcher className="ml-1" />
+          <Link
             href="/#contacto"
-            className="ml-3 rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-bold tracking-[0.16em] text-white uppercase shadow-[0_10px_24px_-12px_rgba(38,36,84,0.55)] transition hover:bg-navy/90"
+            className="ml-2 rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-bold tracking-[0.16em] text-white uppercase shadow-[0_10px_24px_-12px_rgba(38,36,84,0.55)] transition hover:bg-navy/90"
           >
-            Contacto
-          </a>
+            {nav.contactCta}
+          </Link>
         </nav>
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { contactCopy } from "@/data/contact-copy";
+import { useLocaleData } from "@/hooks/use-locale-data";
 import { site } from "@/data/site";
 import { useState } from "react";
 
@@ -16,6 +16,7 @@ function buildMessage(nombre: string, email: string, mensaje: string) {
 }
 
 export function ContactForm() {
+  const { contactCopy } = useLocaleData();
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [mensaje, setMensaje] = useState("");

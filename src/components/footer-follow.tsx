@@ -4,14 +4,15 @@ import {
   InstagramCameraIcon,
   WhatsAppIcon,
 } from "@/components/icons/social-icons";
-import { footerCopy } from "@/data/footer-copy";
+import { useLocaleData } from "@/hooks/use-locale-data";
 import { site } from "@/data/site";
 
-const whatsappPrefill = `${site.whatsapp.href}?text=${encodeURIComponent(
-  "Hola, quisiera consultar sobre Rhinoscopy.",
-)}`;
-
 export function FooterFollow() {
+  const { footerCopy, whatsapp } = useLocaleData();
+  const whatsappPrefill = `${site.whatsapp.href}?text=${encodeURIComponent(
+    whatsapp.defaultMessage,
+  )}`;
+
   return (
     <div className="mt-6">
       <p className="text-[0.65rem] font-semibold tracking-[0.28em] text-white/55 uppercase">

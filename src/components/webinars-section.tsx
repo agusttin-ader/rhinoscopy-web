@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { localizeWebinars } from "@/data/webinars-i18n";
+import { useLocaleData } from "@/hooks/use-locale-data";
+import { useLocale } from "next-intl";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SectionHeading } from "@/components/section-heading";
-import {
-  webinars,
-  webinarsCopy,
-  webinarsVisibleCount,
-} from "@/data/webinars";
+import { webinars, webinarsVisibleCount, type Webinar } from "@/data/webinars";
 
 /** Mismo ancho de miniatura que las filas del listado (desktop). */
 const WEBINAR_THUMB_CLASS =
@@ -33,11 +32,13 @@ function WebinarVisual({
   topic,
   hasVideo,
   lazy,
+  comingSoonLabel,
 }: {
   flyerSrc: string;
   topic: string;
   hasVideo: boolean;
   lazy?: boolean;
+  comingSoonLabel: string;
 }) {
   return (
     <div
@@ -63,7 +64,7 @@ function WebinarVisual({
         <span
           className="absolute bottom-2 right-2 rounded px-1.5 py-0.5 text-[0.65rem] font-semibold tracking-wide text-white/90 bg-black/75"
         >
-          Próximamente
+          {comingSoonLabel}
         </span>
       ) : null}
       <p className="sr-only">{topic}</p>
@@ -77,11 +78,12 @@ function WebinarRow({
   lazyImage,
   placement = "list",
 }: {
-  webinar: (typeof webinars)[number];
+  webinar: Webinar;
   index: number;
   lazyImage?: boolean;
   placement?: "list" | "header";
 }) {
+  const { webinarsCopy } = useLocaleData();
   const hasVideo = Boolean(webinar.youtubeUrl);
   const isHeader = placement === "header";
   const flip = !isHeader && index % 2 === 1;
@@ -113,6 +115,7 @@ function WebinarRow({
             topic={webinar.topic}
             hasVideo={hasVideo}
             lazy={lazyImage}
+            comingSoonLabel={webinarsCopy.comingSoon}
           />
         </a>
       </div>
@@ -165,8 +168,10 @@ function WebinarRow({
 function WebinarsDesktopHeader({
   latestWebinar,
 }: {
-  latestWebinar: (typeof webinars)[number] | undefined;
+  latestWebinar: Webinar | undefined;
 }) {
+  const { webinarsCopy } = useLocaleData();
+
   return (
     <div
       className="hidden md:grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-start md:gap-x-8 lg:gap-x-12"
@@ -208,13 +213,20 @@ function WebinarsDesktopHeader({
 }
 
 export function WebinarsSection() {
+  const locale = useLocale();
+  const { webinarsCopy } = useLocaleData();
   const [expanded, setExpanded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const scrollPinY = useRef<number | null>(null);
   const scrollToSectionTopRef = useRef(false);
-  const latestWebinar = webinars[0];
-  const featured = webinars.slice(0, webinarsVisibleCount);
-  const rest = webinars.slice(webinarsVisibleCount);
+
+  const localizedWebinars = useMemo(
+    () => localizeWebinars(webinars, locale),
+    [locale],
+  );
+  const latestWebinar = localizedWebinars[0];
+  const featured = localizedWebinars.slice(0, webinarsVisibleCount);
+  const rest = localizedWebinars.slice(webinarsVisibleCount);
 
   useLayoutEffect(() => {
     if (scrollToSectionTopRef.current) {

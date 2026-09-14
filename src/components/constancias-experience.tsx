@@ -4,8 +4,8 @@ import { CertificateResultActions } from "@/components/certificate-result-action
 import { CertificateVisual } from "@/components/certificate-visual";
 import { GradientCtaButton } from "@/components/gradient-cta-button";
 import { SectionHeading } from "@/components/section-heading";
-import { constanciasCopy } from "@/data/constancias-copy";
-import Link from "next/link";
+import { useLocaleData } from "@/hooks/use-locale-data";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 
 type Match = {
@@ -23,6 +23,7 @@ type SearchState = {
 };
 
 export function ConstanciasExperience() {
+  const { constanciasCopy, api } = useLocaleData();
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState<SearchState | null>(null);
   const [error, setError] = useState("");
@@ -47,7 +48,11 @@ export function ConstanciasExperience() {
         error?: string;
       };
       if (!response.ok) {
-        setError(data.error ?? constanciasCopy.searchError);
+        setError(
+          response.status === 400
+            ? api.constanciasMinLength
+            : (data.error ?? constanciasCopy.searchError),
+        );
         return;
       }
       setSearch({

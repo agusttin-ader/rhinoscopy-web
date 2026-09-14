@@ -1,7 +1,11 @@
-import { congressCopy } from "@/data/congress-copy";
+"use client";
+
 import { sponsorLogoList } from "@/data/congress";
+import { useLocaleData } from "@/hooks/use-locale-data";
 
 export function SponsorLogos() {
+  const { congressCopy } = useLocaleData();
+
   return (
     <div className="border-t border-navy/8 bg-white px-6 py-12 sm:py-14">
       <div className="mx-auto max-w-6xl">

@@ -1,8 +1,10 @@
+"use client";
+
 import {
   CertificateDownloadIcon,
   CertificateViewIcon,
 } from "@/components/certificate-pdf-icon";
-import { constanciasCopy } from "@/data/constancias-copy";
+import { useLocaleData } from "@/hooks/use-locale-data";
 
 type CertificateResultActionsProps = {
   displayName: string;
@@ -18,6 +20,8 @@ export function CertificateResultActions({
   displayName,
   downloadUrl,
 }: CertificateResultActionsProps) {
+  const { constanciasCopy } = useLocaleData();
+
   return (
     <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
       <a

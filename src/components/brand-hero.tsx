@@ -1,9 +1,12 @@
+import { getLocaleData } from "@/data/locales";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
-import { brandHeroCopy } from "@/data/brand-hero-copy";
 
 const BRAND_LOGO = "/images/rhinoscopy-logo-hero-sombra.png";
 
-export function BrandHero() {
+export async function BrandHero() {
+  const locale = await getLocale();
+  const { brandHeroCopy } = getLocaleData(locale);
   return (
     <section
       id="inicio"

@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -30,7 +31,19 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-export function MobileNav({ links }: { links: NavLink[] }) {
+type MobileNavProps = {
+  links: NavLink[];
+  menuLabel: string;
+  openLabel: string;
+  closeLabel: string;
+};
+
+export function MobileNav({
+  links,
+  menuLabel,
+  openLabel,
+  closeLabel,
+}: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -69,14 +82,14 @@ export function MobileNav({ links }: { links: NavLink[] }) {
                 open ? "translate-x-0 opacity-100" : "translate-x-3 opacity-0"
               }`}
             >
-              Menú
+              {menuLabel}
             </p>
             <button
               type="button"
               className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-all duration-300 hover:bg-white/10 ${
                 open ? "scale-100 opacity-100" : "scale-90 opacity-0"
               }`}
-              aria-label="Cerrar menú"
+              aria-label={closeLabel}
               onClick={() => setOpen(false)}
             >
               <MenuIcon open />
@@ -92,13 +105,13 @@ export function MobileNav({ links }: { links: NavLink[] }) {
                 }`}
                 style={{ transitionDelay: open ? `${120 + index * 55}ms` : "0ms" }}
               >
-                <a
+                <Link
                   href={link.href}
                   className="block border-b border-white/10 py-4 text-2xl font-bold tracking-[0.08em] text-white uppercase transition-colors hover:text-cyan-200"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -118,7 +131,7 @@ export function MobileNav({ links }: { links: NavLink[] }) {
         }`}
         aria-expanded={open}
         aria-controls="mobile-nav-drawer"
-        aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        aria-label={open ? closeLabel : openLabel}
         onClick={() => setOpen((value) => !value)}
       >
         <MenuIcon open={open} />

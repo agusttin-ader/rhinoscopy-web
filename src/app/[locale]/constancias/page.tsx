@@ -2,17 +2,27 @@ import { ConstanciasExperience } from "@/components/constancias-experience";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { constanciasCopy } from "@/data/constancias-copy";
+import { getLocaleData } from "@/data/locales";
+import { Link } from "@/i18n/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { setRequestLocale } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Certificados | Rhinoscopy",
-  description:
-    "Buscá y descargá tu certificado de asistencia del Rhinoscopy Meet 2026 por nombre o apellido.",
-};
+type Props = PageProps<"/[locale]/constancias">;
 
-export default function ConstanciasPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const { meta } = getLocaleData(locale);
+  return {
+    title: meta.constancias.title,
+    description: meta.constancias.description,
+  };
+}
+
+export default async function ConstanciasPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const { constanciasCopy } = getLocaleData(locale);
+
   return (
     <>
       <SiteHeader variant="bar" />

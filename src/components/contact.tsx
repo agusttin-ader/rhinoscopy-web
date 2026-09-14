@@ -1,9 +1,12 @@
 import { ContactForm } from "@/components/contact-form";
 import { SectionHeading } from "@/components/section-heading";
-import { aboutCopy } from "@/data/about-copy";
-import { contactCopy } from "@/data/contact-copy";
+import { getLocaleData } from "@/data/locales";
+import { getLocale } from "next-intl/server";
 
-export function Contact() {
+export async function Contact() {
+  const locale = await getLocale();
+  const { aboutCopy, contactCopy } = getLocaleData(locale);
+
   return (
     <section id="contacto" className="scroll-mt-[4.5rem] bg-paper px-5 py-20 sm:px-6 sm:py-28">
       <div
@@ -14,65 +17,53 @@ export function Contact() {
             as="h2"
             align="left"
             tone="light"
-            size="compact"
-            titleGap="relaxed"
             kicker={aboutCopy.kicker}
             titleScript={aboutCopy.titleScript}
             titleDisplay={aboutCopy.titleDisplay}
             lead={aboutCopy.lead}
+            size="narrow"
           />
-
-          <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+          <div className="mt-8 space-y-4 text-[0.95rem] font-light leading-relaxed text-slate-600">
             {aboutCopy.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
             ))}
           </div>
-
-          <ul className="mt-8 space-y-3 border-t border-navy/10 pt-8">
+          <ul className="mt-8 space-y-3 text-sm font-medium text-navy/80">
             {aboutCopy.highlights.map((item) => (
-              <li
-                key={item}
-                className="flex gap-3 text-sm text-slate-600 sm:text-[0.95rem]"
-              >
+              <li key={item} className="flex gap-3">
                 <span
                   className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500"
                   aria-hidden="true"
                 />
-                <span>{item}</span>
+                {item}
               </li>
             ))}
           </ul>
-
           <a
             href={aboutCopy.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 text-[0.68rem] font-semibold tracking-[0.18em] text-cyan-700 uppercase transition-colors hover:text-navy"
+            className="mt-10 inline-flex flex-col gap-1 text-sm font-semibold text-cyan-700 transition-colors hover:text-navy"
           >
-            <span className="h-px w-6 bg-cyan-500/70" aria-hidden="true" />
             {aboutCopy.instagramCta}
-            <span className="font-normal tracking-normal text-slate-500 normal-case">
+            <span className="text-xs font-normal tracking-wide text-slate-500">
               {aboutCopy.instagramHandle}
             </span>
           </a>
         </div>
 
-        <div className="min-w-0 border-t border-navy/10 pt-10 md:border-t-0 md:border-l md:pt-0 md:pl-12 lg:pl-14">
+        <div className="min-w-0">
           <SectionHeading
-            as="h3"
+            as="h2"
             align="left"
             tone="light"
-            size="narrow"
-            titleGap="relaxed"
             kicker={contactCopy.kicker}
             titleScript={contactCopy.titleScript}
             titleDisplay={contactCopy.titleDisplay}
             lead={contactCopy.lead}
+            size="narrow"
           />
-
-          <div className="mt-8 md:mt-6">
-            <ContactForm />
-          </div>
+          <ContactForm />
         </div>
       </div>
     </section>

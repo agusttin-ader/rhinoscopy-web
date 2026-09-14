@@ -1,10 +1,14 @@
+"use client";
+
 import { WhatsAppIcon } from "@/components/icons/social-icons";
+import { useLocaleData } from "@/hooks/use-locale-data";
 import { site } from "@/data/site";
 
-const DEFAULT_MESSAGE = "Hola, quisiera consultar sobre Rhinoscopy.";
-
 export function WhatsappFloat() {
-  const href = `${site.whatsapp.href}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+  const { whatsapp } = useLocaleData();
+  const href = `${site.whatsapp.href}?text=${encodeURIComponent(
+    whatsapp.defaultMessage,
+  )}`;
 
   return (
     <a

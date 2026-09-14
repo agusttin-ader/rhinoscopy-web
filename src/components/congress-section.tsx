@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
 import { DoctorCard } from "@/components/doctor-card";
 import { SponsorLogos } from "@/components/sponsor-logos";
-import { congressCopy } from "@/data/congress-copy";
+import { useLocaleData } from "@/hooks/use-locale-data";
 import { congress, normalizePersonName, speakerPhotoUrl } from "@/data/congress";
 
 function SectionIntro({
@@ -31,6 +31,8 @@ function SectionIntro({
 }
 
 function CongressProgram() {
+  const { congressCopy } = useLocaleData();
+
   return (
     <section id="programa" className="scroll-mt-24">
       <SectionIntro
@@ -54,6 +56,7 @@ function CongressProgram() {
 }
 
 function CongressSpeakers() {
+  const { congressCopy } = useLocaleData();
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -193,6 +196,9 @@ function CongressSpeakers() {
 }
 
 function CongressCommittee() {
+  const { congressCopy, committeeRoles, committeeRolesByMemberId } =
+    useLocaleData();
+
   return (
     <section id="comite" className="scroll-mt-24">
       <SectionIntro
@@ -201,13 +207,25 @@ function CongressCommittee() {
         lead={congressCopy.committee.lead}
       />
 
-      <ul className="mt-12 grid gap-3 sm:gap-3.5 lg:grid-cols-2 xl:grid-cols-3">
+      <ul className="mt-12 grid gap-4 sm:gap-5 md:grid-cols-3">
         {congress.organizingCommittee.map((member, index) => (
           <li key={member.id}>
             <DoctorCard
+              variant="large"
               name={member.name}
-              subtitle={member.role}
-              photoSrc={speakerPhotoUrl(member.image, member.assetFolder ?? "comite")}
+              subtitle={
+                committeeRolesByMemberId[
+                  member.id as keyof typeof committeeRolesByMemberId
+                ] ??
+                committeeRoles[
+                  member.role as keyof typeof committeeRoles
+                ] ??
+                member.role
+              }
+              photoSrc={speakerPhotoUrl(
+                member.image,
+                member.assetFolder ?? "comite",
+              )}
               accentIndex={index}
             />
           </li>
@@ -218,6 +236,8 @@ function CongressCommittee() {
 }
 
 export function CongressSection() {
+  const { congressCopy } = useLocaleData();
+
   return (
     <section id="congreso" className="scroll-mt-[4.5rem] bg-paper">
       <CongressMeetPresentation />

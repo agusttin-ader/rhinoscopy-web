@@ -1,15 +1,19 @@
 import { FooterFollow } from "@/components/footer-follow";
+import { getLocaleData } from "@/data/locales";
+import { site } from "@/data/site";
+import { Link } from "@/i18n/navigation";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
-import Link from "next/link";
-import { footerCopy, footerNav } from "@/data/footer-copy";
-import { meet2026, site } from "@/data/site";
 
-const whatsappPrefill = `${site.whatsapp.href}?text=${encodeURIComponent(
-  "Hola, quisiera consultar sobre Rhinoscopy.",
-)}`;
-
-export function SiteFooter() {
+export async function SiteFooter() {
+  const locale = await getLocale();
+  const { footerCopy, footerNav, meet2026, siteTagline, whatsapp, footerPage } =
+    getLocaleData(locale);
   const year = new Date().getFullYear();
+
+  const whatsappPrefill = `${site.whatsapp.href}?text=${encodeURIComponent(
+    whatsapp.defaultMessage,
+  )}`;
 
   return (
     <footer className="relative bg-navy text-slate-400">
@@ -44,7 +48,7 @@ export function SiteFooter() {
               {footerCopy.blurb}
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/40">
-              {site.tagline}
+              {siteTagline}
             </p>
           </div>
 
@@ -55,12 +59,12 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-2.5">
               {footerNav.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-white/55 transition-colors duration-200 hover:text-cyan-300"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -75,12 +79,12 @@ export function SiteFooter() {
               <li>{meet2026.venue}</li>
               <li>{meet2026.city}</li>
               <li>
-                <a
+                <Link
                   href="/#congreso"
                   className="text-cyan-300/90 transition-colors hover:text-cyan-200"
                 >
-                  Ver congreso
-                </a>
+                  {footerPage.viewCongress}
+                </Link>
               </li>
             </ul>
           </div>
@@ -128,7 +132,7 @@ export function SiteFooter() {
         >
           <div className="max-w-xl space-y-2">
             <p className="text-white/70">
-              © {year} {site.name}. Todos los derechos reservados.
+              © {year} {site.name}. {footerPage.rightsReserved}
             </p>
             <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
           </div>
@@ -146,7 +150,7 @@ export function SiteFooter() {
               className="h-7 w-auto object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
             />
             <span>
-              Desarrollado por{" "}
+              {footerPage.developedBy}{" "}
               <span className="font-medium text-white/85">Agustin Ader</span>
             </span>
           </a>

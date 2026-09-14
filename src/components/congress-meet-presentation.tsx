@@ -1,10 +1,13 @@
+"use client";
+
+import { useLocaleData } from "@/hooks/use-locale-data";
 import Image from "next/image";
-import { copy } from "@/data/copy";
 
 const HERO_ART_IMAGE = "/images/heromeet-art.png";
 
 /** Presentación visual de Rhinoscopy Meet 2026 dentro de #congreso (no es el hero de marca). */
 export function CongressMeetPresentation() {
+  const { copy, meetPresentation } = useLocaleData();
   return (
     <div className="relative isolate overflow-hidden bg-navy text-white">
       <div
@@ -19,7 +22,7 @@ export function CongressMeetPresentation() {
       <div className="relative mx-auto flex max-w-6xl flex-col px-5 py-12 sm:px-6 sm:py-14 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-center md:gap-8 md:py-16 lg:gap-12">
         <div className="order-2 flex flex-col md:order-1">
           <p className="text-[0.72rem] font-semibold tracking-[0.34em] text-brand-sky/80 uppercase">
-            Congreso · {copy.heroAccent}
+            {meetPresentation.congressPrefix} · {copy.heroAccent}
           </p>
 
           <h2 className="mt-4 leading-[0.9] md:mt-5">
@@ -41,18 +44,18 @@ export function CongressMeetPresentation() {
           <div className="mt-6 grid grid-cols-2 gap-4 border-y border-white/15 py-5 sm:gap-8 md:mt-8">
             <div>
               <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
-                Cuándo
+                {meetPresentation.whenLabel}
               </p>
               <p className="mt-2 text-xl font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
-                17—19 Sept
+                {meetPresentation.whenValue}
               </p>
             </div>
             <div>
               <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
-                Dónde
+                {meetPresentation.whereLabel}
               </p>
               <p className="mt-2 text-xl font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
-                Buenos Aires
+                {meetPresentation.whereValue}
               </p>
             </div>
           </div>
@@ -75,7 +78,7 @@ export function CongressMeetPresentation() {
               href="#programa"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-white uppercase transition hover:border-white/40 hover:bg-white/5"
             >
-              Ver actividades
+              {meetPresentation.activitiesCta}
             </a>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
 const LOGO_SRC = "/images/logo-RHINOSCOPY-1.png";
@@ -64,7 +65,7 @@ export function Logo({
       );
 
   return (
-    <a
+    <Link
       href="/"
       className={`group inline-flex items-center gap-2.5 sm:gap-3 ${className}`}
       aria-label="Rhinoscopy, inicio"
@@ -75,6 +76,6 @@ export function Logo({
           Rhinoscopy
         </span>
       )}
-    </a>
+    </Link>
   );
 }

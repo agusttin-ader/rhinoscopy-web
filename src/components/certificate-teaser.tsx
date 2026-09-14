@@ -1,12 +1,14 @@
-import { copy } from "@/data/copy";
 import { CertificateVisual } from "@/components/certificate-visual";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { GradientCtaLink } from "@/components/gradient-cta-link";
 import { SectionHeading } from "@/components/section-heading";
+import { getLocaleData } from "@/data/locales";
+import { getLocale } from "next-intl/server";
 
-const CONSTANCIAS_HREF = "/constancias";
+export async function CertificateTeaser() {
+  const locale = await getLocale();
+  const { copy } = getLocaleData(locale);
 
-export function CertificateTeaser() {
   return (
     <section
       id="constancias"
@@ -38,7 +40,7 @@ export function CertificateTeaser() {
           <div className="lg:col-start-1 lg:row-start-2">
             <div className="w-full sm:w-fit">
               <GradientCtaLink
-                href={CONSTANCIAS_HREF}
+                href="/constancias"
                 className="flex w-full justify-center sm:inline-flex sm:w-auto"
               >
                 {copy.certCta}

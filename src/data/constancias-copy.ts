@@ -1,9 +1,9 @@
 export const constanciasCopy = {
-  kicker: "Constancias",
+  kicker: "Certificados",
   titleScript: "Descargá",
   titleDisplay: "tu certificado",
   lead:
-    "Constancias del Rhinoscopy Meet 2026. Buscá por nombre o apellido (no hace falta el nombre completo) y descargá el PDF.",
+    "Certificados del Rhinoscopy Meet 2026. Buscá por nombre o apellido y descargá el PDF.",
   backToHome: "← Inicio",
   availableEvent: "Rhinoscopy Meet 2026",
   nameLabel: "Nombre o apellido",
@@ -12,15 +12,19 @@ export const constanciasCopy = {
   searchCta: "Buscar certificado",
   searching: "Buscando…",
   privacyNote:
-    "Usamos tu búsqueda solo para localizar constancias en nuestros archivos.",
+    "Usamos tu búsqueda solo para localizar certificados en nuestros archivos.",
   footnote:
     "Si no aparece ningún resultado, probá otro apellido o escribinos por contacto.",
   contactCta: "Ir a contacto",
-  emptyTitle: "No encontramos constancias",
+  emptyTitle: "No encontramos certificados",
   emptyBody:
     "No hay certificados con ese criterio. Probá con menos letras o otro apellido.",
-  resultTitle: "Constancia de asistencia",
-  downloadCta: "Descargar PDF",
+  resultTitle: "Certificado de asistencia",
+  downloadCta: "PDF",
+  resultsCount: (n: number) =>
+    n === 1 ? "1 certificado" : `${n} certificados`,
+  resultsTruncated: (shown: number, total: number) =>
+    `Mostramos ${shown} de ${total}. Acotá la búsqueda (nombre y apellido).`,
   connectionError: "Hubo un problema de conexión. Intentá de nuevo.",
   searchError: "No se pudo completar la búsqueda.",
 } as const;

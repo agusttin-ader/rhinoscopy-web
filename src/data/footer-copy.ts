@@ -14,6 +14,6 @@ export const footerNav = [
   { href: "/#programa", label: "Programa" },
   { href: "/#speakers", label: "Disertantes" },
   { href: "/#webinars", label: "Webinars" },
-  { href: "/constancias", label: "Constancias" },
+  { href: "/constancias", label: "Certificados" },
   { href: "/#contacto", label: "Contacto" },
 ] as const;

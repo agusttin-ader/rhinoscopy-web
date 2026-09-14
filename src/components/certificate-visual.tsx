@@ -5,6 +5,9 @@ const BRAND_MARK = "/images/rhinoscopy-logo-hero-sombra.png";
 
 type VisualSize = "teaser" | "page";
 
+const LOGO_SHADOW =
+  "drop-shadow-[0_0_2px_rgba(255,255,255,0.35),0_0_1px_rgba(95,198,238,0.5),0_0_40px_rgba(95,198,238,0.22),0_16px_48px_rgba(0,0,0,0.42)]";
+
 function Meet2026Mark() {
   return (
     <div className="text-left leading-[0.92]">
@@ -14,22 +17,32 @@ function Meet2026Mark() {
       <p className="mt-1.5 text-[clamp(2.1rem,9vw,3.75rem)] font-extrabold tracking-[0.02em] text-white uppercase sm:mt-2.5">
         Meet
       </p>
-      <p className="font-script -mt-1 text-[clamp(2.5rem,10vw,4.5rem)] leading-none text-cyan-400 sm:-mt-1.5">
+      <p
+        className="-mt-1 text-[clamp(2.5rem,10vw,4.5rem)] font-bold leading-none tracking-[0.04em] text-cyan-400 sm:-mt-1.5"
+      >
         2026
       </p>
     </div>
   );
 }
 
-const LOGO_SHADOW =
-  "drop-shadow-[0_0_2px_rgba(255,255,255,0.35),0_0_1px_rgba(95,198,238,0.5),0_0_40px_rgba(95,198,238,0.22),0_16px_48px_rgba(0,0,0,0.42)]";
-
 type CertificateVisualProps = {
   size?: VisualSize;
+  /** Solo logo sombra (certificados); por defecto arte + tipografía Meet. */
+  layout?: "meet-text" | "meet-logo";
 };
 
-export function CertificateVisual({ size = "teaser" }: CertificateVisualProps) {
-  if (size === "page") {
+const logoOnlyClassName = (emphasis: "page" | "teaser") =>
+  emphasis === "page"
+    ? `h-auto w-[min(100%,16rem)] object-contain sm:w-[min(100%,18rem)] md:w-[min(100%,20rem)] lg:w-[min(100%,26rem)] xl:w-[min(100%,30rem)] ${LOGO_SHADOW}`
+    : `h-auto w-[min(100%,20rem)] object-contain sm:w-[min(100%,22rem)] md:w-[min(100%,24rem)] lg:w-[min(100%,28rem)] xl:w-[min(100%,32rem)] ${LOGO_SHADOW}`;
+
+export function CertificateVisual({
+  size = "teaser",
+  layout = "meet-text",
+}: CertificateVisualProps) {
+  if (size === "page" || layout === "meet-logo") {
+    const emphasis = size === "page" ? "page" : "teaser";
     return (
       <div
         className="pointer-events-none flex w-full select-none justify-center lg:justify-end"
@@ -41,7 +54,7 @@ export function CertificateVisual({ size = "teaser" }: CertificateVisualProps) {
           width={520}
           height={520}
           priority
-          className={`h-auto w-[min(100%,16rem)] object-contain sm:w-[min(100%,18rem)] md:w-[min(100%,20rem)] lg:w-[min(100%,26rem)] xl:w-[min(100%,30rem)] ${LOGO_SHADOW}`}
+          className={logoOnlyClassName(emphasis)}
         />
       </div>
     );
@@ -66,7 +79,7 @@ export function CertificateVisual({ size = "teaser" }: CertificateVisualProps) {
           />
         </div>
 
-        <div className="absolute right-0 top-[8%] z-20 sm:top-[12%] lg:top-[10%]">
+        <div className="absolute right-0 top-[6%] z-20 sm:top-[10%] lg:top-[8%]">
           <Meet2026Mark />
         </div>
 

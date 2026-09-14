@@ -15,6 +15,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const results = await searchConstancias(nombre);
-  return NextResponse.json({ results });
+  const { results, total, truncated } = await searchConstancias(nombre);
+  return NextResponse.json({ results, total, truncated });
 }

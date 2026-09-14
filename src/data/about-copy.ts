@@ -13,7 +13,7 @@ export const aboutCopy = {
   highlights: [
     "Rhinoscopy Meet — congreso de endoscopía nasal",
     "Webinars semanales con la comunidad",
-    "Constancias y certificados para asistentes",
+    "Certificados de asistencia al Meet",
   ],
   instagramCta: "Ver en Instagram",
   instagramHandle: site.instagramHandle,

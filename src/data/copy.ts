@@ -23,12 +23,12 @@ export const copy = {
   eventsTitle: "Lorem ipsum",
   eventsLead:
     "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
-  certKicker: "Constancias",
+  certKicker: "Certificados",
   certTitleScript: "Descargá",
   certTitleDisplay: "tu certificado",
   certLead:
-    "Por ahora, las constancias disponibles son del Rhinoscopy Meet 2026. Buscá por nombre o apellido y descargá el PDF.",
-  certCta: "Buscar constancia",
+    "Por ahora, los certificados disponibles son del Rhinoscopy Meet 2026. Buscá por nombre o apellido y descargá el PDF.",
+  certCta: "Buscar certificado",
   partnersKicker: "Lorem ipsum",
   contactKicker: "Contacto",
   contactTitle: "Lorem ipsum dolor sit amet.",

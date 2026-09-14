@@ -8,12 +8,20 @@ export const CONSTANCIAS_PUBLIC_DIR = path.join(
 
 const ROOT = path.join(process.cwd(), "public", CONSTANCIAS_PUBLIC_DIR);
 
+export const MAX_CONSTANCIA_SEARCH_RESULTS = 40;
+
 export type ConstanciaMatch = {
   eventId: string;
   eventLabel: string;
   fileName: string;
   displayName: string;
   downloadUrl: string;
+};
+
+export type ConstanciaSearchResult = {
+  results: ConstanciaMatch[];
+  total: number;
+  truncated: boolean;
 };
 
 function fold(value: string) {
@@ -47,16 +55,18 @@ export function displayNameFromCertificateFile(fileName: string): string {
 
 export async function searchConstancias(
   query: string,
-): Promise<ConstanciaMatch[]> {
+): Promise<ConstanciaSearchResult> {
   const tokens = queryTokens(query);
-  if (tokens.length === 0) return [];
+  if (tokens.length === 0) {
+    return { results: [], total: 0, truncated: false };
+  }
 
   let events: string[];
   try {
     const entries = await readdir(ROOT, { withFileTypes: true });
     events = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
   } catch {
-    return [];
+    return { results: [], total: 0, truncated: false };
   }
 
   const matches: ConstanciaMatch[] = [];
@@ -83,7 +93,14 @@ export async function searchConstancias(
     }
   }
 
-  return matches.sort((a, b) =>
+  const sorted = matches.sort((a, b) =>
     a.displayName.localeCompare(b.displayName, "es", { sensitivity: "base" }),
   );
+  const total = sorted.length;
+  const truncated = total > MAX_CONSTANCIA_SEARCH_RESULTS;
+  return {
+    results: sorted.slice(0, MAX_CONSTANCIA_SEARCH_RESULTS),
+    total,
+    truncated,
+  };
 }

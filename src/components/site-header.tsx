@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const homeLinks = [
   { href: "/#congreso", label: "Congreso" },
   { href: "/#webinars", label: "Webinars" },
-  { href: "/constancias", label: "Constancias" },
+  { href: "/constancias", label: "Certificados" },
   { href: "/#contacto", label: "Contacto" },
 ];
 

@@ -335,7 +335,7 @@ export async function generateMeetConstancia(nombreCompleto, options = {}) {
   const sponsorRasterH = light ? 52 : 96;
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
-  doc.setTitle(`Constancia Rhinoscopy Meet 2026 — ${nombreCompleto}`);
+  doc.setTitle(`Certificado Rhinoscopy Meet 2026 — ${nombreCompleto}`);
   doc.setAuthor("Rhinoscopy");
 
   const page = doc.addPage([PAGE_W, PAGE_H]);

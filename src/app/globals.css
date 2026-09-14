@@ -22,6 +22,23 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+@layer base {
+  a[href],
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  select:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
 .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 700;
@@ -121,7 +138,81 @@ body {
   animation-delay: 1.1s;
 }
 
+/* —— Cambio de idioma —— */
+:root {
+  --locale-ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --locale-duration: 0.52s;
+}
+
+.lang-switch-indicator {
+  transition:
+    transform var(--locale-duration) var(--locale-ease),
+    width var(--locale-duration) var(--locale-ease);
+}
+
+.locale-content-root {
+  backface-visibility: hidden;
+}
+
+.locale-content-enter {
+  animation: locale-content-enter var(--locale-duration) var(--locale-ease) both;
+}
+
+@keyframes locale-content-enter {
+  from {
+    opacity: 0.94;
+    transform: translate3d(0, 2px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@supports (view-transition-name: none) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--locale-duration);
+    animation-timing-function: var(--locale-ease);
+  }
+
+  ::view-transition-old(root) {
+    animation-name: locale-vt-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: locale-vt-in;
+  }
+}
+
+@keyframes locale-vt-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 3px, 0);
+  }
+}
+
+@keyframes locale-vt-out {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .lang-switch-indicator {
+    transition: none;
+  }
+
+  .locale-content-enter {
+    animation: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
   .motion-reveal {
     opacity: 1;
     transform: none;

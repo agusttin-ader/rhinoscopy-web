@@ -5,6 +5,7 @@ import {
   shouldAllowSearchIndexing,
   SOMBRA_LOGO_PATH,
 } from "@/lib/site-url";
+import { localePath } from "@/lib/seo-paths";
 import type { Metadata } from "next";
 
 type LocalizedMetadataInput = {
@@ -13,37 +14,55 @@ type LocalizedMetadataInput = {
   path: string;
   title: string;
   description: string;
+  /** Palabras clave opcionales por página (impacto menor en Google). */
+  keywords?: string[];
 };
-
-function localePath(locale: AppLocale, path: string): string {
-  const suffix = path === "/" ? "" : path;
-  if (locale === routing.defaultLocale) {
-    return suffix || "/";
-  }
-  return `/${locale}${suffix}`;
-}
 
 export function hreflangAlternates(
   path: string,
   locale: string,
 ): Metadata["alternates"] {
+  const normalizedPath = path.startsWith("/") ? path : path ? `/${path}` : "";
   const languages: Record<string, string> = {};
   for (const loc of routing.locales) {
-    languages[loc] = absoluteUrl(localePath(loc, path));
+    languages[loc] = absoluteUrl(localePath(loc, normalizedPath));
   }
   languages["x-default"] = absoluteUrl(
-    localePath(routing.defaultLocale, path),
+    localePath(routing.defaultLocale, normalizedPath),
   );
 
-  const current =
-    routing.locales.includes(locale as AppLocale)
-      ? (locale as AppLocale)
-      : routing.defaultLocale;
+  const current = routing.locales.includes(locale as AppLocale)
+    ? (locale as AppLocale)
+    : routing.defaultLocale;
 
   return {
-    canonical: absoluteUrl(localePath(current, path)),
+    canonical: absoluteUrl(localePath(current, normalizedPath)),
     languages,
   };
+}
+
+function searchRobots(): Metadata["robots"] {
+  if (!shouldAllowSearchIndexing()) {
+    return { index: false, follow: false, nocache: true };
+  }
+
+  return {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  };
+}
+
+function siteVerification(): Metadata["verification"] | undefined {
+  const google = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+  if (!google) return undefined;
+  return { google };
 }
 
 export function createLocalizedMetadata({
@@ -51,10 +70,10 @@ export function createLocalizedMetadata({
   path,
   title,
   description,
+  keywords,
 }: LocalizedMetadataInput): Metadata {
   const normalizedPath = path.startsWith("/") ? path : path ? `/${path}` : "";
   const pageUrl = absoluteUrl(localePath(locale as AppLocale, normalizedPath));
-  const ogImage = absoluteUrl(SOMBRA_LOGO_PATH);
 
   const pageTitle =
     title.includes("|") || title.trim().toLowerCase() === "rhinoscopy"
@@ -64,6 +83,7 @@ export function createLocalizedMetadata({
   return {
     title: pageTitle,
     description,
+    keywords,
     alternates: hreflangAlternates(normalizedPath, locale),
     openGraph: {
       type: "website",
@@ -72,38 +92,36 @@ export function createLocalizedMetadata({
       siteName: "Rhinoscopy",
       title,
       description,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: "Rhinoscopy",
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
     },
-    robots: shouldAllowSearchIndexing()
-      ? { index: true, follow: true }
-      : { index: false, follow: false, nocache: true },
+    robots: searchRobots(),
   };
 }
 
 export function rootMetadataBase(): Metadata {
+  const verification = siteVerification();
+
   return {
     metadataBase: new URL(getSiteUrl()),
+    applicationName: "Rhinoscopy",
     title: {
       default: "Rhinoscopy",
       template: "%s | Rhinoscopy",
     },
+    description:
+      "Comunidad de educación médica en rinología y endoscopía nasal.",
     icons: {
       icon: [{ url: SOMBRA_LOGO_PATH, type: "image/png" }],
       apple: SOMBRA_LOGO_PATH,
     },
+    formatDetection: {
+      telephone: false,
+    },
+    ...(verification ? { verification } : {}),
   };
 }
 
@@ -116,28 +134,12 @@ function ogLocale(locale: string): string {
   return map[locale] ?? "es_AR";
 }
 
-export function organizationJsonLd() {
-  const base = getSiteUrl();
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${base}/#organization`,
-        name: "Rhinoscopy",
-        url: base,
-        logo: absoluteUrl(SOMBRA_LOGO_PATH),
-        description:
-          "Comunidad de educación médica en rinología y endoscopía nasal.",
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${base}/#website`,
-        url: base,
-        name: "Rhinoscopy",
-        publisher: { "@id": `${base}/#organization` },
-        inLanguage: ["es-AR", "en", "pt-BR"],
-      },
-    ],
+/** Imagen OG/Twitter vía `opengraph-image.tsx` (App Router). */
+export function openGraphImageAlt(locale: string): string {
+  const map: Record<string, string> = {
+    es: "Rhinoscopy — educación médica en rinología",
+    en: "Rhinoscopy — medical education in rhinology",
+    pt: "Rhinoscopy — educação médica em rinologia",
   };
+  return map[locale] ?? map.es;
 }

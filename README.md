@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rhinoscopy — sitio web
 
-## Getting Started
+Sitio oficial de **Rhinoscopy**: educación médica en rinología y endoscopía nasal (español, inglés y portugués).
 
-First, run the development server:
+**Producción:** [https://www.rhinoscopy.com.ar](https://www.rhinoscopy.com.ar)
+
+## Desarrollo local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts útiles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando | Descripción |
+|---------|-------------|
+| `npm run build` | Build de producción |
+| `npm run start` | Servidor tras el build |
+| `npm run lint` | ESLint |
+| `npm run constancia:meet` | Generar una constancia Meet (PDF) |
 
-## Learn More
+## Despliegue
 
-To learn more about Next.js, take a look at the following resources:
+El proyecto se publica en **Vercel** conectado al repositorio. Las variables de entorno de producción se configuran en el panel de Vercel (URL del sitio, indexación, verificación de Google, etc.).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estructura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/` — rutas Next.js (App Router), sitemap y robots
+- `src/components/` — UI del sitio
+- `src/data/` — contenidos y traducciones
+- `public/images/` — imágenes y certificados PDF
+- `docs/seo.md` — referencia SEO e indexación

@@ -1,12 +1,6 @@
-import { organizationJsonLd } from "@/lib/seo";
+import { organizationJsonLdGraph } from "@/lib/seo-json-ld";
+import { JsonLd } from "@/components/json-ld";
 
 export function SeoJsonLd() {
-  const data = organizationJsonLd();
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
+  return <JsonLd data={organizationJsonLdGraph()} />;
 }

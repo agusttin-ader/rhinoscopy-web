@@ -1,4 +1,4 @@
-/** Léxico de la app Rhinoscopy Meet (krucho.github.io/rhinoscopy). */
+/** Copy del congreso Rhinoscopy Meet 2026. */
 export const congressCopy = {
   kicker: "Rhinoscopy Meet 2026",
   title: "Un evento de pura endoscopía nasal.",

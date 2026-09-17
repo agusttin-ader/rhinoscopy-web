@@ -13,6 +13,9 @@ export const site = {
 export const meet2026 = {
   title: "Rhinoscopy Meet 2026",
   dates: "17, 18 y 19 de septiembre",
+  /** ISO 8601 — JSON-LD Event, SEO. */
+  startDate: "2026-09-17",
+  endDate: "2026-09-19",
   venue: "Hotel Cassa Lepage",
   city: "Buenos Aires, Argentina",
 } as const;

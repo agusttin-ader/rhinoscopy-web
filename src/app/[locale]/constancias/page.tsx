@@ -1,10 +1,17 @@
 import { ConstanciasExperience } from "@/components/constancias-experience";
+import { JsonLd } from "@/components/json-ld";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getLocaleData } from "@/data/locales";
 import { Link } from "@/i18n/navigation";
+import {
+  breadcrumbJsonLd,
+  mergeJsonLdGraphs,
+  webPageJsonLd,
+} from "@/lib/seo-json-ld";
 import { createLocalizedMetadata } from "@/lib/seo";
+import type { AppLocale } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 
@@ -18,16 +25,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: "/constancias",
     title: meta.constancias.title,
     description: meta.constancias.description,
+    keywords: meta.constancias.keywords,
   });
 }
 
 export default async function ConstanciasPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { constanciasCopy } = getLocaleData(locale);
+  const { constanciasCopy, meta } = getLocaleData(locale);
+  const appLocale = locale as AppLocale;
+  const jsonLd = mergeJsonLdGraphs(
+    webPageJsonLd({
+      locale: appLocale,
+      path: "/constancias",
+      title: meta.constancias.title,
+      description: meta.constancias.description,
+    }),
+    breadcrumbJsonLd(appLocale, [
+      { name: meta.home.title, path: "/" },
+      { name: meta.constancias.title, path: "/constancias" },
+    ]),
+  );
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <SiteHeader variant="bar" />
       <main
         className="relative isolate flex flex-1 flex-col overflow-hidden bg-navy text-white"

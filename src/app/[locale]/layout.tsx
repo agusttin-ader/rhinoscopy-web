@@ -1,4 +1,5 @@
 import { LocaleTransition } from "@/components/locale-transition";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { ScrollToTopOnRefresh } from "@/components/scroll-to-top-on-refresh";
 import { SeoJsonLd } from "@/components/seo-json-ld";
 import { WhatsappFloat } from "@/components/whatsapp-float";
@@ -50,6 +51,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${montserrat.variable} ${marckScript.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        <GoogleAnalytics />
         <SeoJsonLd />
         <NextIntlClientProvider messages={messages}>
           <ScrollToTopOnRefresh />

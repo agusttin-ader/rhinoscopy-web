@@ -28,4 +28,9 @@ export const constanciasCopy = {
     `Mostramos ${shown} de ${total}. Acotá la búsqueda (nombre y apellido).`,
   connectionError: "Hubo un problema de conexión. Intentá de nuevo.",
   searchError: "No se pudo completar la búsqueda.",
+  comingSoon: {
+    titleScript: "Próximamente",
+    titleDisplay: "Certificados del Meet 2026",
+    statusLine: "Preparando el acceso",
+  },
 } as const;

@@ -1,9 +1,11 @@
+import { ConstanciasComingSoon } from "@/components/constancias-coming-soon";
 import { ConstanciasExperience } from "@/components/constancias-experience";
 import { JsonLd } from "@/components/json-ld";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getLocaleData } from "@/data/locales";
+import { certificadosPortalEnabled } from "@/data/constancias-feature";
 import { Link } from "@/i18n/navigation";
 import {
   breadcrumbJsonLd,
@@ -64,7 +66,11 @@ export default async function ConstanciasPage({ params }: Props) {
             {constanciasCopy.backToHome}
           </Link>
 
-          <ConstanciasExperience />
+          {certificadosPortalEnabled ? (
+            <ConstanciasExperience />
+          ) : (
+            <ConstanciasComingSoon copy={constanciasCopy.comingSoon} />
+          )}
         </div>
       </main>
       <SiteFooter />

@@ -59,7 +59,7 @@ export const en = {
     instagramUrl: "https://www.instagram.com/rhinoscopyofficial/",
   },
   brandHeroCopy: {
-    kicker: "Specialized medical education",
+    kicker: "Rhinoscopy Meet 2026",
     headlineImpact: "Excellence in rhinology training",
     tagline: "Medical education community in rhinology and nasal endoscopy",
     lead:
@@ -180,6 +180,11 @@ export const en = {
       `Showing ${shown} of ${total}. Narrow your search (first and last name).`,
     connectionError: "Connection problem. Please try again.",
     searchError: "Search could not be completed.",
+    comingSoon: {
+      titleScript: "Coming soon",
+      titleDisplay: "Meet 2026 certificates",
+      statusLine: "Preparing access",
+    },
   },
   footerCopy: {
     navTitle: "Site",
@@ -253,7 +258,7 @@ export const en = {
   },
   meta: {
     home: {
-      title: "Rhinoscopy",
+      title: "Rhinoscopy Meet 2026 | Rhinology Congress in Buenos Aires",
       description:
         "Medical education community in rhinology and nasal endoscopy. Rhinoscopy Meet 2026, webinars, and certificates.",
       keywords: [
@@ -268,7 +273,7 @@ export const en = {
     constancias: {
       title: "Certificates | Rhinoscopy",
       description:
-        "Find and download your Rhinoscopy Meet 2026 attendance certificate by first or last name.",
+        "Coming soon: Rhinoscopy Meet 2026 attendance certificate downloads.",
       keywords: [
         "Rhinoscopy certificate",
         "attendance certificate",

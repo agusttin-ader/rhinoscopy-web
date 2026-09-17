@@ -199,7 +199,207 @@ body {
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .constancias-soon-enter {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    animation: constancias-soon-rise 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .constancias-soon-enter--1 {
+    animation-delay: 0.05s;
+  }
+
+  .constancias-soon-enter--2 {
+    animation-delay: 0.22s;
+  }
+
+  .constancias-soon-enter--3 {
+    animation-delay: 0.38s;
+  }
+
+  .constancias-soon-ring {
+    animation: constancias-soon-ring-spin 56s linear infinite;
+  }
+
+  .constancias-soon-ring-stroke {
+    stroke-dasharray: 580;
+    stroke-dashoffset: 580;
+    animation: constancias-soon-ring-draw 1.6s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+  }
+
+  .constancias-soon-orbit-dot {
+    animation: constancias-soon-orbit-live 4.2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  }
+
+  .constancias-soon-orbit-dot--1 {
+    animation-duration: 4s;
+  }
+
+  .constancias-soon-orbit-dot--2 {
+    animation-delay: 0.5s;
+    animation-duration: 4.6s;
+  }
+
+  .constancias-soon-orbit-dot--3 {
+    animation-delay: 1s;
+    animation-duration: 4.4s;
+  }
+
+  .constancias-soon-logo {
+    animation: constancias-soon-logo 5.5s ease-in-out infinite;
+  }
+
+  .constancias-soon-script {
+    background: linear-gradient(
+      105deg,
+      rgba(103, 232, 249, 0.95) 0%,
+      rgba(255, 255, 255, 0.92) 42%,
+      rgba(232, 121, 249, 0.88) 78%,
+      rgba(103, 232, 249, 0.95) 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: constancias-soon-shimmer 8s ease-in-out infinite;
+  }
+
+  .constancias-soon-rule {
+    transform-origin: center;
+    animation: constancias-soon-rule 4s ease-in-out infinite;
+  }
+
+  .constancias-soon-dots span {
+    animation: constancias-soon-dot 1.55s ease-in-out infinite;
+  }
+
+  .constancias-soon-dots span:nth-child(2) {
+    animation-delay: 0.25s;
+  }
+
+  .constancias-soon-dots span:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+}
+
+@keyframes constancias-soon-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes constancias-soon-ring-draw {
+  from {
+    stroke-dashoffset: 580;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes constancias-soon-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes constancias-soon-orbit-live {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.84;
+  }
+  35% {
+    transform: translate3d(1px, -2px, 0) scale(1.08);
+    opacity: 0.96;
+  }
+  70% {
+    transform: translate3d(-1px, 1px, 0) scale(1.04);
+    opacity: 0.88;
+  }
+}
+
+@keyframes constancias-soon-logo {
+  0%,
+  100% {
+    opacity: 0.94;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.008);
+  }
+}
+
+@keyframes constancias-soon-shimmer {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+@keyframes constancias-soon-rule {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scaleX(0.9);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes constancias-soon-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 0.75;
+    transform: translateY(-1px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .constancias-soon-enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .constancias-soon-script {
+    color: rgba(103, 232, 249, 0.95);
+    background: none;
+  }
+
+  .constancias-soon-logo,
+  .constancias-soon-dots span,
+  .constancias-soon-ring,
+  .constancias-soon-ring-stroke,
+  .constancias-soon-orbit-dot,
+  .constancias-soon-rule {
+    animation: none;
+  }
+
+  .constancias-soon-ring-stroke {
+    stroke-dashoffset: 0;
+  }
+
   .lang-switch-indicator {
     transition: none;
   }

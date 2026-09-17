@@ -1,5 +1,5 @@
 export const brandHeroCopy = {
-  kicker: "Educación médica especializada",
+  kicker: "Rhinoscopy Meet 2026",
   /** Variante activa — otras opciones en comentario para A/B de copy. */
   headlineImpact: "Formación de excelencia en rinología",
   // headlineImpact: "Educación que transforma la práctica clínica",

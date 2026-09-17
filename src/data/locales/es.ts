@@ -62,7 +62,7 @@ export const es = {
   },
   meta: {
     home: {
-      title: "Rhinoscopy",
+      title: "Rhinoscopy Meet 2026 | Congreso de rinología en Buenos Aires",
       description:
         "Comunidad de educación médica en rinología y endoscopía nasal. Rhinoscopy Meet 2026, webinars y certificados.",
       keywords: [
@@ -77,7 +77,7 @@ export const es = {
     constancias: {
       title: "Certificados | Rhinoscopy",
       description:
-        "Buscá y descargá tu certificado de asistencia del Rhinoscopy Meet 2026 por nombre o apellido.",
+        "Próximamente: descarga de certificados de asistencia del Rhinoscopy Meet 2026.",
       keywords: [
         "certificado Rhinoscopy",
         "constancia asistencia",

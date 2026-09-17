@@ -1,4 +1,4 @@
-import { getSiteUrl, SOMBRA_LOGO_PATH } from "@/lib/site-url";
+import { getSiteUrl } from "@/lib/site-url";
 import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -16,8 +16,14 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-AR",
     icons: [
       {
-        src: SOMBRA_LOGO_PATH,
-        sizes: "512x512",
+        src: "/icon.png",
+        sizes: "48x48",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/apple-icon.png",
+        sizes: "180x180",
         type: "image/png",
         purpose: "any",
       },

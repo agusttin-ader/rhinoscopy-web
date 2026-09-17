@@ -3,7 +3,6 @@ import {
   absoluteUrl,
   getSiteUrl,
   shouldAllowSearchIndexing,
-  SOMBRA_LOGO_PATH,
 } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
 import type { Metadata } from "next";
@@ -114,10 +113,6 @@ export function rootMetadataBase(): Metadata {
     },
     description:
       "Comunidad de educación médica en rinología y endoscopía nasal.",
-    icons: {
-      icon: [{ url: SOMBRA_LOGO_PATH, type: "image/png" }],
-      apple: SOMBRA_LOGO_PATH,
-    },
     formatDetection: {
       telephone: false,
     },

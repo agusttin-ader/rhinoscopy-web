@@ -17,6 +17,12 @@ const GALLERY = {
 /** Carpetas por jornada (debe coincidir con `dir` en congress-gallery.ts). */
 const GALLERY_DAY_DIRS = ["dia-uno", "dia-dos", "dia-tres"];
 
+const GALLERY_MANIFEST_BY_DIR = {
+  "dia-uno": "CONGRESS_GALLERY_DAY1_FILES",
+  "dia-dos": "CONGRESS_GALLERY_DAY2_FILES",
+  "dia-tres": "CONGRESS_GALLERY_DAY3_FILES",
+};
+
 const GALLERY_PREVIEW = {
   subdir: "preview",
   maxWidth: 960,
@@ -111,15 +117,17 @@ async function optimizeGalleryDay(dayDir) {
 }
 
 async function syncGalleryManifestFromDisk() {
-  const webps = await listGalleryDayWebps("dia-uno");
-  if (webps.length === 0) {
-    console.warn(
-      "Aviso: no hay WebP en public/images/galeria/dia-uno/; no se actualiza el manifiesto.\n",
+  for (const dayDir of GALLERY_DAY_DIRS) {
+    const constName = GALLERY_MANIFEST_BY_DIR[dayDir];
+    const webps = await listGalleryDayWebps(dayDir);
+    if (webps.length === 0) {
+      continue;
+    }
+    await writeGalleryManifest(constName, webps);
+    console.log(
+      `Manifiesto ${constName}: ${webps.length} archivos (${dayDir})\n`,
     );
-    return;
   }
-  await writeGalleryManifest(webps);
-  console.log(`Manifiesto: ${webps.length} archivos en congress-gallery.ts\n`);
 }
 
 async function buildGalleryDerivativesForDay(dayDir, { subdir, maxWidth, quality }, label) {
@@ -160,14 +168,18 @@ async function buildGalleryDerivatives({ subdir, maxWidth, quality }, label) {
   }
 }
 
-async function writeGalleryManifest(webpNames) {
+async function writeGalleryManifest(constName, webpNames) {
   const tsPath = path.join(ROOT, "src/data/congress-gallery.ts");
   let src = await fs.readFile(tsPath, "utf8");
   const list = webpNames.map((n) => `  "${n}",`).join("\n");
-  src = src.replace(
-    /const CONGRESS_GALLERY_DAY1_FILES = \[[\s\S]*?\] as const;/,
-    `const CONGRESS_GALLERY_DAY1_FILES = [\n${list}\n] as const;`,
+  const re = new RegExp(
+    `const ${constName} = \\[[\\s\\S]*?\\] as const;`,
   );
+  if (!re.test(src)) {
+    console.warn(`Aviso: no se encontró ${constName} en congress-gallery.ts`);
+    return;
+  }
+  src = src.replace(re, `const ${constName} = [\n${list}\n] as const;`);
   await fs.writeFile(tsPath, src);
 }
 

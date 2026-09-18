@@ -46,6 +46,40 @@ const CONGRESS_GALLERY_DAY1_FILES = [
   "_KMP9988.webp",
 ] as const;
 
+const CONGRESS_GALLERY_DAY2_FILES = [
+  "RLV_4729.webp",
+  "RLV_4755.webp",
+  "RLV_4763.webp",
+  "RLV_4784.webp",
+  "RLV_4798.webp",
+  "RLV_4822.webp",
+  "RLV_4854.webp",
+  "RLV_4874.webp",
+  "RLV_4891.webp",
+  "RLV_4906.webp",
+  "RLV_4933.webp",
+  "RLV_4942.webp",
+  "RLV_4984.webp",
+  "RLV_5000.webp",
+  "RLV_5035.webp",
+  "RLV_5041.webp",
+  "RLV_5071.webp",
+  "RLV_5091.webp",
+  "RLV_5114.webp",
+  "RLV_5142.webp",
+  "RLV_5151.webp",
+  "RLV_5158.webp",
+  "RLV_5171.webp",
+  "RLV_5204.webp",
+  "RLV_5221.webp",
+  "RLV_5262.webp",
+  "RLV_5265.webp",
+  "RLV_5278.webp",
+  "_KMP0001.webp",
+] as const;
+
+const CONGRESS_GALLERY_DAY3_FILES = [] as const;
+
 /** Jornadas del Meet (ejemplo: día 2 y 3 listos para cargar fotos). */
 export const CONGRESS_GALLERY_DAYS = [
   {
@@ -58,13 +92,13 @@ export const CONGRESS_GALLERY_DAYS = [
     id: "day2",
     date: "2026-09-18",
     dir: "dia-dos",
-    files: [] as const,
+    files: CONGRESS_GALLERY_DAY2_FILES,
   },
   {
     id: "day3",
     date: "2026-09-19",
     dir: "dia-tres",
-    files: [] as const,
+    files: CONGRESS_GALLERY_DAY3_FILES,
   },
 ] as const;
 

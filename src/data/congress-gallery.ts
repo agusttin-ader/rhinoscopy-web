@@ -1,49 +1,7 @@
 /** Archivos en `public/images/galeria/` (congreso Meet 2026). */
 
 const CONGRESS_GALLERY_DAY1_FILES = [
-  "_KMP0002.webp",
-  "_KMP0009.webp",
-  "_KMP0131.webp",
-  "_KMP0171.webp",
-  "_KMP0203.webp",
-  "_KMP0242.webp",
-  "_KMP0290.webp",
-  "_KMP0323.webp",
-  "_KMP0371.webp",
-  "_KMP0390.webp",
-  "_KMP0411.webp",
-  "_KMP0455.webp",
-  "_KMP0466.webp",
-  "_KMP0518.webp",
-  "_KMP0531.webp",
-  "_KMP0561.webp",
-  "_KMP0579.webp",
-  "_KMP0616.webp",
-  "_KMP0634.webp",
-  "_KMP0709.webp",
-  "_KMP0712.webp",
-  "_KMP0748.webp",
-  "_KMP0779.webp",
-  "_KMP9236.webp",
-  "_KMP9288.webp",
-  "_KMP9401.webp",
-  "_KMP9433.webp",
-  "_KMP9440.webp",
-  "_KMP9477.webp",
-  "_KMP9524.webp",
-  "_KMP9559.webp",
-  "_KMP9622.webp",
-  "_KMP9628.webp",
-  "_KMP9640.webp",
-  "_KMP9649.webp",
-  "_KMP9708.webp",
-  "_KMP9712.webp",
-  "_KMP9752.webp",
-  "_KMP9799.webp",
-  "_KMP9876.webp",
-  "_KMP9903.webp",
-  "_KMP9973.webp",
-  "_KMP9988.webp",
+
 ] as const;
 
 /** Jornadas del Meet (ejemplo: día 2 y 3 listos para cargar fotos). */
@@ -72,12 +30,41 @@ export const CONGRESS_GALLERY_FILES = CONGRESS_GALLERY_DAYS.flatMap((day) => [
 ]);
 
 export const CONGRESS_GALLERY_BASE = "/images/galeria";
+export const CONGRESS_GALLERY_PREVIEW_BASE = "/images/galeria/preview";
+export const CONGRESS_GALLERY_DISPLAY_BASE = "/images/galeria/display";
 
 export const CONGRESS_GALLERY_SELECTION_SIZE = 7;
 
 /** @deprecated Usar selecciones de 7 fotos en el mosaico. */
 export const CONGRESS_GALLERY_PAGE_SIZE = 12;
 
-export function congressGallerySrc(file: string): string {
+export type CongressGalleryVariant = "preview" | "display" | "full";
+
+/** Mosaico/carrusel: `preview`. Lightbox: `display`. Archivo original: `full`. */
+export function congressGallerySrc(
+  file: string,
+  variant: CongressGalleryVariant = "full",
+): string {
+  if (variant === "preview") {
+    return `${CONGRESS_GALLERY_PREVIEW_BASE}/${file}`;
+  }
+  if (variant === "display") {
+    return `${CONGRESS_GALLERY_DISPLAY_BASE}/${file}`;
+  }
   return `${CONGRESS_GALLERY_BASE}/${file}`;
+}
+
+const prefetchedGallery = new Set<string>();
+
+/** Precarga estática (p. ej. hover en mosaico o vecinos del lightbox). */
+export function prefetchCongressGalleryImage(
+  file: string,
+  variant: CongressGalleryVariant = "display",
+): void {
+  if (typeof window === "undefined") return;
+  const src = congressGallerySrc(file, variant);
+  if (prefetchedGallery.has(src)) return;
+  prefetchedGallery.add(src);
+  const img = new window.Image();
+  img.src = src;
 }

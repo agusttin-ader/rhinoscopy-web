@@ -14,6 +14,18 @@ const GALLERY = {
   quality: 82,
 };
 
+const GALLERY_PREVIEW = {
+  subdir: "preview",
+  maxWidth: 960,
+  quality: 74,
+};
+
+const GALLERY_DISPLAY = {
+  subdir: "display",
+  maxWidth: 1440,
+  quality: 76,
+};
+
 const VERTICAL = {
   files: [
     "public/images/pantallas-vertical-1.jpg",
@@ -72,6 +84,43 @@ async function optimizeGallery() {
   );
 }
 
+async function buildGalleryPreviews() {
+  await buildGalleryDerivatives(GALLERY_PREVIEW, "Previews");
+}
+
+async function buildGalleryDisplays() {
+  await buildGalleryDerivatives(GALLERY_DISPLAY, "Display (lightbox)");
+}
+
+async function buildGalleryDerivatives({ subdir, maxWidth, quality }, label) {
+  const outDir = path.join(GALLERY.dir, subdir);
+  await fs.mkdir(outDir, { recursive: true });
+
+  const entries = await fs.readdir(GALLERY.dir, { withFileTypes: true });
+  const webps = entries
+    .filter((e) => e.isFile() && /\.webp$/i.test(e.name))
+    .map((e) => e.name)
+    .sort();
+
+  if (webps.length === 0) {
+    console.log(`Galería: sin WebP en raíz, omitiendo ${subdir}.\n`);
+    return;
+  }
+
+  let totalOut = 0;
+  for (const name of webps) {
+    const input = path.join(GALLERY.dir, name);
+    const output = path.join(outDir, name);
+    const { outBytes } = await toWebp(input, output, {
+      maxWidth,
+      quality,
+    });
+    totalOut += outBytes;
+    console.log(`  galeria/${subdir}/${name}  ${(outBytes / 1024).toFixed(0)} KB`);
+  }
+  console.log(`\n${label}: ${webps.length} fotos (${(totalOut / 1e6).toFixed(1)} MB total)\n`);
+}
+
 async function writeGalleryManifest(webpNames) {
   const tsPath = path.join(ROOT, "src/data/congress-gallery.ts");
   let src = await fs.readFile(tsPath, "utf8");
@@ -86,6 +135,11 @@ async function writeGalleryManifest(webpNames) {
 async function optimizeVertical() {
   for (const rel of VERTICAL.files) {
     const input = path.join(ROOT, rel);
+    try {
+      await fs.access(input);
+    } catch {
+      continue;
+    }
     const output = input.replace(/\.jpe?g$/i, ".webp");
     const { outBytes } = await toWebp(input, output, {
       maxHeight: VERTICAL.maxHeight,
@@ -99,8 +153,12 @@ async function optimizeVertical() {
 async function main() {
   console.log("Optimizando imágenes públicas…\n");
   await optimizeGallery();
+  await buildGalleryPreviews();
+  await buildGalleryDisplays();
   await optimizeVertical();
-  console.log("Listo. Commit public/images/*.webp y src/data/congress-gallery.ts");
+  console.log(
+    "Listo. Commit public/images/galeria/**/*.webp y src/data/congress-gallery.ts",
+  );
 }
 
 main().catch((err) => {

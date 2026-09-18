@@ -6,6 +6,7 @@ import {
   CONGRESS_GALLERY_SELECTION_SIZE,
   type CongressGalleryDayId,
   congressGallerySrc,
+  prefetchCongressGalleryImage,
 } from "@/data/congress-gallery";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import Image from "next/image";
@@ -87,14 +88,16 @@ function GalleryTile({
     <button
       type="button"
       onClick={() => onOpen(file)}
+      onMouseEnter={() => prefetchCongressGalleryImage(file, "display")}
+      onFocus={() => prefetchCongressGalleryImage(file, "display")}
       style={style}
       className={`group relative min-h-0 min-w-0 overflow-hidden bg-paper transition-opacity hover:opacity-[0.92] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ${className}`}
     >
       <Image
-        src={congressGallerySrc(file)}
+        src={congressGallerySrc(file, "preview")}
         alt={alt}
         fill
-        sizes="(max-width: 767px) 45vw, (max-width: 1920px) 24vw, 20vw"
+        sizes="(max-width: 767px) 100vw, (max-width: 1280px) 42vw, 520px"
         className="object-cover"
         loading={priority ? "eager" : "lazy"}
       />
@@ -186,7 +189,7 @@ function GalleryMobileSwipe({
             >
               <div className="relative h-full w-full overflow-hidden bg-navy/5">
                 <Image
-                  src={congressGallerySrc(file)}
+                  src={congressGallerySrc(file, "preview")}
                   alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
                   fill
                   sizes="100vw"
@@ -411,6 +414,7 @@ function LightboxPhotoStage({
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const naturalRef = useRef({ w: 0, h: 0 });
+  const [displayReady, setDisplayReady] = useState(false);
   const [layout, setLayout] = useState<{
     frame: { w: number; h: number };
     stageW: number;
@@ -432,6 +436,14 @@ function LightboxPhotoStage({
       },
     });
   }, []);
+
+  const onPhotoMetrics = useCallback(
+    (naturalWidth: number, naturalHeight: number) => {
+      naturalRef.current = { w: naturalWidth, h: naturalHeight };
+      refit();
+    },
+    [refit],
+  );
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -487,19 +499,29 @@ function LightboxPhotoStage({
           }
         >
           <Image
-            src={congressGallerySrc(file)}
-            alt={`${photoAlt} (${index + 1}/${total})`}
+            src={congressGallerySrc(file, "preview")}
+            alt=""
+            aria-hidden
             fill
             sizes="100vw"
             className="object-contain"
             priority
             onLoad={(e) => {
-              const img = e.currentTarget;
-              naturalRef.current = {
-                w: img.naturalWidth,
-                h: img.naturalHeight,
-              };
-              refit();
+              onPhotoMetrics(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight);
+            }}
+          />
+          <Image
+            src={congressGallerySrc(file, "display")}
+            alt={`${photoAlt} (${index + 1}/${total})`}
+            fill
+            sizes="100vw"
+            className={`object-contain transition-opacity duration-300 ${
+              displayReady ? "opacity-100" : "opacity-0"
+            }`}
+            priority
+            onLoad={(e) => {
+              setDisplayReady(true);
+              onPhotoMetrics(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight);
             }}
           />
         </div>
@@ -687,6 +709,7 @@ export function CongressGallery() {
 
   const openLightbox = (file: string) => {
     if (!getDesktopGallerySnapshot()) return;
+    prefetchCongressGalleryImage(file, "display");
     setLightbox({ file, scope: dayFiles });
   };
   const closeLightbox = () => setLightbox(null);
@@ -710,6 +733,16 @@ export function CongressGallery() {
       return { file: state.scope[next], scope: state.scope };
     });
   }, []);
+
+  useEffect(() => {
+    if (lightbox === null || !isDesktopGallery) return;
+
+    const index = lightbox.scope.indexOf(lightbox.file);
+    if (index < 0) return;
+    const len = lightbox.scope.length;
+    prefetchCongressGalleryImage(lightbox.scope[(index - 1 + len) % len], "display");
+    prefetchCongressGalleryImage(lightbox.scope[(index + 1) % len], "display");
+  }, [lightbox, isDesktopGallery]);
 
   useEffect(() => {
     if (lightbox === null || !isDesktopGallery) return;

@@ -14,6 +14,9 @@ const GALLERY = {
   quality: 82,
 };
 
+/** Carpetas por jornada (debe coincidir con `dir` en congress-gallery.ts). */
+const GALLERY_DAY_DIRS = ["dia-uno", "dia-dos", "dia-tres"];
+
 const GALLERY_PREVIEW = {
   subdir: "preview",
   maxWidth: 960,
@@ -55,26 +58,36 @@ async function toWebp(
   return { inBytes: inStat.size, outBytes: outStat.size };
 }
 
-async function listGalleryRootWebps() {
-  const entries = await fs.readdir(GALLERY.dir, { withFileTypes: true });
-  return entries
-    .filter((e) => e.isFile() && /\.webp$/i.test(e.name))
-    .map((e) => e.name)
-    .sort();
+async function listGalleryDayWebps(dayDir) {
+  const dayPath = path.join(GALLERY.dir, dayDir);
+  try {
+    const entries = await fs.readdir(dayPath, { withFileTypes: true });
+    return entries
+      .filter((e) => e.isFile() && /\.webp$/i.test(e.name))
+      .map((e) => e.name)
+      .sort();
+  } catch {
+    return [];
+  }
 }
 
-async function optimizeGallery() {
-  const names = (await fs.readdir(GALLERY.dir)).filter((n) =>
-    /\.jpe?g$/i.test(n),
-  );
+async function optimizeGalleryDay(dayDir) {
+  const dayPath = path.join(GALLERY.dir, dayDir);
+  let names;
+  try {
+    names = (await fs.readdir(dayPath)).filter((n) => /\.jpe?g$/i.test(n));
+  } catch {
+    return [];
+  }
+
+  const webpNames = [];
   let totalIn = 0;
   let totalOut = 0;
-  const webpNames = [];
 
   for (const name of names.sort()) {
-    const input = path.join(GALLERY.dir, name);
+    const input = path.join(dayPath, name);
     const webpName = name.replace(/\.jpe?g$/i, ".webp");
-    const output = path.join(GALLERY.dir, webpName);
+    const output = path.join(dayPath, webpName);
     const { inBytes, outBytes } = await toWebp(input, output, {
       maxWidth: GALLERY.maxWidth,
       quality: GALLERY.quality,
@@ -83,24 +96,25 @@ async function optimizeGallery() {
     totalOut += outBytes;
     webpNames.push(webpName);
     await fs.unlink(input);
-    console.log(`  galeria/${webpName}  ${(outBytes / 1024).toFixed(0)} KB`);
+    console.log(
+      `  galeria/${dayDir}/${webpName}  ${(outBytes / 1024).toFixed(0)} KB`,
+    );
   }
 
   if (webpNames.length > 0) {
-    await writeGalleryManifest(webpNames);
     console.log(
-      `\nGalería: ${names.length} fotos → WebP (${(totalIn / 1e6).toFixed(1)} MB → ${(totalOut / 1e6).toFixed(1)} MB)\n`,
+      `\n${dayDir}: ${names.length} fotos → WebP (${(totalIn / 1e6).toFixed(1)} MB → ${(totalOut / 1e6).toFixed(1)} MB)\n`,
     );
-  } else {
-    console.log("Galería: sin JPEG nuevos para convertir.\n");
   }
+
+  return webpNames;
 }
 
 async function syncGalleryManifestFromDisk() {
-  const webps = await listGalleryRootWebps();
+  const webps = await listGalleryDayWebps("dia-uno");
   if (webps.length === 0) {
     console.warn(
-      "Aviso: no hay WebP en public/images/galeria/; no se actualiza el manifiesto.\n",
+      "Aviso: no hay WebP en public/images/galeria/dia-uno/; no se actualiza el manifiesto.\n",
     );
     return;
   }
@@ -108,37 +122,42 @@ async function syncGalleryManifestFromDisk() {
   console.log(`Manifiesto: ${webps.length} archivos en congress-gallery.ts\n`);
 }
 
-async function buildGalleryPreviews() {
-  await buildGalleryDerivatives(GALLERY_PREVIEW, "Previews");
-}
-
-async function buildGalleryDisplays() {
-  await buildGalleryDerivatives(GALLERY_DISPLAY, "Display (lightbox)");
-}
-
-async function buildGalleryDerivatives({ subdir, maxWidth, quality }, label) {
-  const outDir = path.join(GALLERY.dir, subdir);
+async function buildGalleryDerivativesForDay(dayDir, { subdir, maxWidth, quality }, label) {
+  const dayPath = path.join(GALLERY.dir, dayDir);
+  const outDir = path.join(dayPath, subdir);
   await fs.mkdir(outDir, { recursive: true });
 
-  const webps = await listGalleryRootWebps();
-
+  const webps = await listGalleryDayWebps(dayDir);
   if (webps.length === 0) {
-    console.log(`Galería: sin WebP en raíz, omitiendo ${subdir}.\n`);
     return;
   }
 
   let totalOut = 0;
   for (const name of webps) {
-    const input = path.join(GALLERY.dir, name);
+    const input = path.join(dayPath, name);
     const output = path.join(outDir, name);
     const { outBytes } = await toWebp(input, output, {
       maxWidth,
       quality,
     });
     totalOut += outBytes;
-    console.log(`  galeria/${subdir}/${name}  ${(outBytes / 1024).toFixed(0)} KB`);
+    console.log(
+      `  galeria/${dayDir}/${subdir}/${name}  ${(outBytes / 1024).toFixed(0)} KB`,
+    );
   }
-  console.log(`\n${label}: ${webps.length} fotos (${(totalOut / 1e6).toFixed(1)} MB total)\n`);
+  console.log(
+    `\n${label} (${dayDir}): ${webps.length} fotos (${(totalOut / 1e6).toFixed(1)} MB total)\n`,
+  );
+}
+
+async function buildGalleryDerivatives({ subdir, maxWidth, quality }, label) {
+  for (const dayDir of GALLERY_DAY_DIRS) {
+    await buildGalleryDerivativesForDay(
+      dayDir,
+      { subdir, maxWidth, quality },
+      label,
+    );
+  }
 }
 
 async function writeGalleryManifest(webpNames) {
@@ -172,13 +191,15 @@ async function optimizeVertical() {
 
 async function main() {
   console.log("Optimizando imágenes públicas…\n");
-  await optimizeGallery();
+  for (const dayDir of GALLERY_DAY_DIRS) {
+    await optimizeGalleryDay(dayDir);
+  }
   await syncGalleryManifestFromDisk();
-  await buildGalleryPreviews();
-  await buildGalleryDisplays();
+  await buildGalleryDerivatives(GALLERY_PREVIEW, "Previews");
+  await buildGalleryDerivatives(GALLERY_DISPLAY, "Display (lightbox)");
   await optimizeVertical();
   console.log(
-    "Listo. Commit public/images/galeria/**/*.webp y src/data/congress-gallery.ts",
+    "Listo. Commit public/images/galeria/** y src/data/congress-gallery.ts",
   );
 }
 

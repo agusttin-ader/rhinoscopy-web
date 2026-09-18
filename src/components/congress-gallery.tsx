@@ -4,6 +4,7 @@ import { Reveal } from "@/components/motion/reveal";
 import {
   CONGRESS_GALLERY_DAYS,
   CONGRESS_GALLERY_SELECTION_SIZE,
+  type CongressGalleryDayDir,
   type CongressGalleryDayId,
   congressGallerySrc,
   prefetchCongressGalleryImage,
@@ -70,6 +71,7 @@ const SIDE_TILE_LAYOUT: ReadonlyArray<{
 type TileProps = {
   file: string;
   alt: string;
+  dayDir: CongressGalleryDayDir;
   className?: string;
   style?: React.CSSProperties;
   priority?: boolean;
@@ -79,6 +81,7 @@ type TileProps = {
 function GalleryTile({
   file,
   alt,
+  dayDir,
   className = "",
   style,
   priority,
@@ -88,13 +91,13 @@ function GalleryTile({
     <button
       type="button"
       onClick={() => onOpen(file)}
-      onMouseEnter={() => prefetchCongressGalleryImage(file, "display")}
-      onFocus={() => prefetchCongressGalleryImage(file, "display")}
+      onMouseEnter={() => prefetchCongressGalleryImage(file, dayDir, "display")}
+      onFocus={() => prefetchCongressGalleryImage(file, dayDir, "display")}
       style={style}
       className={`group relative min-h-0 min-w-0 overflow-hidden bg-paper transition-opacity hover:opacity-[0.92] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ${className}`}
     >
       <Image
-        src={congressGallerySrc(file, "preview")}
+        src={congressGallerySrc(file, "preview", dayDir)}
         alt={alt}
         fill
         sizes="(max-width: 767px) 100vw, (max-width: 1280px) 42vw, 520px"
@@ -129,6 +132,7 @@ function CarouselArrow({
 type GalleryMobileSwipeProps = {
   slideIndex: number;
   files: string[];
+  dayDir: CongressGalleryDayDir;
   dayTotal: number;
   selectionStartIndex: number;
   photoAlt: string;
@@ -138,6 +142,7 @@ type GalleryMobileSwipeProps = {
 function GalleryMobileSwipe({
   slideIndex,
   files,
+  dayDir,
   dayTotal,
   selectionStartIndex,
   photoAlt,
@@ -189,7 +194,7 @@ function GalleryMobileSwipe({
             >
               <div className="relative h-full w-full overflow-hidden bg-navy/5">
                 <Image
-                  src={congressGallerySrc(file, "preview")}
+                  src={congressGallerySrc(file, "preview", dayDir)}
                   alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
                   fill
                   sizes="100vw"
@@ -227,6 +232,7 @@ type MosaicProps = {
   slideIndex: number;
   hero: string;
   rest: string[];
+  dayDir: CongressGalleryDayDir;
   selectionStartIndex: number;
   dayTotal: number;
   photoAlt: string;
@@ -238,6 +244,7 @@ function GalleryMosaic({
   slideIndex,
   hero,
   rest,
+  dayDir,
   selectionStartIndex,
   dayTotal,
   photoAlt,
@@ -250,6 +257,7 @@ function GalleryMosaic({
     >
       <GalleryTile
         file={hero}
+        dayDir={dayDir}
         alt={`${photoAlt} (${selectionStartIndex + 1}/${dayTotal})`}
         className="col-start-1 row-start-1 row-span-6"
         priority
@@ -264,6 +272,7 @@ function GalleryMosaic({
           <GalleryTile
             key={`${slideIndex}-${file}`}
             file={file}
+            dayDir={dayDir}
             alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
             style={{
               gridRow: `${layout.rowStart} / span ${layout.rowSpan}`,
@@ -282,6 +291,7 @@ function GalleryCarousel({
   selectionCount,
   hero,
   rest,
+  dayDir,
   selectionStartIndex,
   dayTotal,
   photoAlt,
@@ -327,6 +337,7 @@ function GalleryCarousel({
           slideIndex={slideIndex}
           hero={hero}
           rest={rest}
+          dayDir={dayDir}
           selectionStartIndex={selectionStartIndex}
           dayTotal={dayTotal}
           photoAlt={photoAlt}
@@ -395,6 +406,7 @@ type GalleryLightboxProps = {
   onPrev: () => void;
   onNext: () => void;
   photoEnter: LightboxPhotoEnter;
+  dayDir: CongressGalleryDayDir;
 };
 
 const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
@@ -421,12 +433,14 @@ function LightboxPhotoStage({
   photoAlt,
   index,
   total,
+  dayDir,
   enter,
 }: {
   file: string;
   photoAlt: string;
   index: number;
   total: number;
+  dayDir: CongressGalleryDayDir;
   enter: LightboxPhotoEnter;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -435,9 +449,9 @@ function LightboxPhotoStage({
     stageW: number;
   } | null>(null);
 
-  const fullSrc = congressGallerySrc(file, "full");
-  const displaySrc = congressGallerySrc(file, "display");
-  const previewSrc = congressGallerySrc(file, "preview");
+  const fullSrc = congressGallerySrc(file, "full", dayDir);
+  const displaySrc = congressGallerySrc(file, "display", dayDir);
+  const previewSrc = congressGallerySrc(file, "preview", dayDir);
 
   const [photoSrc, setPhotoSrc] = useState(previewSrc);
 
@@ -524,7 +538,7 @@ function LightboxPhotoStage({
           onLoad={(e) => {
             const img = e.currentTarget;
             updateLayoutFromImage(img.naturalWidth, img.naturalHeight);
-            if (img.src.includes("/galeria/preview/")) {
+            if (img.src.includes("/preview/")) {
               setPhotoSrc(displaySrc);
             }
           }}
@@ -577,6 +591,7 @@ function GalleryLightbox({
   onPrev,
   onNext,
   photoEnter,
+  dayDir,
 }: GalleryLightboxProps) {
   const swipe = useLightboxSwipe(onPrev, onNext);
 
@@ -616,6 +631,7 @@ function GalleryLightbox({
           index={index}
           total={total}
           enter={photoEnter}
+          dayDir={dayDir}
         />
 
         <button
@@ -681,6 +697,7 @@ export function CongressGallery() {
     file: string;
     scope: readonly string[];
     enter: LightboxPhotoEnter;
+    dayDir: CongressGalleryDayDir;
   } | null>(null);
 
   const activeDay = useMemo(
@@ -725,8 +742,13 @@ export function CongressGallery() {
 
   const openLightbox = (file: string) => {
     if (!getDesktopGallerySnapshot()) return;
-    prefetchCongressGalleryImage(file, "display");
-    setLightbox({ file, scope: dayFiles, enter: "initial" });
+    prefetchCongressGalleryImage(file, activeDay.dir, "display");
+    setLightbox({
+      file,
+      scope: dayFiles,
+      enter: "initial",
+      dayDir: activeDay.dir,
+    });
   };
   const closeLightbox = () => setLightbox(null);
 
@@ -740,6 +762,7 @@ export function CongressGallery() {
         file: state.scope[next],
         scope: state.scope,
         enter: "prev",
+        dayDir: state.dayDir,
       };
     });
   }, []);
@@ -754,6 +777,7 @@ export function CongressGallery() {
         file: state.scope[next],
         scope: state.scope,
         enter: "next",
+        dayDir: state.dayDir,
       };
     });
   }, []);
@@ -764,8 +788,16 @@ export function CongressGallery() {
     const index = lightbox.scope.indexOf(lightbox.file);
     if (index < 0) return;
     const len = lightbox.scope.length;
-    prefetchCongressGalleryImage(lightbox.scope[(index - 1 + len) % len], "display");
-    prefetchCongressGalleryImage(lightbox.scope[(index + 1) % len], "display");
+    prefetchCongressGalleryImage(
+      lightbox.scope[(index - 1 + len) % len],
+      lightbox.dayDir,
+      "display",
+    );
+    prefetchCongressGalleryImage(
+      lightbox.scope[(index + 1) % len],
+      lightbox.dayDir,
+      "display",
+    );
   }, [lightbox, isDesktopGallery]);
 
   useEffect(() => {
@@ -789,6 +821,7 @@ export function CongressGallery() {
         selectionStartIndex,
         dayTotal,
         photoAlt: copy.photoAlt,
+        dayDir: activeDay.dir,
         onOpen: openLightbox,
       }
     : null;
@@ -849,6 +882,7 @@ export function CongressGallery() {
           key={`${dayId}-${slideIndex}`}
           slideIndex={slideIndex}
           files={mobileFiles}
+          dayDir={activeDay.dir}
           dayTotal={dayTotal}
           selectionStartIndex={selectionStartIndex}
           photoAlt={copy.photoAlt}
@@ -892,6 +926,7 @@ export function CongressGallery() {
           onPrev={goPrevPhoto}
           onNext={goNextPhoto}
           photoEnter={lightbox.enter}
+          dayDir={lightbox.dayDir}
         />
       ) : null}
     </section>

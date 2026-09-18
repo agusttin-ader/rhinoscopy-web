@@ -51,29 +51,33 @@ export const CONGRESS_GALLERY_DAYS = [
   {
     id: "day1",
     date: "2026-09-17",
+    dir: "dia-uno",
     files: CONGRESS_GALLERY_DAY1_FILES,
   },
   {
     id: "day2",
     date: "2026-09-18",
+    dir: "dia-dos",
     files: [] as const,
   },
   {
     id: "day3",
     date: "2026-09-19",
+    dir: "dia-tres",
     files: [] as const,
   },
 ] as const;
 
 export type CongressGalleryDayId = (typeof CONGRESS_GALLERY_DAYS)[number]["id"];
 
+export type CongressGalleryDayDir =
+  (typeof CONGRESS_GALLERY_DAYS)[number]["dir"];
+
 export const CONGRESS_GALLERY_FILES = CONGRESS_GALLERY_DAYS.flatMap((day) => [
   ...day.files,
 ]);
 
 export const CONGRESS_GALLERY_BASE = "/images/galeria";
-export const CONGRESS_GALLERY_PREVIEW_BASE = "/images/galeria/preview";
-export const CONGRESS_GALLERY_DISPLAY_BASE = "/images/galeria/display";
 
 export const CONGRESS_GALLERY_SELECTION_SIZE = 7;
 
@@ -82,18 +86,27 @@ export const CONGRESS_GALLERY_PAGE_SIZE = 12;
 
 export type CongressGalleryVariant = "preview" | "display" | "full";
 
+export function congressGalleryDayDir(
+  dayId: CongressGalleryDayId,
+): CongressGalleryDayDir {
+  const day = CONGRESS_GALLERY_DAYS.find((d) => d.id === dayId);
+  return day?.dir ?? CONGRESS_GALLERY_DAYS[0].dir;
+}
+
 /** Mosaico/carrusel: `preview`. Lightbox: `display`. Archivo original: `full`. */
 export function congressGallerySrc(
   file: string,
   variant: CongressGalleryVariant = "full",
+  dayDir: CongressGalleryDayDir,
 ): string {
+  const root = `${CONGRESS_GALLERY_BASE}/${dayDir}`;
   if (variant === "preview") {
-    return `${CONGRESS_GALLERY_PREVIEW_BASE}/${file}`;
+    return `${root}/preview/${file}`;
   }
   if (variant === "display") {
-    return `${CONGRESS_GALLERY_DISPLAY_BASE}/${file}`;
+    return `${root}/display/${file}`;
   }
-  return `${CONGRESS_GALLERY_BASE}/${file}`;
+  return `${root}/${file}`;
 }
 
 const prefetchedGallery = new Set<string>();
@@ -101,10 +114,11 @@ const prefetchedGallery = new Set<string>();
 /** Precarga estática (p. ej. hover en mosaico o vecinos del lightbox). */
 export function prefetchCongressGalleryImage(
   file: string,
+  dayDir: CongressGalleryDayDir,
   variant: CongressGalleryVariant = "display",
 ): void {
   if (typeof window === "undefined") return;
-  const src = congressGallerySrc(file, variant);
+  const src = congressGallerySrc(file, variant, dayDir);
   if (prefetchedGallery.has(src)) return;
   prefetchedGallery.add(src);
   const img = new window.Image();

@@ -287,6 +287,7 @@ function GalleryCarousel({
   photoAlt,
   mosaicClassName,
   slideClassName,
+  slideEnter,
   onPrevSlide,
   onNextSlide,
   prevAria,
@@ -295,12 +296,20 @@ function GalleryCarousel({
 }: MosaicProps & {
   selectionCount: number;
   slideClassName: string;
+  slideEnter: LightboxPhotoEnter;
   onPrevSlide: () => void;
   onNextSlide: () => void;
   prevAria: string;
   nextAria: string;
 }) {
   const showArrows = selectionCount > 1;
+
+  const slideEnterClass =
+    slideEnter === "prev"
+      ? "congress-gallery-slide--prev"
+      : slideEnter === "next"
+        ? "congress-gallery-slide--next"
+        : "";
 
   return (
     <div className="congress-gallery-controls flex items-center">
@@ -310,7 +319,10 @@ function GalleryCarousel({
         <span className="hidden w-11 shrink-0 md:block md:w-12" aria-hidden />
       )}
 
-      <div key={slideIndex} className={`${slideClassName} min-w-0 flex-1`}>
+      <div
+        key={slideIndex}
+        className={`${slideClassName} ${slideEnterClass} min-w-0 flex-1`.trim()}
+      >
         <GalleryMosaic
           slideIndex={slideIndex}
           hero={hero}
@@ -364,6 +376,8 @@ function LightboxCloseIcon() {
   );
 }
 
+export type LightboxPhotoEnter = "initial" | "prev" | "next";
+
 type GalleryLightboxProps = {
   file: string;
   index: number;
@@ -380,6 +394,7 @@ type GalleryLightboxProps = {
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  photoEnter: LightboxPhotoEnter;
 };
 
 const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
@@ -406,69 +421,81 @@ function LightboxPhotoStage({
   photoAlt,
   index,
   total,
+  enter,
 }: {
   file: string;
   photoAlt: string;
   index: number;
   total: number;
+  enter: LightboxPhotoEnter;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const naturalRef = useRef({ w: 0, h: 0 });
-  const [displayReady, setDisplayReady] = useState(false);
   const [layout, setLayout] = useState<{
     frame: { w: number; h: number };
     stageW: number;
   } | null>(null);
 
-  const refit = useCallback(() => {
-    const stage = stageRef.current;
-    const { w: nw, h: nh } = naturalRef.current;
-    if (!stage || !nw || !nh) return;
+  const fullSrc = congressGallerySrc(file, "full");
+  const displaySrc = congressGallerySrc(file, "display");
+  const previewSrc = congressGallerySrc(file, "preview");
 
-    const maxW = Math.max(1, stage.clientWidth);
-    const maxH = Math.max(1, stage.clientHeight);
-    const scale = Math.min(maxW / nw, maxH / nh);
-    setLayout({
-      stageW: stage.clientWidth,
-      frame: {
-        w: Math.floor(nw * scale),
-        h: Math.floor(nh * scale),
-      },
+  const [photoSrc, setPhotoSrc] = useState(previewSrc);
+
+  const handlePhotoError = useCallback(() => {
+    setPhotoSrc((current) => {
+      if (current === previewSrc) return displaySrc;
+      if (current === displaySrc) return fullSrc;
+      return current;
     });
-  }, []);
+  }, [previewSrc, displaySrc, fullSrc]);
 
-  const onPhotoMetrics = useCallback(
+  const updateLayoutFromImage = useCallback(
     (naturalWidth: number, naturalHeight: number) => {
-      naturalRef.current = { w: naturalWidth, h: naturalHeight };
-      refit();
+      const stage = stageRef.current;
+      if (!stage || naturalWidth <= 0 || naturalHeight <= 0) return;
+
+      const maxW = Math.max(1, stage.clientWidth);
+      const maxH = Math.max(1, stage.clientHeight);
+      const scale = Math.min(maxW / naturalWidth, maxH / naturalHeight);
+      setLayout({
+        stageW: stage.clientWidth,
+        frame: {
+          w: Math.floor(naturalWidth * scale),
+          h: Math.floor(naturalHeight * scale),
+        },
+      });
     },
-    [refit],
+    [],
   );
 
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    const ro = new ResizeObserver(() => refit());
-    ro.observe(stage);
-    return () => ro.disconnect();
-  }, [refit]);
+  const photoClassName =
+    "congress-lightbox-photo-img relative z-30 max-h-[calc(100dvh-10.5rem)] max-w-[calc(100vw-2.5rem)] object-contain object-center drop-shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-h-[calc(100dvh-7rem)] sm:max-w-[calc(100vw-12rem)]";
+
+  const frameClass =
+    enter === "prev"
+      ? "congress-lightbox-photo-frame congress-lightbox-photo-frame--prev"
+      : enter === "next"
+        ? "congress-lightbox-photo-frame congress-lightbox-photo-frame--next"
+        : "congress-lightbox-photo-frame";
+
+  const isPreview = photoSrc === previewSrc;
 
   return (
     <div
       ref={stageRef}
-      className="congress-lightbox-photo absolute inset-x-3 bottom-3 top-[max(9rem,calc(env(safe-area-inset-top,0px)+7.25rem))] flex items-center justify-center sm:inset-x-20 sm:inset-y-5 sm:top-auto"
+      className="absolute inset-x-3 bottom-3 top-[max(9rem,calc(env(safe-area-inset-top,0px)+7.25rem))] flex items-center justify-center sm:inset-x-20 sm:inset-y-5 sm:top-auto"
     >
       {layout && layout.stageW - layout.frame.w >= 100 ? (
         <>
           <div
-            className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2"
+            className="pointer-events-none absolute inset-y-0 left-0 z-0 flex items-center justify-center px-2"
             style={{ width: (layout.stageW - layout.frame.w) / 2 }}
             aria-hidden
           >
             <LightboxMeetWatermark />
           </div>
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-2"
+            className="pointer-events-none absolute inset-y-0 right-0 z-0 flex items-center justify-center px-2"
             style={{ width: (layout.stageW - layout.frame.w) / 2 }}
             aria-hidden
           >
@@ -477,54 +504,32 @@ function LightboxPhotoStage({
         </>
       ) : (
         <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
           aria-hidden
         >
           <LightboxMeetWatermark className="max-w-[min(55vw,420px)] opacity-[0.09] sm:opacity-[0.11]" />
         </div>
       )}
 
-      <div className="relative z-10 flex h-full max-h-full items-center justify-center">
-        <div
-          className="relative shrink-0 drop-shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
-          style={
-            layout
-              ? { width: layout.frame.w, height: layout.frame.h }
-              : {
-                  height: "100%",
-                  width: "100%",
-                  maxHeight: "100%",
-                  maxWidth: "100%",
-                }
-          }
-        >
-          <Image
-            src={congressGallerySrc(file, "preview")}
-            alt=""
-            aria-hidden
-            fill
-            sizes="100vw"
-            className="object-contain"
-            priority
-            onLoad={(e) => {
-              onPhotoMetrics(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight);
-            }}
-          />
-          <Image
-            src={congressGallerySrc(file, "display")}
-            alt={`${photoAlt} (${index + 1}/${total})`}
-            fill
-            sizes="100vw"
-            className={`object-contain transition-opacity duration-300 ${
-              displayReady ? "opacity-100" : "opacity-0"
-            }`}
-            priority
-            onLoad={(e) => {
-              setDisplayReady(true);
-              onPhotoMetrics(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight);
-            }}
-          />
-        </div>
+      <div className={`relative z-20 flex items-center justify-center ${frameClass}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={photoSrc}
+          alt={`${photoAlt} (${index + 1}/${total})`}
+          decoding="async"
+          fetchPriority="high"
+          className={`${photoClassName} ${
+            isPreview ? "congress-lightbox-photo-img--preview" : "congress-lightbox-photo-img--sharp"
+          }`}
+          onLoad={(e) => {
+            const img = e.currentTarget;
+            updateLayoutFromImage(img.naturalWidth, img.naturalHeight);
+            if (img.src.includes("/galeria/preview/")) {
+              setPhotoSrc(displaySrc);
+            }
+          }}
+          onError={handlePhotoError}
+        />
       </div>
     </div>
   );
@@ -571,6 +576,7 @@ function GalleryLightbox({
   onClose,
   onPrev,
   onNext,
+  photoEnter,
 }: GalleryLightboxProps) {
   const swipe = useLightboxSwipe(onPrev, onNext);
 
@@ -609,6 +615,7 @@ function GalleryLightbox({
           photoAlt={photoAlt}
           index={index}
           total={total}
+          enter={photoEnter}
         />
 
         <button
@@ -669,9 +676,11 @@ export function CongressGallery() {
 
   const [dayId, setDayId] = useState<CongressGalleryDayId>("day1");
   const [slideIndex, setSlideIndex] = useState(0);
+  const [slideEnter, setSlideEnter] = useState<LightboxPhotoEnter>("initial");
   const [lightbox, setLightbox] = useState<{
     file: string;
     scope: readonly string[];
+    enter: LightboxPhotoEnter;
   } | null>(null);
 
   const activeDay = useMemo(
@@ -700,17 +709,24 @@ export function CongressGallery() {
   const selectDay = (id: CongressGalleryDayId) => {
     setDayId(id);
     setSlideIndex(0);
+    setSlideEnter("initial");
   };
 
   const goToSlide = (next: number) => {
     if (selectionCount === 0) return;
-    setSlideIndex((next + selectionCount) % selectionCount);
+    const target = (next + selectionCount) % selectionCount;
+    if (target === slideIndex) return;
+    const forward =
+      target > slideIndex ||
+      (slideIndex === selectionCount - 1 && target === 0);
+    setSlideEnter(forward ? "next" : "prev");
+    setSlideIndex(target);
   };
 
   const openLightbox = (file: string) => {
     if (!getDesktopGallerySnapshot()) return;
     prefetchCongressGalleryImage(file, "display");
-    setLightbox({ file, scope: dayFiles });
+    setLightbox({ file, scope: dayFiles, enter: "initial" });
   };
   const closeLightbox = () => setLightbox(null);
 
@@ -720,7 +736,11 @@ export function CongressGallery() {
       const index = state.scope.indexOf(state.file);
       if (index < 0) return state;
       const next = (index - 1 + state.scope.length) % state.scope.length;
-      return { file: state.scope[next], scope: state.scope };
+      return {
+        file: state.scope[next],
+        scope: state.scope,
+        enter: "prev",
+      };
     });
   }, []);
 
@@ -730,7 +750,11 @@ export function CongressGallery() {
       const index = state.scope.indexOf(state.file);
       if (index < 0) return state;
       const next = (index + 1) % state.scope.length;
-      return { file: state.scope[next], scope: state.scope };
+      return {
+        file: state.scope[next],
+        scope: state.scope,
+        enter: "next",
+      };
     });
   }, []);
 
@@ -774,7 +798,7 @@ export function CongressGallery() {
 
   return (
     <section id="galeria" className="scroll-mt-24 overflow-x-clip">
-      <Reveal as="div" className="mx-auto max-w-2xl border-b border-navy/10 pb-8">
+      <Reveal as="div" className="max-w-2xl border-b border-navy/10 pb-8">
         <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
           {copy.kicker}
         </p>
@@ -785,7 +809,7 @@ export function CongressGallery() {
       </Reveal>
 
       <div
-        className="mt-10 mb-1 grid w-full grid-cols-3 gap-3 px-2 md:mt-8 md:mb-2 md:flex md:justify-center md:gap-4 md:px-0"
+        className="mt-10 mb-1 grid w-full grid-cols-3 gap-3 md:mt-8 md:mb-2 md:flex md:justify-start md:gap-4"
         role="tablist"
         aria-label={copy.dayTabsAria}
       >
@@ -815,7 +839,7 @@ export function CongressGallery() {
       </div>
 
       {dayTotal === 0 ? (
-        <p className="mt-12 text-center text-sm text-slate-500">{copy.dayEmpty}</p>
+        <p className="mt-12 text-left text-sm text-slate-500">{copy.dayEmpty}</p>
       ) : null}
 
       {mosaicShared ? (
@@ -839,6 +863,7 @@ export function CongressGallery() {
             selectionCount={selectionCount}
             mosaicClassName="congress-gallery-mosaic"
             slideClassName="congress-gallery-slide"
+            slideEnter={slideEnter}
             onPrevSlide={() => goToSlide(slideIndex - 1)}
             onNextSlide={() => goToSlide(slideIndex + 1)}
             prevAria={copy.prevSelectionAria}
@@ -846,16 +871,6 @@ export function CongressGallery() {
           />
         </div>
       </div>
-
-      {selectionCount > 1 ? (
-        <button
-          type="button"
-          onClick={() => goToSlide(slideIndex + 1)}
-          className="mx-auto mt-8 block text-center text-sm font-medium text-slate-500 transition hover:text-slate-700"
-        >
-          {copy.nextSelection}
-        </button>
-      ) : null}
         </>
       ) : null}
 
@@ -876,6 +891,7 @@ export function CongressGallery() {
           onClose={closeLightbox}
           onPrev={goPrevPhoto}
           onNext={goNextPhoto}
+          photoEnter={lightbox.enter}
         />
       ) : null}
     </section>

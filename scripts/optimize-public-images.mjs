@@ -55,6 +55,14 @@ async function toWebp(
   return { inBytes: inStat.size, outBytes: outStat.size };
 }
 
+async function listGalleryRootWebps() {
+  const entries = await fs.readdir(GALLERY.dir, { withFileTypes: true });
+  return entries
+    .filter((e) => e.isFile() && /\.webp$/i.test(e.name))
+    .map((e) => e.name)
+    .sort();
+}
+
 async function optimizeGallery() {
   const names = (await fs.readdir(GALLERY.dir)).filter((n) =>
     /\.jpe?g$/i.test(n),
@@ -78,10 +86,26 @@ async function optimizeGallery() {
     console.log(`  galeria/${webpName}  ${(outBytes / 1024).toFixed(0)} KB`);
   }
 
-  await writeGalleryManifest(webpNames);
-  console.log(
-    `\nGalería: ${names.length} fotos → WebP (${(totalIn / 1e6).toFixed(1)} MB → ${(totalOut / 1e6).toFixed(1)} MB)\n`,
-  );
+  if (webpNames.length > 0) {
+    await writeGalleryManifest(webpNames);
+    console.log(
+      `\nGalería: ${names.length} fotos → WebP (${(totalIn / 1e6).toFixed(1)} MB → ${(totalOut / 1e6).toFixed(1)} MB)\n`,
+    );
+  } else {
+    console.log("Galería: sin JPEG nuevos para convertir.\n");
+  }
+}
+
+async function syncGalleryManifestFromDisk() {
+  const webps = await listGalleryRootWebps();
+  if (webps.length === 0) {
+    console.warn(
+      "Aviso: no hay WebP en public/images/galeria/; no se actualiza el manifiesto.\n",
+    );
+    return;
+  }
+  await writeGalleryManifest(webps);
+  console.log(`Manifiesto: ${webps.length} archivos en congress-gallery.ts\n`);
 }
 
 async function buildGalleryPreviews() {
@@ -96,11 +120,7 @@ async function buildGalleryDerivatives({ subdir, maxWidth, quality }, label) {
   const outDir = path.join(GALLERY.dir, subdir);
   await fs.mkdir(outDir, { recursive: true });
 
-  const entries = await fs.readdir(GALLERY.dir, { withFileTypes: true });
-  const webps = entries
-    .filter((e) => e.isFile() && /\.webp$/i.test(e.name))
-    .map((e) => e.name)
-    .sort();
+  const webps = await listGalleryRootWebps();
 
   if (webps.length === 0) {
     console.log(`Galería: sin WebP en raíz, omitiendo ${subdir}.\n`);
@@ -153,6 +173,7 @@ async function optimizeVertical() {
 async function main() {
   console.log("Optimizando imágenes públicas…\n");
   await optimizeGallery();
+  await syncGalleryManifestFromDisk();
   await buildGalleryPreviews();
   await buildGalleryDisplays();
   await optimizeVertical();

@@ -88,6 +88,10 @@ export const congressCopy = {
     prevPhoto: "Foto anterior",
     nextPhoto: "Foto siguiente",
     photoAlt: "Rhinoscopy Meet 2026",
+    lightboxBrandBold: "Rhinoscopy",
+    lightboxBrandLight: "Meet 2026",
+    lightboxTitleScript: "Buenos Aires",
+    lightboxTitleDisplay: "Galería",
     swipeHint: "Deslizá para ver más fotos",
     swipeAria: "Galería de fotos. Deslizá horizontalmente.",
     photoInSelection: (current: number, inSelection: number) =>

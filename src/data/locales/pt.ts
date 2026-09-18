@@ -165,6 +165,10 @@ export const pt = {
       prevPhoto: "Foto anterior",
       nextPhoto: "Próxima foto",
       photoAlt: "Rhinoscopy Meet 2026",
+      lightboxBrandBold: "Rhinoscopy",
+      lightboxBrandLight: "Meet 2026",
+      lightboxTitleScript: "Buenos Aires",
+      lightboxTitleDisplay: "Galeria",
       swipeHint: "Deslize para ver mais fotos",
       swipeAria: "Galeria de fotos. Deslize na horizontal.",
       photoInSelection: (current: number, inSelection: number) =>

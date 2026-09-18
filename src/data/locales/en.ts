@@ -165,6 +165,10 @@ export const en = {
       prevPhoto: "Previous photo",
       nextPhoto: "Next photo",
       photoAlt: "Rhinoscopy Meet 2026",
+      lightboxBrandBold: "Rhinoscopy",
+      lightboxBrandLight: "Meet 2026",
+      lightboxTitleScript: "Buenos Aires",
+      lightboxTitleDisplay: "Gallery",
       swipeHint: "Swipe to see more photos",
       swipeAria: "Photo gallery. Swipe horizontally.",
       photoInSelection: (current: number, inSelection: number) =>

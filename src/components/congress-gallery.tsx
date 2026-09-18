@@ -10,7 +10,31 @@ import {
 import { useLocaleData } from "@/hooks/use-locale-data";
 import Image from "next/image";
 import { useLocale } from "next-intl";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+
+const DESKTOP_GALLERY_MQ = "(min-width: 768px)";
+
+function subscribeDesktopGallery(onStoreChange: () => void) {
+  const mq = window.matchMedia(DESKTOP_GALLERY_MQ);
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getDesktopGallerySnapshot() {
+  return window.matchMedia(DESKTOP_GALLERY_MQ).matches;
+}
+
+function getDesktopGalleryServerSnapshot() {
+  return false;
+}
+
+function useDesktopGallery() {
+  return useSyncExternalStore(
+    subscribeDesktopGallery,
+    getDesktopGallerySnapshot,
+    getDesktopGalleryServerSnapshot,
+  );
+}
 
 function formatGalleryDayDate(isoDate: string, locale: string): string {
   const tag = locale === "en" ? "en-US" : locale === "pt" ? "pt-BR" : "es-AR";
@@ -106,7 +130,6 @@ type GalleryMobileSwipeProps = {
   selectionStartIndex: number;
   photoAlt: string;
   swipeAria: string;
-  onOpen: (file: string) => void;
 };
 
 function GalleryMobileSwipe({
@@ -116,7 +139,6 @@ function GalleryMobileSwipe({
   selectionStartIndex,
   photoAlt,
   swipeAria,
-  onOpen,
 }: GalleryMobileSwipeProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -162,11 +184,7 @@ function GalleryMobileSwipe({
                 index === 0 ? () => setNudge(false) : undefined
               }
             >
-              <button
-                type="button"
-                onClick={() => onOpen(file)}
-                className="relative block h-full w-full overflow-hidden bg-navy/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-              >
+              <div className="relative h-full w-full overflow-hidden bg-navy/5">
                 <Image
                   src={congressGallerySrc(file)}
                   alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
@@ -175,7 +193,7 @@ function GalleryMobileSwipe({
                   className="object-cover"
                   priority={index === 0}
                 />
-              </button>
+              </div>
             </div>
           );
         })}
@@ -311,10 +329,321 @@ function GalleryCarousel({
   );
 }
 
+function LightboxBrandLine({
+  bold,
+  light,
+}: {
+  bold: string;
+  light: string;
+}) {
+  return (
+    <p className="mt-1.5 uppercase leading-none">
+      <span className="text-[0.62rem] font-semibold tracking-[0.24em] text-white/70 sm:text-[0.68rem]">
+        {bold}
+      </span>{" "}
+      <span className="text-[0.62rem] font-light tracking-[0.38em] text-white/38 sm:text-[0.68rem]">
+        {light}
+      </span>
+    </p>
+  );
+}
+
+function LightboxCloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M5 5l10 10M15 5 5 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+type GalleryLightboxProps = {
+  file: string;
+  index: number;
+  total: number;
+  photoAlt: string;
+  brandBold: string;
+  brandLight: string;
+  titleScript: string;
+  titleDisplay: string;
+  closeLabel: string;
+  prevLabel: string;
+  nextLabel: string;
+  swipeAria: string;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+};
+
+const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
+
+function LightboxMeetWatermark({ className }: { className?: string }) {
+  return (
+    <div
+      className={`relative aspect-[1200/520] w-full max-w-[240px] opacity-[0.12] brightness-[0.85] sm:max-w-[280px] ${className ?? ""}`}
+    >
+      <Image
+        src={MEET_LOGO_DARK}
+        alt=""
+        fill
+        sizes="280px"
+        className="object-contain"
+        unoptimized
+      />
+    </div>
+  );
+}
+
+function LightboxPhotoStage({
+  file,
+  photoAlt,
+  index,
+  total,
+}: {
+  file: string;
+  photoAlt: string;
+  index: number;
+  total: number;
+}) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const naturalRef = useRef({ w: 0, h: 0 });
+  const [layout, setLayout] = useState<{
+    frame: { w: number; h: number };
+    stageW: number;
+  } | null>(null);
+
+  const refit = useCallback(() => {
+    const stage = stageRef.current;
+    const { w: nw, h: nh } = naturalRef.current;
+    if (!stage || !nw || !nh) return;
+
+    const maxW = Math.max(1, stage.clientWidth);
+    const maxH = Math.max(1, stage.clientHeight);
+    const scale = Math.min(maxW / nw, maxH / nh);
+    setLayout({
+      stageW: stage.clientWidth,
+      frame: {
+        w: Math.floor(nw * scale),
+        h: Math.floor(nh * scale),
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const ro = new ResizeObserver(() => refit());
+    ro.observe(stage);
+    return () => ro.disconnect();
+  }, [refit]);
+
+  return (
+    <div
+      ref={stageRef}
+      className="congress-lightbox-photo absolute inset-x-3 bottom-3 top-[max(9rem,calc(env(safe-area-inset-top,0px)+7.25rem))] flex items-center justify-center sm:inset-x-20 sm:inset-y-5 sm:top-auto"
+    >
+      {layout && layout.stageW - layout.frame.w >= 100 ? (
+        <>
+          <div
+            className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2"
+            style={{ width: (layout.stageW - layout.frame.w) / 2 }}
+            aria-hidden
+          >
+            <LightboxMeetWatermark />
+          </div>
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-2"
+            style={{ width: (layout.stageW - layout.frame.w) / 2 }}
+            aria-hidden
+          >
+            <LightboxMeetWatermark />
+          </div>
+        </>
+      ) : (
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          aria-hidden
+        >
+          <LightboxMeetWatermark className="max-w-[min(55vw,420px)] opacity-[0.09] sm:opacity-[0.11]" />
+        </div>
+      )}
+
+      <div className="relative z-10 flex h-full max-h-full items-center justify-center">
+        <div
+          className="relative shrink-0 drop-shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
+          style={
+            layout
+              ? { width: layout.frame.w, height: layout.frame.h }
+              : {
+                  height: "100%",
+                  width: "100%",
+                  maxHeight: "100%",
+                  maxWidth: "100%",
+                }
+          }
+        >
+          <Image
+            src={congressGallerySrc(file)}
+            alt={`${photoAlt} (${index + 1}/${total})`}
+            fill
+            sizes="100vw"
+            className="object-contain"
+            priority
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              naturalRef.current = {
+                w: img.naturalWidth,
+                h: img.naturalHeight,
+              };
+              refit();
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function useLightboxSwipe(onPrev: () => void, onNext: () => void) {
+  const startRef = useRef<{ x: number; y: number } | null>(null);
+
+  return {
+    onTouchStart: (event: React.TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      startRef.current = { x: touch.clientX, y: touch.clientY };
+    },
+    onTouchEnd: (event: React.TouchEvent) => {
+      const start = startRef.current;
+      const touch = event.changedTouches[0];
+      startRef.current = null;
+      if (!start || !touch) return;
+
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.15) return;
+
+      if (dx > 0) onPrev();
+      else onNext();
+    },
+  };
+}
+
+function GalleryLightbox({
+  file,
+  index,
+  total,
+  photoAlt,
+  brandBold,
+  brandLight,
+  titleScript,
+  titleDisplay,
+  closeLabel,
+  prevLabel,
+  nextLabel,
+  swipeAria,
+  onClose,
+  onPrev,
+  onNext,
+}: GalleryLightboxProps) {
+  const swipe = useLightboxSwipe(onPrev, onNext);
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  return (
+    <dialog
+      open
+      className="congress-lightbox fixed inset-0 z-[100] m-0 h-[100dvh] max-h-[100dvh] w-full max-w-none overflow-hidden border-0 bg-[#0a0918] p-0 backdrop:bg-[#0a0918]"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      aria-modal
+      aria-label={`${photoAlt}. ${swipeAria}`}
+    >
+      <div
+        className="relative h-[100dvh] max-h-[100dvh] w-full touch-pan-y"
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={swipe.onTouchStart}
+        onTouchEnd={swipe.onTouchEnd}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgba(255,255,255,0.04)_0%,transparent_55%)]"
+          aria-hidden
+        />
+
+        <LightboxPhotoStage
+          key={file}
+          file={file}
+          photoAlt={photoAlt}
+          index={index}
+          total={total}
+        />
+
+        <button
+          type="button"
+          onClick={onPrev}
+          className="absolute top-1/2 left-2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-[#0a0918]/55 text-2xl leading-none text-white/90 backdrop-blur-sm transition hover:border-white/20 hover:bg-[#0a0918]/75 sm:flex sm:left-5 sm:h-12 sm:w-12"
+          aria-label={prevLabel}
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          onClick={onNext}
+          className="absolute top-1/2 right-2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-[#0a0918]/55 text-2xl leading-none text-white/90 backdrop-blur-sm transition hover:border-white/20 hover:bg-[#0a0918]/75 sm:flex sm:right-5 sm:h-12 sm:w-12"
+          aria-label={nextLabel}
+        >
+          ›
+        </button>
+
+        <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-4 px-4 pt-[max(1.35rem,env(safe-area-inset-top,0px))] pb-2 sm:px-8 sm:pt-5 sm:pb-3">
+          <div className="min-w-0">
+            <h2 className="leading-[0.92]">
+              <span className="font-script block text-[clamp(1.75rem,5vw,2.35rem)] leading-none text-cyan-400">
+                {titleScript}
+              </span>
+              <span className="font-display -mt-0.5 block text-[clamp(1.35rem,3.8vw,1.85rem)] uppercase tracking-[0.03em] text-white">
+                {titleDisplay}
+              </span>
+            </h2>
+            <LightboxBrandLine bold={brandBold} light={brandLight} />
+          </div>
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+            <span className="text-[0.7rem] font-medium tabular-nums text-white/45 sm:text-xs">
+              {index + 1}
+              <span className="mx-1 text-white/25">/</span>
+              {total}
+            </span>
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/90 transition hover:border-white/25 hover:bg-white/12"
+              aria-label={closeLabel}
+            >
+              <LightboxCloseIcon />
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  );
+}
+
 export function CongressGallery() {
   const locale = useLocale();
   const { congressCopy } = useLocaleData();
   const copy = congressCopy.gallery;
+  const isDesktopGallery = useDesktopGallery();
 
   const [dayId, setDayId] = useState<CongressGalleryDayId>("day1");
   const [slideIndex, setSlideIndex] = useState(0);
@@ -357,6 +686,7 @@ export function CongressGallery() {
   };
 
   const openLightbox = (file: string) => {
+    if (!getDesktopGallerySnapshot()) return;
     setLightbox({ file, scope: dayFiles });
   };
   const closeLightbox = () => setLightbox(null);
@@ -382,7 +712,7 @@ export function CongressGallery() {
   }, []);
 
   useEffect(() => {
-    if (lightbox === null) return;
+    if (lightbox === null || !isDesktopGallery) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeLightbox();
@@ -392,7 +722,7 @@ export function CongressGallery() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [lightbox, goPrevPhoto, goNextPhoto]);
+  }, [lightbox, isDesktopGallery, goPrevPhoto, goNextPhoto]);
 
   const mosaicShared = hero
     ? {
@@ -466,7 +796,6 @@ export function CongressGallery() {
           selectionStartIndex={selectionStartIndex}
           photoAlt={copy.photoAlt}
           swipeAria={copy.swipeAria}
-          onOpen={openLightbox}
         />
       </div>
 
@@ -497,51 +826,24 @@ export function CongressGallery() {
         </>
       ) : null}
 
-      {lightbox !== null && lightboxIndex >= 0 ? (
-        <dialog
-          open
-          className="fixed inset-0 z-[100] m-0 flex h-full max-h-none w-full max-w-none items-center justify-center border-0 bg-navy/92 p-4 backdrop:bg-navy/92 sm:p-8"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closeLightbox();
-          }}
-          aria-modal
-        >
-          <button
-            type="button"
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 px-4 py-2 text-[0.65rem] font-bold tracking-[0.14em] text-white uppercase transition hover:bg-white/20 sm:top-6 sm:right-6"
-          >
-            {copy.closeLightbox}
-          </button>
-
-          <button
-            type="button"
-            onClick={goPrevPhoto}
-            className="absolute top-1/2 left-2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20 sm:flex sm:left-4"
-            aria-label={copy.prevPhoto}
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            onClick={goNextPhoto}
-            className="absolute top-1/2 right-2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20 sm:flex sm:right-4"
-            aria-label={copy.nextPhoto}
-          >
-            ›
-          </button>
-
-          <div className="relative h-[min(78vh,720px)] w-full max-w-5xl">
-            <Image
-              src={congressGallerySrc(lightbox.file)}
-              alt={`${copy.photoAlt} (${lightboxIndex + 1}/${lightbox.scope.length})`}
-              fill
-              sizes="100vw"
-              className="object-contain"
-              priority
-            />
-          </div>
-        </dialog>
+      {lightbox !== null && lightboxIndex >= 0 && isDesktopGallery ? (
+        <GalleryLightbox
+          file={lightbox.file}
+          index={lightboxIndex}
+          total={lightbox.scope.length}
+          photoAlt={copy.photoAlt}
+          brandBold={copy.lightboxBrandBold}
+          brandLight={copy.lightboxBrandLight}
+          titleScript={copy.lightboxTitleScript}
+          titleDisplay={copy.lightboxTitleDisplay}
+          closeLabel={copy.closeLightbox}
+          prevLabel={copy.prevPhoto}
+          nextLabel={copy.nextPhoto}
+          swipeAria={copy.swipeAria}
+          onClose={closeLightbox}
+          onPrev={goPrevPhoto}
+          onNext={goNextPhoto}
+        />
       ) : null}
     </section>
   );

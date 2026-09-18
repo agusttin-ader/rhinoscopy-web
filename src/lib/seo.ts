@@ -112,7 +112,11 @@ export function rootMetadataBase(): Metadata {
       template: "%s | Rhinoscopy",
     },
     description:
-      "Comunidad de educación médica en rinología y endoscopía nasal.",
+      "Rhinoscopy: otorrinolaringología, rinología y rinoscopia. Formación en endoscopía nasal, cirugía rinológica y ORL. Webinars y congreso Rhinoscopy Meet.",
+    icons: {
+      icon: [{ url: "/icon.png", type: "image/png", sizes: "48x48" }],
+      apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    },
     formatDetection: {
       telephone: false,
     },
@@ -132,9 +136,9 @@ function ogLocale(locale: string): string {
 /** Imagen OG/Twitter vía `opengraph-image.tsx` (App Router). */
 export function openGraphImageAlt(locale: string): string {
   const map: Record<string, string> = {
-    es: "Rhinoscopy — educación médica en rinología",
-    en: "Rhinoscopy — medical education in rhinology",
-    pt: "Rhinoscopy — educação médica em rinologia",
+    es: "Otorrinolaringología, rinología y rinoscopia",
+    en: "Otolaryngology, rhinology and rhinoscopy",
+    pt: "Otorrinolaringologia, rinologia e rinoscopia",
   };
   return map[locale] ?? map.es;
 }

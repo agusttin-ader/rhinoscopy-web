@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Rhinoscopy",
     short_name: "Rhinoscopy",
     description:
-      "Comunidad de educación médica en rinología y endoscopía nasal.",
+      "Rhinoscopy: otorrinolaringología, rinología y rinoscopia. Webinars, congreso Meet y formación en endoscopía nasal y ORL.",
     start_url: base,
     display: "standalone",
     background_color: "#262454",
@@ -24,6 +24,12 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         src: "/apple-icon.png",
         sizes: "180x180",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/images/logo-rhinoscopy-hd.png",
+        sizes: "1024x1024",
         type: "image/png",
         purpose: "any",
       },

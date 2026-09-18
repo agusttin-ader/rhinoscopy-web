@@ -6,9 +6,9 @@ export const aboutCopy = {
   titleScript: "Somos",
   titleDisplay: "Rhinoscopy",
   lead:
-    "Una comunidad de educación médica en rinología y endoscopía nasal, con base en Argentina y alcance para profesionales de toda la región.",
+    "Comunidad de educación médica en otorrinolaringología, rinología, rinoscopia y endoscopía nasal, con base en Argentina y alcance para profesionales de toda la región.",
   paragraphs: [
-    "Nacimos para acercar formación de calidad en rinología: jornadas presenciales, encuentros en vivo y contenido pensado para la práctica clínica diaria. En Instagram compartimos novedades del congreso, avisos de webinars y material de la comunidad.",
+    "Nacimos para acercar formación de calidad en rinología y ORL: jornadas presenciales, webinars en vivo y contenido pensado para la práctica clínica en cirugía endoscópica nasal y rinosinusitis. En Instagram compartimos novedades del congreso, avisos de webinars y material de la comunidad.",
   ],
   highlights: [
     "Rhinoscopy Meet — congreso de endoscopía nasal",

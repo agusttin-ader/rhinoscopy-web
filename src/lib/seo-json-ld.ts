@@ -1,24 +1,38 @@
 import type { AppLocale } from "@/i18n/routing";
 import { meet2026, site } from "@/data/site";
+import { SEO_KNOWS_ABOUT } from "@/data/seo-copy";
 import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
 
 export type JsonLdGraph = Record<string, unknown> | Record<string, unknown>[];
 
-export function organizationJsonLdGraph(): JsonLdGraph {
+export function organizationJsonLdGraph(
+  locale: AppLocale = "es",
+): JsonLdGraph {
   const base = getSiteUrl();
+  const knowsAbout = SEO_KNOWS_ABOUT[locale] ?? SEO_KNOWS_ABOUT.es;
 
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["Organization", "EducationalOrganization"],
+        "@type": ["Organization", "EducationalOrganization", "MedicalOrganization"],
         "@id": `${base}/#organization`,
         name: site.name,
         url: base,
-        logo: absoluteUrl("/images/rhinoscopy-logo-hero-sombra.png"),
-        description:
-          "Comunidad de educación médica en rinología y endoscopía nasal.",
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl("/images/logo-rhinoscopy-hd.png"),
+          width: 1024,
+          height: 1024,
+        },
+        description: site.brandDescription,
+        alternateName: ["Rhinoscopy Meet"],
+        knowsAbout,
+        audience: {
+          "@type": "MedicalAudience",
+          audienceType: "Physician",
+        },
         email: site.email,
         sameAs: [site.instagram],
         contactPoint: [
@@ -35,8 +49,13 @@ export function organizationJsonLdGraph(): JsonLdGraph {
         "@id": `${base}/#website`,
         url: base,
         name: site.name,
+        description: site.brandDescription,
         publisher: { "@id": `${base}/#organization` },
         inLanguage: ["es-AR", "en", "pt-BR"],
+        about: knowsAbout.map((topic) => ({
+          "@type": "Thing",
+          name: topic,
+        })),
       },
     ],
   };
@@ -92,7 +111,7 @@ export function rhinoscopyMeetEventJsonLd(locale: AppLocale): JsonLdGraph {
     "@context": "https://schema.org",
     "@type": "Event",
     name: meet2026.title,
-    description: site.tagline,
+    description: site.meetTagline,
     startDate: meet2026.startDate,
     endDate: meet2026.endDate,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -108,7 +127,7 @@ export function rhinoscopyMeetEventJsonLd(locale: AppLocale): JsonLdGraph {
     },
     organizer: { "@id": `${base}/#organization` },
     url: eventUrl,
-    image: absoluteUrl("/images/rhinoscopy-logo-hero-sombra.png"),
+    image: absoluteUrl("/images/logo-rhinoscopy-hd.png"),
   };
 }
 

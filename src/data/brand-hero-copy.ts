@@ -4,9 +4,10 @@ export const brandHeroCopy = {
   headlineImpact: "Formación de excelencia en rinología",
   // headlineImpact: "Educación que transforma la práctica clínica",
   // headlineImpact: "Donde la rinología se encuentra",
-  tagline: "Comunidad de educación médica en rinología y endoscopía nasal",
+  tagline:
+    "Otorrinolaringología, rinología y rinoscopia para la práctica clínica",
   lead:
-    "Webinars, congreso y recursos para profesionales que buscan profundizar en endoscopía nasal y cirugía rinológica.",
+    "Webinars, congreso y recursos para otorrinolaringólogos que profundizan en endoscopía nasal, cirugía rinológica y rinología.",
   ctaCongress: "Ver Congreso",
   ctaWebinars: "Ver Webinars",
 } as const;

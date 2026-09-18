@@ -45,9 +45,9 @@ export const en = {
     titleScript: "We are",
     titleDisplay: "Rhinoscopy",
     lead:
-      "A medical education community in rhinology and nasal endoscopy, based in Argentina and open to professionals across the region.",
+      "A medical education community in otolaryngology, rhinology, rhinoscopy and nasal endoscopy, based in Argentina and open to ENT professionals across the region.",
     paragraphs: [
-      "We bring quality training in rhinology closer: in-person meetings, live events, and content designed for daily clinical practice. On Instagram we share congress updates, webinar announcements, and community news.",
+      "We bring quality training in rhinology and otolaryngology closer: in-person meetings, live webinars, and content for endoscopic sinus surgery and daily ORL practice. On Instagram we share congress updates, webinar announcements, and community news.",
     ],
     highlights: [
       "Rhinoscopy Meet — nasal endoscopy congress",
@@ -272,7 +272,7 @@ export const en = {
     en: "English",
     pt: "Português",
   },
-  siteTagline: "A pure nasal endoscopy event",
+  siteTagline: "Otolaryngology, rhinology and rhinoscopy.",
   meet2026: {
     title: "Rhinoscopy Meet 2026",
     dates: "September 17, 18 and 19",
@@ -284,26 +284,35 @@ export const en = {
   },
   meta: {
     home: {
-      title: "Rhinoscopy Meet 2026 | Rhinology Congress in Buenos Aires",
+      title: "Rhinoscopy | Otolaryngology, rhinology and rhinoscopy",
       description:
-        "Medical education community in rhinology and nasal endoscopy. Rhinoscopy Meet 2026, webinars, and certificates.",
+        "Rhinoscopy is medical education for otolaryngologists (ENT): rhinology, rhinoscopy, nasal endoscopy and endoscopic sinus surgery. Webinars, Rhinoscopy Meet congress, and clinical resources.",
       keywords: [
+        "Rhinoscopy",
+        "rhinoscopy",
+        "otolaryngology",
+        "ENT",
         "rhinology",
         "nasal endoscopy",
-        "Rhinoscopy Meet",
-        "medical webinars",
+        "endoscopic sinus surgery",
+        "paranasal sinuses",
+        "skull base endoscopy",
         "rhinology congress",
+        "Rhinoscopy Meet 2026",
+        "medical webinars",
         "Buenos Aires",
       ],
     },
     constancias: {
       title: "Certificates | Rhinoscopy",
       description:
-        "Coming soon: Rhinoscopy Meet 2026 attendance certificate downloads.",
+        "Rhinoscopy Meet 2026 attendance certificates for otolaryngologists and rhinology professionals.",
       keywords: [
         "Rhinoscopy certificate",
-        "attendance certificate",
+        "ENT congress certificate",
         "Rhinoscopy Meet 2026",
+        "rhinology",
+        "otolaryngology",
       ],
     },
   },

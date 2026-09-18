@@ -45,9 +45,9 @@ export const pt = {
     titleScript: "Somos",
     titleDisplay: "Rhinoscopy",
     lead:
-      "Uma comunidade de educação médica em rinologia e endoscopia nasal, com base na Argentina e alcance para profissionais de toda a região.",
+      "Comunidade de educação médica em otorrinolaringologia, rinologia, rinoscopia e endoscopia nasal, com base na Argentina e alcance para profissionais de toda a região.",
     paragraphs: [
-      "Nascemos para aproximar formação de qualidade em rinologia: encontros presenciais, eventos ao vivo e conteúdo pensado para a prática clínica diária. No Instagram compartilhamos novidades do congresso, avisos de webinars e material da comunidade.",
+      "Nascemos para aproximar formação de qualidade em rinologia e ORL: encontros presenciais, webinars ao vivo e conteúdo para cirurgia endoscópica nasal e prática clínica. No Instagram compartilhamos novidades do congresso, avisos de webinars e material da comunidade.",
     ],
     highlights: [
       "Rhinoscopy Meet — congresso de endoscopia nasal",
@@ -272,7 +272,7 @@ export const pt = {
     en: "English",
     pt: "Português",
   },
-  siteTagline: "Um evento de endoscopia nasal pura",
+  siteTagline: "Otorrinolaringologia, rinologia e rinoscopia.",
   meet2026: {
     title: "Rhinoscopy Meet 2026",
     dates: "17, 18 e 19 de setembro",
@@ -284,26 +284,35 @@ export const pt = {
   },
   meta: {
     home: {
-      title: "Rhinoscopy Meet 2026 | Congresso de rinologia em Buenos Aires",
+      title: "Rhinoscopy | Otorrinolaringologia, rinologia e rinoscopia",
       description:
-        "Comunidade de educação médica em rinologia e endoscopia nasal. Rhinoscopy Meet 2026, webinars e certificados.",
+        "Rhinoscopy é formação em otorrinolaringologia (ORL), rinologia, rinoscopia e endoscopia nasal: webinars, cirurgia rinológica, congresso Meet 2026 e recursos para profissionais.",
       keywords: [
+        "Rhinoscopy",
+        "rinoscopia",
+        "rhinoscopy",
+        "otorrinolaringologia",
+        "ORL",
         "rinologia",
         "endoscopia nasal",
-        "Rhinoscopy Meet",
-        "webinars médicos",
+        "cirurgia rinológica",
+        "seios paranasais",
         "congresso rinologia",
+        "Rhinoscopy Meet 2026",
+        "webinars médicos",
         "Buenos Aires",
       ],
     },
     constancias: {
       title: "Certificados | Rhinoscopy",
       description:
-        "Em breve: certificados de participação do Rhinoscopy Meet 2026.",
+        "Certificados de participação do Rhinoscopy Meet 2026 para otorrinolaringologistas e profissionais de rinologia.",
       keywords: [
         "certificado Rhinoscopy",
-        "certificado de participação",
+        "congresso ORL",
         "Rhinoscopy Meet 2026",
+        "rinologia",
+        "otorrinolaringologia",
       ],
     },
   },

@@ -1,5 +1,11 @@
 export const site = {
   name: "Rhinoscopy",
+  /** Marca / sitio (SEO, Organization schema). */
+  brandDescription:
+    "Rhinoscopy: educación médica para otorrinolaringólogos y especialistas en rinología, rinoscopia, endoscopía nasal y cirugía rinológica. Webinars, congresos y recursos.",
+  /** Copy del congreso (Event schema, no confundir con la marca). */
+  meetTagline: "Un evento de pura endoscopía nasal",
+  /** @deprecated Usar brandDescription o meetTagline según contexto. */
   tagline: "Un evento de pura endoscopía nasal",
   email: "rhinoscopy.srl@gmail.com",
   whatsapp: {

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ACCENT_BAR = [
   "bg-gradient-to-b from-sky-300 via-cyan-200/90 to-sky-100/25 group-hover:from-sky-200 group-hover:via-cyan-100",
   "bg-gradient-to-b from-navy via-[#35336a] to-navy/15 group-hover:from-[#2f2d5c] group-hover:via-navy",
@@ -45,11 +47,13 @@ export function DoctorCard({
             : "h-11 w-11 sm:h-12 sm:w-12"
         }`}
       >
-        <img
+        <Image
           src={photoSrc}
           alt=""
+          width={76}
+          height={76}
+          unoptimized
           className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
         />
       </div>
 

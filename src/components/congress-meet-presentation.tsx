@@ -3,13 +3,20 @@
 import { useLocaleData } from "@/hooks/use-locale-data";
 import Image from "next/image";
 
-const HERO_ART_IMAGE = "/images/heromeet-art.png";
+const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
 
 /** Presentación visual de Rhinoscopy Meet 2026 dentro de #congreso (no es el hero de marca). */
 export function CongressMeetPresentation() {
   const { copy, meetPresentation } = useLocaleData();
   return (
-    <div className="relative isolate overflow-hidden bg-navy text-white">
+    <div
+      id="congreso"
+      className="relative isolate flex min-h-[100dvh] min-h-[100svh] scroll-mt-[4.5rem] flex-col overflow-hidden bg-navy text-white"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-slate/40 via-navy to-navy"
+        aria-hidden="true"
+      />
       <div
         className="pointer-events-none absolute -left-32 top-16 h-[26rem] w-[26rem] rounded-full bg-cyan-400/10 blur-3xl"
         aria-hidden="true"
@@ -19,34 +26,35 @@ export function CongressMeetPresentation() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col px-5 py-12 sm:px-6 sm:py-14 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-center md:gap-8 md:py-16 lg:gap-12">
-        <div className="order-2 flex flex-col md:order-1">
+      <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-5 py-16 sm:px-6 sm:py-20 lg:max-w-4xl lg:py-28">
+        <div className="flex w-full flex-col items-center text-center">
           <p className="text-[0.72rem] font-semibold tracking-[0.34em] text-brand-sky/80 uppercase">
             {meetPresentation.congressPrefix} · {copy.heroAccent}
           </p>
 
-          <h2 className="mt-4 leading-[0.9] md:mt-5">
-            <span className="block text-[0.78rem] font-bold tracking-[0.42em] text-white/90 uppercase sm:text-[0.82rem]">
-              Rhinoscopy
-            </span>
-            <span className="mt-2 block text-[clamp(2.6rem,9vw,5.2rem)] font-extrabold tracking-[0.02em] text-white uppercase">
-              Meet
-            </span>
-            <span className="font-script -mt-1 block text-[clamp(3rem,11vw,6.5rem)] leading-none text-brand-sky">
-              2026
-            </span>
-          </h2>
+          <div className="mt-5 flex w-full justify-center sm:mt-7">
+            <div className="w-full max-w-[min(96vw,26rem)] sm:max-w-xl lg:max-w-3xl xl:max-w-4xl">
+              <Image
+                src={MEET_LOGO_DARK}
+                alt="Rhinoscopy Meet 2026"
+                width={1200}
+                height={520}
+                priority
+                className="h-auto w-full drop-shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
+              />
+            </div>
+          </div>
 
-          <p className="mt-5 max-w-lg text-base font-bold leading-snug tracking-[0.04em] text-white uppercase sm:text-lg md:mt-6 md:text-xl">
+          <p className="mt-6 max-w-xl text-base font-bold leading-snug tracking-[0.04em] text-white uppercase sm:mt-8 sm:text-lg lg:max-w-2xl lg:text-xl">
             {copy.heroTitle}
           </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-4 border-y border-white/15 py-5 sm:gap-8 md:mt-8">
+          <div className="mt-6 grid w-full max-w-sm grid-cols-2 gap-6 border-y border-white/15 py-5 sm:max-w-md sm:gap-8 lg:mt-8">
             <div>
               <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
                 {meetPresentation.whenLabel}
               </p>
-              <p className="mt-2 text-xl font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
+              <p className="mt-2 text-lg font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
                 {meetPresentation.whenValue}
               </p>
             </div>
@@ -54,19 +62,21 @@ export function CongressMeetPresentation() {
               <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
                 {meetPresentation.whereLabel}
               </p>
-              <p className="mt-2 text-xl font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
+              <p className="mt-2 text-lg font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
                 {meetPresentation.whereValue}
               </p>
             </div>
           </div>
 
-          <p className="mt-5 text-sm font-medium text-slate-300">
+          <p className="mt-5 max-w-md text-sm font-medium leading-relaxed text-slate-300 sm:max-w-lg">
             {copy.heroMeetSubtitle}
-            <span className="mx-2 text-white/20" aria-hidden="true">/</span>
+            <span className="mx-2 text-white/20" aria-hidden="true">
+              /
+            </span>
             {copy.heroMeetVenue}
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="mt-7 flex w-full max-w-sm flex-col items-center gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center">
             <a
               href="#contacto"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"
@@ -80,18 +90,6 @@ export function CongressMeetPresentation() {
             >
               {meetPresentation.activitiesCta}
             </a>
-          </div>
-        </div>
-
-        <div className="order-1 mb-8 flex justify-center md:order-2 md:mb-0 md:justify-end">
-          <div className="relative w-full max-w-[15.5rem] sm:max-w-xs md:max-w-md lg:max-w-lg">
-            <Image
-              src={HERO_ART_IMAGE}
-              alt="Ilustración de perfil nasal con el Obelisco y la Ciudad de Buenos Aires"
-              width={525}
-              height={569}
-              className="h-auto w-full drop-shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
-            />
           </div>
         </div>
       </div>

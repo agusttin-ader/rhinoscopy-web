@@ -20,6 +20,11 @@ body {
   background: var(--color-paper);
   color: var(--color-navy);
   font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+html {
+  overflow-x: clip;
 }
 
 @layer base {
@@ -375,6 +380,202 @@ body {
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .congress-gallery-slide {
+    animation: congress-gallery-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+/* Desktop gallery: scales with viewport from md through 4K (mobile uses separate layout). */
+.congress-gallery-bleed {
+  display: none;
+}
+
+.congress-gallery-frame {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.congress-gallery-controls {
+  gap: 1.25rem;
+}
+
+.congress-gallery-mosaic {
+  width: 100%;
+  aspect-ratio: 23 / 14;
+  max-height: 520px;
+  gap: 10px;
+}
+
+.congress-gallery-mosaic-mobile {
+  height: clamp(300px, 78vw, 400px);
+}
+
+/* Mobile: full-width swipe carousel */
+.congress-gallery-mobile-track {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.congress-gallery-mobile-track::-webkit-scrollbar {
+  display: none;
+}
+
+.congress-gallery-mobile-slide {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .congress-gallery-mobile-nudge {
+    animation: congress-gallery-mobile-nudge 0.9s cubic-bezier(0.33, 1, 0.68, 1) 0.4s 1
+      both;
+  }
+}
+
+@keyframes congress-gallery-mobile-nudge {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  38% {
+    transform: translate3d(-11px, 0, 0);
+  }
+  62% {
+    transform: translate3d(4px, 0, 0);
+  }
+  82% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .congress-gallery-bleed {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    padding-inline: 0;
+  }
+
+  .congress-gallery-frame {
+    max-width: 72rem;
+  }
+
+  .congress-gallery-controls {
+    gap: 1.75rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 560px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .congress-gallery-controls {
+    gap: 2.25rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 620px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .congress-gallery-frame {
+    max-width: 80rem;
+  }
+
+  .congress-gallery-controls {
+    gap: 2.75rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 680px;
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .congress-gallery-frame {
+    max-width: 84rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 720px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .congress-gallery-frame {
+    max-width: 90rem;
+  }
+
+  .congress-gallery-controls {
+    gap: 3.25rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 780px;
+    gap: 14px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .congress-gallery-frame {
+    max-width: 96rem;
+  }
+
+  .congress-gallery-controls {
+    gap: 3.75rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 840px;
+  }
+}
+
+@media (min-width: 3840px) {
+  .congress-gallery-frame {
+    max-width: 112rem;
+  }
+
+  .congress-gallery-controls {
+    gap: 4.5rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: 920px;
+    gap: 16px;
+  }
+
+  .congress-gallery-arrow {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.75rem;
+  }
+}
+
+@keyframes congress-gallery-slide-in {
+  from {
+    opacity: 0;
+    transform: translate3d(10px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .constancias-soon-enter {
     opacity: 1;
@@ -431,6 +632,14 @@ body {
 
   .brand-hero-ring-stroke {
     stroke-dashoffset: 0;
+  }
+
+  .congress-gallery-slide {
+    animation: none;
+  }
+
+  .congress-gallery-mobile-nudge {
+    animation: none;
   }
 }
 

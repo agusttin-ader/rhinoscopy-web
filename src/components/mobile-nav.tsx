@@ -2,8 +2,11 @@
 
 import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { Link } from "@/i18n/navigation";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
+
+const MOBILE_MENU_LOGO = "/images/rhinoscopy-logo-hero-sombra.png";
 
 type NavLink = {
   href: string;
@@ -46,11 +49,11 @@ export function MobileNav({
   closeLabel,
 }: MobileNavProps) {
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -97,7 +100,7 @@ export function MobileNav({
             </button>
           </div>
 
-          <ul className="relative flex flex-1 flex-col justify-center gap-1 overflow-y-auto px-6 py-8 pb-[max(2rem,env(safe-area-inset-bottom))]">
+          <ul className="relative flex min-h-0 flex-1 flex-col justify-center gap-1 overflow-y-auto px-6 py-6">
             {links.map((link, index) => (
               <li
                 key={link.href}
@@ -127,6 +130,32 @@ export function MobileNav({
               </li>
             ))}
           </ul>
+
+          <div
+            className={`relative shrink-0 px-6 pt-2 pb-[max(1.75rem,env(safe-area-inset-bottom))] transition-all duration-500 ease-out ${
+              open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+            style={{ transitionDelay: open ? "320ms" : "0ms" }}
+          >
+            <Link
+              href="/"
+              className="mx-auto flex max-w-[11rem] flex-col items-center gap-3 opacity-90 transition hover:opacity-100"
+              onClick={() => setOpen(false)}
+              aria-label="Rhinoscopy, inicio"
+            >
+              <Image
+                src={MOBILE_MENU_LOGO}
+                alt=""
+                width={280}
+                height={280}
+                unoptimized
+                className="h-auto w-full max-w-[9.5rem] object-contain drop-shadow-[0_0_24px_rgba(95,198,238,0.2)]"
+              />
+              <span className="text-[0.62rem] font-semibold tracking-[0.32em] text-white/45 uppercase">
+                Rhinoscopy
+              </span>
+            </Link>
+          </div>
         </nav>
       </div>,
       document.body,

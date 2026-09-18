@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { CongressGallery } from "@/components/congress-gallery";
+import { CongressVerticalScreens } from "@/components/congress-vertical-screens";
 import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
 import { Reveal } from "@/components/motion/reveal";
 import { DoctorCard } from "@/components/doctor-card";
@@ -251,7 +253,7 @@ export function CongressSection() {
   const { congressCopy } = useLocaleData();
 
   return (
-    <section id="congreso" className="scroll-mt-[4.5rem] bg-paper">
+    <section className="overflow-x-clip bg-paper">
       <Reveal offset={16}>
         <CongressMeetPresentation />
       </Reveal>
@@ -279,6 +281,14 @@ export function CongressSection() {
         <CongressProgram />
         <CongressCommittee />
         <CongressSpeakers />
+      </div>
+
+      <div className="overflow-x-clip px-6 pb-20 sm:pb-28">
+        <CongressGallery />
+      </div>
+
+      <div className="mt-20 overflow-x-clip px-6 pb-20 sm:mt-24 sm:pb-28">
+        <CongressVerticalScreens />
       </div>
 
       <Reveal offset={16}>

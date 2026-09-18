@@ -72,4 +72,25 @@ export const congressCopy = {
     accreditationLead:
       "Los horarios y requisitos de acreditación se informarán cuando estén confirmados.",
   },
+  gallery: {
+    kicker: "Rhinoscopy Meet 2026",
+    title: "Galería.",
+    lead: "Imágenes del encuentro en Buenos Aires.",
+    nextSelection: "Ver siguiente selección",
+    dayTabsAria: "Filtrar galería por jornada",
+    dayLabel: (dayNumber: number) => `Día ${dayNumber}`,
+    dayEmpty: "Próximamente más fotos de esta jornada.",
+    prevSelectionAria: "Selección anterior",
+    nextSelectionAria: "Siguiente selección",
+    selectionLabel: (current: number, count: number) =>
+      `Selección ${current} de ${count}`,
+    closeLightbox: "Cerrar imagen",
+    prevPhoto: "Foto anterior",
+    nextPhoto: "Foto siguiente",
+    photoAlt: "Rhinoscopy Meet 2026",
+    swipeHint: "Deslizá para ver más fotos",
+    swipeAria: "Galería de fotos. Deslizá horizontalmente.",
+    photoInSelection: (current: number, inSelection: number) =>
+      `${current} / ${inSelection}`,
+  },
 } as const;

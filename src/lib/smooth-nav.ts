@@ -37,7 +37,8 @@ export function smoothScrollToTop() {
 export function smoothScrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return false;
-  el.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+  const block = id === "congreso" ? "center" : "start";
+  el.scrollIntoView({ behavior: scrollBehavior(), block });
   return true;
 }
 

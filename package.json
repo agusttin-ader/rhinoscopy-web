@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "images:optimize": "node scripts/optimize-public-images.mjs",
     "constancia:meet": "node scripts/generate-meet-constancia.mjs",
     "constancia:meet:batch": "node scripts/generate-meet-constancia-batch.mjs",
     "constancia:meet:bulk-franco": "node scripts/generate-meet-constancia-bulk-franco.mjs"

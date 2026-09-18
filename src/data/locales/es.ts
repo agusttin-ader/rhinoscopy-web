@@ -27,6 +27,7 @@ export const es = {
     { href: "/#congreso", label: "Congreso" },
     { href: "/#programa", label: "Programa" },
     { href: "/#speakers", label: "Disertantes" },
+    { href: "/#galeria", label: "Galería" },
     { href: "/#webinars", label: "Webinars" },
     { href: "/constancias", label: "Certificados" },
     { href: "/#contacto", label: "Contacto" },

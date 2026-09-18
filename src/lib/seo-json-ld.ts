@@ -1,4 +1,4 @@
-import { routing, type AppLocale } from "@/i18n/routing";
+import type { AppLocale } from "@/i18n/routing";
 import { meet2026, site } from "@/data/site";
 import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
@@ -124,7 +124,8 @@ export function mergeJsonLdGraphs(...graphs: JsonLdGraph[]): JsonLdGraph {
     if (Array.isArray(inner)) {
       merged.push(...(inner as Record<string, unknown>[]));
     } else {
-      const { "@context": _context, ...node } = graph;
+      const node = { ...graph } as Record<string, unknown>;
+      delete node["@context"];
       merged.push(node);
     }
   }

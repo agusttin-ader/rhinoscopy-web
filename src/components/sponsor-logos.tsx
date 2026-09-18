@@ -2,6 +2,7 @@
 
 import { sponsorLogoList } from "@/data/congress";
 import { useLocaleData } from "@/hooks/use-locale-data";
+import Image from "next/image";
 
 export function SponsorLogos() {
   const { congressCopy } = useLocaleData();
@@ -21,11 +22,12 @@ export function SponsorLogos() {
             const isProvisional = "provisional" in sponsor && sponsor.provisional;
             return (
               <li key={sponsor.alt} className="flex items-center justify-center">
-                <img
+                <Image
                   src={sponsor.src}
                   alt={sponsor.alt}
                   width={180}
                   height={72}
+                  unoptimized
                   className={`h-12 w-auto max-w-[9.5rem] object-contain transition duration-300 sm:h-14 sm:max-w-[11rem] md:h-16 md:max-w-[12.5rem] ${
                     isProvisional
                       ? "opacity-70 sm:opacity-45 sm:grayscale sm:hover:opacity-100 sm:hover:grayscale-0"

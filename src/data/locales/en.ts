@@ -149,6 +149,27 @@ export const en = {
       accreditationLead:
         "Accreditation hours and requirements will be announced when confirmed.",
     },
+    gallery: {
+      kicker: "Rhinoscopy Meet 2026",
+      title: "Gallery.",
+      lead: "Photos from the event in Buenos Aires.",
+      nextSelection: "See next selection",
+      dayTabsAria: "Filter gallery by day",
+      dayLabel: (dayNumber: number) => `Day ${dayNumber}`,
+      dayEmpty: "More photos from this day coming soon.",
+      prevSelectionAria: "Previous selection",
+      nextSelectionAria: "Next selection",
+      selectionLabel: (current: number, count: number) =>
+        `Selection ${current} of ${count}`,
+      closeLightbox: "Close image",
+      prevPhoto: "Previous photo",
+      nextPhoto: "Next photo",
+      photoAlt: "Rhinoscopy Meet 2026",
+      swipeHint: "Swipe to see more photos",
+      swipeAria: "Photo gallery. Swipe horizontally.",
+      photoInSelection: (current: number, inSelection: number) =>
+        `${current} / ${inSelection}`,
+    },
   },
   constanciasCopy: {
     kicker: "Certificates",
@@ -223,6 +244,7 @@ export const en = {
     { href: "/#congreso", label: "Congress" },
     { href: "/#programa", label: "Program" },
     { href: "/#speakers", label: "Speakers" },
+    { href: "/#galeria", label: "Gallery" },
     { href: "/#webinars", label: "Webinars" },
     { href: "/constancias", label: "Certificates" },
     { href: "/#contacto", label: "Contact" },

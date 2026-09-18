@@ -143,11 +143,12 @@ export async function SiteFooter() {
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-2.5 text-white/65 transition hover:text-white/80"
           >
-            <img
+            <Image
               src="/images/logo-dev/logo-dev.webp"
               alt=""
               width={256}
               height={202}
+              unoptimized
               className="h-7 w-auto object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
             />
             <span>

@@ -1,4 +1,4 @@
-import { routing, type AppLocale } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
 import type { MetadataRoute } from "next";

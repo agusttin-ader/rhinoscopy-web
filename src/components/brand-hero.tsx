@@ -10,7 +10,7 @@ export async function BrandHero() {
   return (
     <section
       id="inicio"
-      className="brand-hero relative isolate overflow-hidden bg-navy text-white"
+      className="brand-hero relative isolate flex min-h-[calc(100dvh-4.5rem)] min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-navy text-white"
       aria-labelledby="brand-hero-heading"
     >
       <div
@@ -26,7 +26,7 @@ export async function BrandHero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-6 sm:py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:items-center md:gap-12 md:py-20 lg:py-24">
+      <div className="relative mx-auto grid w-full max-w-6xl flex-1 grid-cols-1 content-center items-center gap-10 px-5 py-10 sm:px-6 sm:py-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-12 lg:gap-14">
         <div className="flex w-full justify-center">
           <div
             className="relative h-[min(92vw,21rem)] w-[min(92vw,21rem)] sm:h-[22rem] sm:w-[22rem] md:h-[23rem] md:w-[23rem]"

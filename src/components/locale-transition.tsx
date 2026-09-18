@@ -24,9 +24,14 @@ export function LocaleTransition({ children }: LocaleTransitionProps) {
 
     if (consumeLocaleViewTransition()) return;
 
-    setEntering(true);
+    const frame = requestAnimationFrame(() => {
+      setEntering(true);
+    });
     const timeout = window.setTimeout(() => setEntering(false), ENTER_MS);
-    return () => window.clearTimeout(timeout);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
   }, [locale]);
 
   return (

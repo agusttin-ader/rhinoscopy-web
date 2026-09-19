@@ -83,6 +83,15 @@ export const en = {
     kicker: "Rhinoscopy Meet 2026",
     title: "A pure nasal endoscopy event.",
     lead: "Explore the program, meet the speakers, and find all event information.",
+    family: {
+      kicker: "Community",
+      titleScript: "Family",
+      titleDisplay: "Rhinoscopy",
+      lead:
+        "Organizers, faculty, and professionals who shaped Meet 2026 in Buenos Aires.",
+      imageAlt:
+        "Rhinoscopy community group on stage at Meet 2026 in Buenos Aires",
+    },
     program: {
       kicker: "Scientific agenda",
       title: "Program.",

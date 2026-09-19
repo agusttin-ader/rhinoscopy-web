@@ -10,7 +10,7 @@ import {
   prefetchCongressGalleryImage,
 } from "@/data/congress-gallery";
 import { useLocaleData } from "@/hooks/use-locale-data";
-import Image from "next/image";
+import { StaticImage } from "@/components/static-image";
 import { useLocale } from "next-intl";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
@@ -96,13 +96,12 @@ function GalleryTile({
       style={style}
       className={`group relative min-h-0 min-w-0 overflow-hidden bg-paper transition-opacity hover:opacity-[0.92] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ${className}`}
     >
-      <Image
+      <StaticImage
         src={congressGallerySrc(file, "preview", dayDir)}
         alt={alt}
         fill
         sizes="(max-width: 767px) 100vw, (max-width: 1280px) 42vw, 520px"
-        className="object-cover"
-        loading={priority ? "eager" : "lazy"}
+        priority={priority}
       />
     </button>
   );
@@ -193,12 +192,11 @@ function GalleryMobileSwipe({
               }
             >
               <div className="relative h-full w-full overflow-hidden bg-navy/5">
-                <Image
+                <StaticImage
                   src={congressGallerySrc(file, "preview", dayDir)}
                   alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
                   fill
                   sizes="100vw"
-                  className="object-cover"
                   priority={index === 0}
                 />
               </div>
@@ -416,13 +414,13 @@ function LightboxMeetWatermark({ className }: { className?: string }) {
     <div
       className={`relative aspect-[1200/520] w-full max-w-[240px] opacity-[0.12] brightness-[0.85] sm:max-w-[280px] ${className ?? ""}`}
     >
-      <Image
+      <StaticImage
         src={MEET_LOGO_DARK}
         alt=""
         fill
         sizes="280px"
-        className="object-contain"
-        unoptimized
+        objectFit="contain"
+        className="brightness-[0.85]"
       />
     </div>
   );

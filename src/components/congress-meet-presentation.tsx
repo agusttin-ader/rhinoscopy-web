@@ -11,10 +11,14 @@ export function CongressMeetPresentation() {
   return (
     <div
       id="congreso"
-      className="relative isolate flex min-h-[100dvh] min-h-[100svh] scroll-mt-[4.5rem] flex-col overflow-hidden bg-navy text-white"
+      className="relative isolate flex min-h-[calc(100dvh-4.25rem)] min-h-[calc(100svh-4.25rem)] scroll-mt-[4.5rem] flex-col overflow-hidden bg-navy text-white sm:min-h-[min(100dvh,920px)] sm:min-h-[min(100svh,920px)] md:min-h-[100dvh] md:min-h-[100svh]"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-slate/40 via-navy to-navy"
+        className="pointer-events-none absolute inset-0 bg-navy"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy from-35% via-[#221f4a] to-[#1a1838]"
         aria-hidden="true"
       />
       <div
@@ -26,14 +30,14 @@ export function CongressMeetPresentation() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-5 py-16 sm:px-6 sm:py-20 lg:max-w-4xl lg:py-28">
+      <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-end px-4 pb-8 pt-20 sm:px-6 sm:pb-12 sm:pt-28 lg:max-w-4xl lg:pb-14 lg:pt-32">
         <div className="flex w-full flex-col items-center text-center">
           <p className="text-[0.72rem] font-semibold tracking-[0.34em] text-brand-sky/80 uppercase">
             {meetPresentation.congressPrefix} · {copy.heroAccent}
           </p>
 
-          <div className="mt-5 flex w-full justify-center sm:mt-7">
-            <div className="w-full max-w-[min(96vw,26rem)] sm:max-w-xl lg:max-w-3xl xl:max-w-4xl">
+          <div className="mt-4 flex w-full justify-center sm:mt-7">
+            <div className="w-full max-w-[min(92vw,22rem)] sm:max-w-xl lg:max-w-3xl xl:max-w-4xl">
               <Image
                 src={MEET_LOGO_DARK}
                 alt="Rhinoscopy Meet 2026"
@@ -45,48 +49,50 @@ export function CongressMeetPresentation() {
             </div>
           </div>
 
-          <p className="mt-6 max-w-xl text-base font-bold leading-snug tracking-[0.04em] text-white uppercase sm:mt-8 sm:text-lg lg:max-w-2xl lg:text-xl">
+          <p className="mt-4 max-w-xl text-[0.8125rem] font-bold leading-snug tracking-[0.04em] text-white uppercase sm:mt-8 sm:text-lg lg:max-w-2xl lg:text-xl">
             {copy.heroTitle}
           </p>
 
-          <div className="mt-6 grid w-full max-w-sm grid-cols-2 gap-6 border-y border-white/15 py-5 sm:max-w-md sm:gap-8 lg:mt-8">
+          <div className="mt-5 grid w-full max-w-sm grid-cols-2 gap-4 border-y border-white/15 py-4 sm:max-w-md sm:gap-8 sm:py-5 lg:mt-8">
             <div>
-              <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
+              <p className="text-[0.58rem] font-semibold tracking-[0.26em] text-brand-sky/75 uppercase sm:text-[0.62rem] sm:tracking-[0.3em]">
                 {meetPresentation.whenLabel}
               </p>
-              <p className="mt-2 text-lg font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
+              <p className="mt-1.5 text-base font-extrabold tracking-[0.05em] text-white uppercase sm:mt-2 sm:text-2xl sm:tracking-[0.06em]">
                 {meetPresentation.whenValue}
               </p>
             </div>
             <div>
-              <p className="text-[0.62rem] font-semibold tracking-[0.3em] text-brand-sky/75 uppercase">
+              <p className="text-[0.58rem] font-semibold tracking-[0.26em] text-brand-sky/75 uppercase sm:text-[0.62rem] sm:tracking-[0.3em]">
                 {meetPresentation.whereLabel}
               </p>
-              <p className="mt-2 text-lg font-extrabold tracking-[0.06em] text-white uppercase sm:text-2xl">
+              <p className="mt-1.5 text-base font-extrabold tracking-[0.05em] text-white uppercase sm:mt-2 sm:text-2xl sm:tracking-[0.06em]">
                 {meetPresentation.whereValue}
               </p>
             </div>
           </div>
 
-          <p className="mt-5 max-w-md text-sm font-medium leading-relaxed text-slate-300 sm:max-w-lg">
-            {copy.heroMeetSubtitle}
-            <span className="mx-2 text-white/20" aria-hidden="true">
+          <p className="mt-4 max-w-md text-center text-xs font-medium leading-relaxed text-slate-300 sm:max-w-lg sm:text-sm">
+            <span className="block sm:inline">{copy.heroMeetSubtitle}</span>
+            <span className="mx-2 hidden text-white/20 sm:inline" aria-hidden="true">
               /
             </span>
-            {copy.heroMeetVenue}
+            <span className="mt-1 block text-[0.7rem] text-slate-400 sm:mt-0 sm:inline sm:text-sm sm:text-slate-300">
+              {copy.heroMeetVenue}
+            </span>
           </p>
 
-          <div className="mt-7 flex w-full max-w-sm flex-col items-center gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center">
+          <div className="mt-6 flex w-full max-w-sm flex-col items-stretch gap-2.5 sm:mt-7 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
             <a
               href="#contacto"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[0.65rem] font-bold tracking-[0.16em] text-navy uppercase transition hover:bg-cyan-50 sm:w-auto sm:px-7 sm:py-3.5 sm:text-[0.7rem] sm:tracking-[0.18em]"
             >
               {copy.heroCta}
               <span aria-hidden="true">→</span>
             </a>
             <a
               href="#programa"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-white uppercase transition hover:border-white/40 hover:bg-white/5"
+              className="inline-flex w-full items-center justify-center rounded-full border border-white/20 px-6 py-3 text-[0.65rem] font-bold tracking-[0.16em] text-white uppercase transition hover:border-white/40 hover:bg-white/5 sm:w-auto sm:px-7 sm:py-3.5 sm:text-[0.7rem] sm:tracking-[0.18em]"
             >
               {meetPresentation.activitiesCta}
             </a>

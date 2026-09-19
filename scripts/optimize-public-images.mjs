@@ -183,6 +183,31 @@ async function writeGalleryManifest(constName, webpNames) {
   await fs.writeFile(tsPath, src);
 }
 
+async function optimizeWebinarFlyers() {
+  const dir = path.join(ROOT, "public/images/webinars");
+  let names;
+  try {
+    names = (await fs.readdir(dir)).filter((n) => /\.jpe?g$/i.test(n));
+  } catch {
+    return;
+  }
+
+  for (const name of names.sort()) {
+    const input = path.join(dir, name);
+    const webpName = name.replace(/\.jpe?g$/i, ".webp");
+    const output = path.join(dir, webpName);
+    const { outBytes } = await toWebp(input, output, {
+      maxWidth: 1280,
+      quality: 78,
+    });
+    await fs.unlink(input);
+    console.log(`  webinars/${webpName}  ${(outBytes / 1024).toFixed(0)} KB`);
+  }
+  if (names.length > 0) {
+    console.log(`\nWebinars: ${names.length} flyers → WebP\n`);
+  }
+}
+
 async function optimizeVertical() {
   for (const rel of VERTICAL.files) {
     const input = path.join(ROOT, rel);
@@ -209,9 +234,10 @@ async function main() {
   await syncGalleryManifestFromDisk();
   await buildGalleryDerivatives(GALLERY_PREVIEW, "Previews");
   await buildGalleryDerivatives(GALLERY_DISPLAY, "Display (lightbox)");
+  await optimizeWebinarFlyers();
   await optimizeVertical();
   console.log(
-    "Listo. Commit public/images/galeria/** y src/data/congress-gallery.ts",
+    "Listo. Commit public/images/** y src/data/congress-gallery.ts",
   );
 }
 

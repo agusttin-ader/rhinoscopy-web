@@ -394,6 +394,65 @@ html {
   }
 }
 
+/* Familia Rhinoscopy — banda full-bleed en congreso */
+/* Mobile: foto entera (3:2), sin recortar costados */
+.congress-family-photo-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.congress-family-caption-scrim {
+  height: 46%;
+  min-height: 9rem;
+  background: linear-gradient(
+    to top,
+    rgb(38 36 84 / 0.98) 0%,
+    rgb(38 36 84 / 0.9) 22%,
+    rgb(38 36 84 / 0.4) 50%,
+    transparent 100%
+  );
+}
+
+@media (min-width: 768px) {
+  /* Mismo ratio que el archivo (3:2) → recorte mínimo */
+  .congress-family-photo-wrap {
+    aspect-ratio: 3 / 2;
+    max-height: min(74vh, 820px);
+  }
+
+  .congress-family-photo {
+    object-position: 50% 42%;
+  }
+
+  .congress-family-caption-scrim {
+    height: 58%;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .congress-family-photo-wrap {
+    max-height: min(72vh, 860px);
+  }
+
+  .congress-family-photo {
+    object-position: 50% 40%;
+  }
+}
+
+/* Separador galería → pantallas verticales */
+.congress-section-rule {
+  height: 1px;
+  width: min(100%, 42rem);
+  background: #d9d9d9;
+}
+
+@media (min-width: 640px) {
+  .congress-section-rule {
+    width: min(100%, 48rem);
+  }
+}
+
 /* Desktop gallery: scales with viewport from md through 4K (mobile uses separate layout). */
 .congress-gallery-bleed {
   display: none;

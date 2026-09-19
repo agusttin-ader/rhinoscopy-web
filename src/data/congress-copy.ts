@@ -4,6 +4,15 @@ export const congressCopy = {
   title: "Un evento de pura endoscopía nasal.",
   lead:
     "Explorá el programa, conocé a los speakers y toda la información del encuentro.",
+  family: {
+    kicker: "Comunidad",
+    titleScript: "Familia",
+    titleDisplay: "Rhinoscopy",
+    lead:
+      "Organización, disertantes y profesionales del Meet 2026 en Buenos Aires.",
+    imageAlt:
+      "Grupo de la comunidad Rhinoscopy en el escenario del Meet 2026 en Buenos Aires",
+  },
   program: {
     kicker: "Agenda científica",
     title: "Programa.",

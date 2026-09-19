@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { CongressFamilyBand } from "@/components/congress-family-band";
 import { CongressGallery } from "@/components/congress-gallery";
 import { CongressVerticalScreens } from "@/components/congress-vertical-screens";
 import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
@@ -258,8 +259,10 @@ export function CongressSection() {
         <CongressMeetPresentation />
       </Reveal>
 
+      <CongressFamilyBand />
+
       <Reveal delay={60} offset={12}>
-      <div className="border-b border-navy/10 bg-white px-6 py-10 sm:py-12">
+      <div className="border-b border-navy/10 bg-paper px-5 py-8 sm:px-6 sm:py-12">
         <div className="mx-auto max-w-6xl">
           <p className="max-w-2xl text-slate-600">{congressCopy.lead}</p>
           <p className="mt-3 text-sm text-slate-500">
@@ -284,7 +287,11 @@ export function CongressSection() {
         <CongressGallery />
       </div>
 
-      <div className="mt-20 overflow-x-clip px-6 pb-20 sm:mt-24 sm:pb-28">
+      <div className="flex justify-center px-8 py-8 sm:px-10 sm:py-10">
+        <div className="congress-section-rule" role="presentation" aria-hidden="true" />
+      </div>
+
+      <div className="overflow-x-clip px-6 pb-20 pt-6 sm:pb-28 sm:pt-8">
         <CongressVerticalScreens />
       </div>
 

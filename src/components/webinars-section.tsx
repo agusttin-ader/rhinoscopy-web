@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { StaticImage } from "@/components/static-image";
 import { localizeWebinars } from "@/data/webinars-i18n";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { useLocale } from "next-intl";
@@ -45,14 +45,13 @@ function WebinarVisual({
     <div
       className="relative aspect-video w-full overflow-hidden rounded-xl bg-black ring-1 ring-white/10 transition-[box-shadow,ring-color] duration-200 group-hover:ring-white/20"
     >
-      <Image
+      <StaticImage
         src={flyerSrc}
         alt=""
         fill
-        loading={lazy ? "lazy" : undefined}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 28rem, 34rem"
-        className="!object-contain object-center"
-        style={{ objectFit: "contain" }}
+        objectFit="contain"
+        priority={!lazy}
       />
       <div className="absolute inset-0 flex items-center justify-center">
         <span

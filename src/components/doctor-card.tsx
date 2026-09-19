@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { StaticImage } from "@/components/static-image";
 
 const ACCENT_BAR = [
   "bg-gradient-to-b from-sky-300 via-cyan-200/90 to-sky-100/25 group-hover:from-sky-200 group-hover:via-cyan-100",
@@ -47,12 +47,11 @@ export function DoctorCard({
             : "h-11 w-11 sm:h-12 sm:w-12"
         }`}
       >
-        <Image
+        <StaticImage
           src={photoSrc}
           alt=""
           width={76}
           height={76}
-          unoptimized
           className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
         />
       </div>

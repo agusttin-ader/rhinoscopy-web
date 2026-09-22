@@ -15,12 +15,13 @@ const GALLERY = {
 };
 
 /** Carpetas por jornada (debe coincidir con `dir` en congress-gallery.ts). */
-const GALLERY_DAY_DIRS = ["dia-uno", "dia-dos", "dia-tres"];
+const GALLERY_DAY_DIRS = ["dia-uno", "dia-dos", "dia-tres", "pam-dia-tres"];
 
 const GALLERY_MANIFEST_BY_DIR = {
   "dia-uno": "CONGRESS_GALLERY_DAY1_FILES",
   "dia-dos": "CONGRESS_GALLERY_DAY2_FILES",
   "dia-tres": "CONGRESS_GALLERY_DAY3_FILES",
+  "pam-dia-tres": "CONGRESS_GALLERY_PAM_DAY3_FILES",
 };
 
 const GALLERY_PREVIEW = {

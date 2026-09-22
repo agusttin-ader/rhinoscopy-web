@@ -864,13 +864,31 @@ export function CongressGallery() {
       </Reveal>
 
       <div
-        className="mt-8 mb-1 grid w-full min-w-0 grid-cols-3 gap-2 min-[375px]:gap-3 md:mt-8 md:mb-2 md:flex md:justify-start md:gap-4"
+        className="mt-8 mb-1 grid w-full min-w-0 grid-cols-2 gap-2 min-[375px]:gap-3 min-[480px]:grid-cols-4 md:mt-8 md:mb-2 md:grid md:grid-cols-4 md:gap-4 lg:flex lg:flex-nowrap lg:justify-start"
         role="tablist"
         aria-label={copy.dayTabsAria}
       >
         {CONGRESS_GALLERY_DAYS.map((day, index) => {
           const selected = day.id === dayId;
           const dateLabel = formatGalleryDayDate(day.date, locale);
+          const dayNumber =
+            day.id === "day1"
+              ? 1
+              : day.id === "day2"
+                ? 2
+                : day.id === "day3"
+                  ? 3
+                  : null;
+          const tabLabel =
+            "tabLabel" in day && day.tabLabel
+              ? day.tabLabel
+              : dayNumber !== null
+                ? copy.dayLabel(dayNumber)
+                : copy.dayLabel(index + 1);
+          const datedTab = `${tabLabel} · ${dateLabel}`;
+          const mobileTab =
+            day.id === "pamDay3" ? datedTab : tabLabel;
+          const desktopTab = datedTab;
           return (
             <button
               key={day.id}
@@ -884,10 +902,8 @@ export function CongressGallery() {
                   : "border-navy/15 bg-white text-navy/70 hover:border-navy/30 hover:text-navy"
               }`}
             >
-              <span className="md:hidden">{copy.dayLabel(index + 1)}</span>
-              <span className="hidden md:inline">
-                {copy.dayLabel(index + 1)} · {dateLabel}
-              </span>
+              <span className="min-[768px]:hidden">{mobileTab}</span>
+              <span className="hidden min-[768px]:inline">{desktopTab}</span>
             </button>
           );
         })}

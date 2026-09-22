@@ -334,6 +334,9 @@ const CONGRESS_GALLERY_DAY3_FILES = [
   "97 RINOSCOPHY MEET 2026 - 190826 - Casa Lepague  (Foto IGNACIO ARNEDO) _P0A1707.webp",
   "98 RINOSCOPHY MEET 2026 - 190826 - Casa Lepague  (Foto IGNACIO ARNEDO) _P0A1709.webp",
   "99 RINOSCOPHY MEET 2026 - 190826 - Casa Lepague  (Foto IGNACIO ARNEDO) _P0A1711.webp",
+] as const;
+
+const CONGRESS_GALLERY_PAM_DAY3_FILES = [
   "_KMP1110.webp",
   "_KMP1129.webp",
   "_KMP1143.webp",
@@ -392,6 +395,13 @@ export const CONGRESS_GALLERY_DAYS = [
     date: "2026-09-19",
     dir: "dia-tres",
     files: CONGRESS_GALLERY_DAY3_FILES,
+  },
+  {
+    id: "pamDay3",
+    date: "2026-09-19",
+    dir: "pam-dia-tres",
+    tabLabel: "Pam",
+    files: CONGRESS_GALLERY_PAM_DAY3_FILES,
   },
 ] as const;
 

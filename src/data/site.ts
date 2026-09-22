@@ -14,6 +14,8 @@ export const site = {
   },
   instagram: "https://www.instagram.com/rhinoscopyofficial/",
   instagramHandle: "@rhinoscopyofficial",
+  youtube: "https://www.youtube.com/@RhinoscopyArg",
+  youtubeHandle: "@RhinoscopyArg",
 } as const;
 
 export const meet2026 = {

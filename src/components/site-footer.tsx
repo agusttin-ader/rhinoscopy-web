@@ -123,6 +123,16 @@ export async function SiteFooter() {
                   {site.instagramHandle}
                 </a>
               </li>
+              <li>
+                <a
+                  href={site.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/55 transition-colors hover:text-white"
+                >
+                  {site.youtubeHandle}
+                </a>
+              </li>
             </ul>
             <FooterFollow />
           </div>

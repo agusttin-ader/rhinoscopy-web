@@ -17,8 +17,11 @@ export const webinarsCopy = {
   titleScript: "en vivo",
   lead:
     "Charlas semanales con especialistas de la comunidad. Los videos en YouTube se irán sumando a medida que estén listos.",
-  watchCta: "Ver en YouTube",
+  watchCta: "Ver webinar",
+  watchCtaAria: (topic: string) => `Reproducir: ${topic}`,
   comingSoon: "YouTube — próximamente",
+  openOnYoutube: "Abrir en YouTube",
+  closePlayer: "Cerrar reproductor",
   instagramCta: "Ver en Instagram",
   sourceNote:
     "Biblioteca reconstruida desde Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Puede haber charlas anteriores no indexadas.",
@@ -39,7 +42,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Carlos López Moris",
     dateLabel: "Jueves 10 de septiembre",
     flyerSrc: "/images/webinars/poliposis-nasosinusal.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=zBmL8PwWmQI",
     instagramUrl: "https://www.instagram.com/reel/DdE7QUBuwk-/",
   },
   {
@@ -48,7 +51,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Ernesto Desio",
     dateLabel: "Jueves 3 de septiembre",
     flyerSrc: "/images/webinars/otoplastia-pabellones.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=Hi4XCb8Uf9A",
     instagramUrl: "https://www.instagram.com/p/Dcv3YYEuzf_/",
   },
   {
@@ -75,7 +78,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Rodolfo Lugo Saldaña",
     dateLabel: "Jueves 13 de agosto",
     flyerSrc: "/images/webinars/valvula-nasal-cpap.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=zISyuVaLtnw",
     instagramUrl: "https://www.instagram.com/p/Db6OoZ1O-RU/",
   },
   {
@@ -84,7 +87,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Daniel Paez Moya",
     dateLabel: "Jueves 6 de agosto",
     flyerSrc: "/images/webinars/accesos-transorbitarios.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=rh5Glp8Ko_U",
     instagramUrl: "https://www.instagram.com/p/DbnjByZOKhJ/",
   },
   {
@@ -102,7 +105,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Renato Sousa",
     dateLabel: "Jueves 23 de julio",
     flyerSrc: "/images/webinars/dorso-nasal-sousa.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=smfoOBnJOrc",
     instagramUrl: "https://www.instagram.com/p/DbBwosuhq3E/",
   },
   {
@@ -111,7 +114,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Javier Yapur",
     dateLabel: "Jueves 16 de julio",
     flyerSrc: "/images/webinars/oxigeno-hiperbarico-yapur.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=RtI1tKe9Ku0",
     instagramUrl: "https://www.instagram.com/p/Da0asdMOlNt/",
   },
   {
@@ -120,7 +123,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Miguel Tepedino",
     dateLabel: "Jueves 25 de junio",
     flyerSrc: "/images/webinars/abordaje-endonasal-tepedino.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=rIltJVLrsGk",
     instagramUrl: "https://www.instagram.com/p/DZ-MMGQuj8E/",
   },
   {
@@ -129,7 +132,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Raúl Martínez Vite",
     dateLabel: "Jueves 11 de junio",
     flyerSrc: "/images/webinars/rehabilitacion-respiratoria-nasal.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=E2KuDW_NqJ0",
     instagramUrl: "https://www.instagram.com/p/DZYWwT7BePd/",
   },
   {
@@ -138,7 +141,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Matías García",
     dateLabel: "Jueves 4 de junio",
     flyerSrc: "/images/webinars/endo-dcr.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=3EuOaIpOKd0",
     instagramUrl: "https://www.instagram.com/p/DZITq9WuNHk/",
   },
   {

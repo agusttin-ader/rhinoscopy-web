@@ -8,25 +8,17 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { DarkSectionAtmosphere } from "@/components/section-atmosphere";
 import { SectionHeading } from "@/components/section-heading";
+import { WebinarPlayButton } from "@/components/webinar-play-button";
+import { WebinarTopicHeading } from "@/components/webinar-topic-heading";
+import {
+  WebinarVideoModal,
+  type WebinarPlayerState,
+} from "@/components/webinar-video-modal";
 import { webinars, webinarsVisibleCount, type Webinar } from "@/data/webinars";
 
 /** Mismo ancho de miniatura que las filas del listado (desktop). */
 const WEBINAR_THUMB_CLASS =
   "w-full max-w-[min(100%,30rem)] shrink-0 sm:max-w-[28rem] md:max-w-[30rem] lg:w-[clamp(16.5rem,38vw,34rem)] lg:max-w-[34rem]";
-
-function PlayMark() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className="h-5 w-5"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="0.75" />
-      <path d="M10 8.2v7.6l6.2-3.8L10 8.2z" fill="currentColor" />
-    </svg>
-  );
-}
 
 function WebinarVisual({
   flyerSrc,
@@ -53,13 +45,17 @@ function WebinarVisual({
         objectFit="contain"
         priority={!lazy}
       />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-black/60 text-white/90 sm:h-14 sm:w-14"
-        >
-          <PlayMark />
-        </span>
-      </div>
+      {hasVideo ? (
+        <>
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/15 to-navy/10 transition-opacity duration-300 group-hover:via-navy/25"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <WebinarPlayButton />
+          </div>
+        </>
+      ) : null}
       {!hasVideo ? (
         <span
           className="absolute bottom-2 right-2 rounded px-1.5 py-0.5 text-[0.65rem] font-semibold tracking-wide text-white/90 bg-black/75"
@@ -77,17 +73,21 @@ function WebinarRow({
   index,
   lazyImage,
   placement = "list",
+  onPlay,
 }: {
   webinar: Webinar;
   index: number;
   lazyImage?: boolean;
   placement?: "list" | "header";
+  onPlay: (webinar: Webinar) => void;
 }) {
   const { webinarsCopy } = useLocaleData();
   const hasVideo = Boolean(webinar.youtubeUrl);
   const isHeader = placement === "header";
   const flip = !isHeader && index % 2 === 1;
-  const thumbHref = hasVideo ? webinar.youtubeUrl : webinar.instagramUrl;
+
+  const thumbClassName =
+    "block w-full cursor-pointer rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400";
 
   return (
     <article
@@ -104,20 +104,37 @@ function WebinarRow({
           isHeader ? "max-w-full" : ""
         }`}
       >
-        <a
-          href={thumbHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
-        >
-          <WebinarVisual
-            flyerSrc={webinar.flyerSrc}
-            topic={webinar.topic}
-            hasVideo={hasVideo}
-            lazy={lazyImage}
-            comingSoonLabel={webinarsCopy.comingSoon}
-          />
-        </a>
+        {hasVideo ? (
+          <button
+            type="button"
+            onClick={() => onPlay(webinar)}
+            className={thumbClassName}
+            aria-label={webinarsCopy.watchCtaAria(webinar.topic)}
+          >
+            <WebinarVisual
+              flyerSrc={webinar.flyerSrc}
+              topic={webinar.topic}
+              hasVideo={hasVideo}
+              lazy={lazyImage}
+              comingSoonLabel={webinarsCopy.comingSoon}
+            />
+          </button>
+        ) : (
+          <a
+            href={webinar.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={thumbClassName}
+          >
+            <WebinarVisual
+              flyerSrc={webinar.flyerSrc}
+              topic={webinar.topic}
+              hasVideo={hasVideo}
+              lazy={lazyImage}
+              comingSoonLabel={webinarsCopy.comingSoon}
+            />
+          </a>
+        )}
       </div>
 
       <div
@@ -130,22 +147,32 @@ function WebinarRow({
         <p className="text-[0.68rem] font-medium tracking-[0.28em] text-cyan-300/75 uppercase">
           {webinar.dateLabel}
         </p>
-        <h3 className="font-display mt-2 text-lg leading-snug text-white line-clamp-3 sm:text-xl lg:mt-3 lg:text-2xl lg:leading-snug">
-          {webinar.topic}
-        </h3>
+        <WebinarTopicHeading
+          topic={webinar.topic}
+          className="mt-2 line-clamp-4 lg:mt-3"
+        />
         <p className="mt-2 text-sm text-white/45 sm:mt-3 sm:text-base">{webinar.speaker}</p>
 
         <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 sm:mt-6">
           {hasVideo ? (
-            <a
-              href={webinar.youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.22em] text-white uppercase transition-colors duration-200 hover:text-cyan-300"
-            >
-              <span className="h-px w-8 bg-cyan-400/80" aria-hidden="true" />
-              {webinarsCopy.watchCta}
-            </a>
+            <>
+              <button
+                type="button"
+                onClick={() => onPlay(webinar)}
+                className="inline-flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.22em] text-white uppercase transition-colors duration-200 hover:text-cyan-300"
+              >
+                <span className="h-px w-8 bg-cyan-400/80" aria-hidden="true" />
+                {webinarsCopy.watchCta}
+              </button>
+              <a
+                href={webinar.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[0.68rem] tracking-[0.18em] text-white/35 uppercase underline-offset-[6px] transition-colors duration-200 hover:text-white/70 hover:underline"
+              >
+                {webinarsCopy.openOnYoutube}
+              </a>
+            </>
           ) : (
             <p className="text-sm font-light italic text-white/40">
               {webinarsCopy.comingSoon}
@@ -167,8 +194,10 @@ function WebinarRow({
 
 function WebinarsDesktopHeader({
   latestWebinar,
+  onPlay,
 }: {
   latestWebinar: Webinar | undefined;
+  onPlay: (webinar: Webinar) => void;
 }) {
   const { webinarsCopy } = useLocaleData();
 
@@ -204,7 +233,12 @@ function WebinarsDesktopHeader({
       {latestWebinar ? (
         <div className="min-w-0 pt-6 sm:pt-[1.625rem]">
           <div className="mx-auto w-full lg:max-w-[clamp(16.5rem,38vw,34rem)]">
-            <WebinarRow webinar={latestWebinar} index={0} placement="header" />
+            <WebinarRow
+              webinar={latestWebinar}
+              index={0}
+              placement="header"
+              onPlay={onPlay}
+            />
           </div>
         </div>
       ) : null}
@@ -216,6 +250,16 @@ export function WebinarsSection() {
   const locale = useLocale();
   const { webinarsCopy } = useLocaleData();
   const [expanded, setExpanded] = useState(false);
+  const [player, setPlayer] = useState<WebinarPlayerState | null>(null);
+
+  const openPlayer = (webinar: Webinar) => {
+    if (!webinar.youtubeUrl) return;
+    setPlayer({
+      youtubeUrl: webinar.youtubeUrl,
+      topic: webinar.topic,
+      speaker: webinar.speaker,
+    });
+  };
   const sectionRef = useRef<HTMLElement>(null);
   const scrollPinY = useRef<number | null>(null);
   const scrollToSectionTopRef = useRef(false);
@@ -280,7 +324,7 @@ export function WebinarsSection() {
     <section
       ref={sectionRef}
       id="webinars"
-      className="site-scroll-mt relative overflow-hidden bg-navy text-white"
+      className="site-scroll-mt relative overflow-x-clip bg-navy text-white"
     >
       <DarkSectionAtmosphere />
 
@@ -295,7 +339,10 @@ export function WebinarsSection() {
           />
         </Reveal>
         <Reveal delay={50} offset={14}>
-          <WebinarsDesktopHeader latestWebinar={latestWebinar} />
+          <WebinarsDesktopHeader
+            latestWebinar={latestWebinar}
+            onPlay={openPlayer}
+          />
         </Reveal>
 
         <div className="mt-12 sm:mt-16 md:mt-24">
@@ -315,7 +362,11 @@ export function WebinarsSection() {
                   }`}
                 >
                   <Reveal delay={Math.min(index, 5) * 40} offset={12}>
-                    <WebinarRow webinar={webinar} index={index} />
+                    <WebinarRow
+                      webinar={webinar}
+                      index={index}
+                      onPlay={openPlayer}
+                    />
                   </Reveal>
                 </li>
               ))}
@@ -330,6 +381,7 @@ export function WebinarsSection() {
                         webinar={webinar}
                         index={webinarsVisibleCount + index}
                         lazyImage
+                        onPlay={openPlayer}
                       />
                       </Reveal>
                     </li>
@@ -373,6 +425,13 @@ export function WebinarsSection() {
           </Reveal>
         ) : null}
       </div>
+
+      <WebinarVideoModal
+        player={player}
+        onClose={() => setPlayer(null)}
+        closeLabel={webinarsCopy.closePlayer}
+        openOnYoutubeLabel={webinarsCopy.openOnYoutube}
+      />
     </section>
   );
 }

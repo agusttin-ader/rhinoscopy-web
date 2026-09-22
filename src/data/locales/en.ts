@@ -236,8 +236,11 @@ export const en = {
     titleScript: "live",
     lead:
       "Weekly talks with community specialists. YouTube videos will be added as they become available.",
-    watchCta: "Watch on YouTube",
+    watchCta: "Watch webinar",
+    watchCtaAria: (topic: string) => `Play: ${topic}`,
     comingSoon: "YouTube — coming soon",
+    openOnYoutube: "Open on YouTube",
+    closePlayer: "Close player",
     instagramCta: "View on Instagram",
     sourceNote:
       "Library rebuilt from Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Earlier talks may not be indexed.",

@@ -3,6 +3,7 @@
 import {
   InstagramCameraIcon,
   WhatsAppIcon,
+  YouTubeIcon,
 } from "@/components/icons/social-icons";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { site } from "@/data/site";
@@ -36,6 +37,15 @@ export function FooterFollow() {
           aria-label={`Instagram ${site.instagramHandle}`}
         >
           <InstagramCameraIcon className="h-[1.35rem] w-[1.35rem]" />
+        </a>
+        <a
+          href={site.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#ff4444] to-[#cc0000] text-white shadow-[0_10px_28px_-12px_rgba(204,0,0,0.55)] transition-transform duration-200 hover:scale-[1.04]"
+          aria-label={`YouTube ${site.youtubeHandle}`}
+        >
+          <YouTubeIcon className="h-[1.35rem] w-[1.35rem]" />
         </a>
       </div>
     </div>

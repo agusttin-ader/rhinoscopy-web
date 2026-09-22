@@ -34,7 +34,7 @@ export function organizationJsonLdGraph(
           audienceType: "Physician",
         },
         email: site.email,
-        sameAs: [site.instagram],
+        sameAs: [site.instagram, site.youtube],
         contactPoint: [
           {
             "@type": "ContactPoint",

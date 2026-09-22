@@ -236,8 +236,11 @@ export const pt = {
     titleScript: "ao vivo",
     lead:
       "Palestras semanais com especialistas da comunidade. Os vídeos no YouTube serão adicionados conforme estiverem prontos.",
-    watchCta: "Ver no YouTube",
+    watchCta: "Ver webinar",
+    watchCtaAria: (topic: string) => `Reproduzir: ${topic}`,
     comingSoon: "YouTube — em breve",
+    openOnYoutube: "Abrir no YouTube",
+    closePlayer: "Fechar reprodutor",
     instagramCta: "Ver no Instagram",
     sourceNote:
       "Biblioteca reconstruída a partir do Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Palestras anteriores podem não estar indexadas.",

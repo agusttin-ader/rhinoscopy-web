@@ -4,7 +4,15 @@ import { consumeLocaleViewTransition } from "@/lib/locale-transition-coord";
 import { useLocale } from "next-intl";
 import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
 
-const ENTER_MS = 520;
+const ENTER_MS_DESKTOP = 520;
+const ENTER_MS_MOBILE = 680;
+
+function localeEnterMs() {
+  if (typeof window === "undefined") return ENTER_MS_DESKTOP;
+  return window.matchMedia("(max-width: 1023px)").matches
+    ? ENTER_MS_MOBILE
+    : ENTER_MS_DESKTOP;
+}
 
 type LocaleTransitionProps = {
   children: ReactNode;
@@ -27,7 +35,7 @@ export function LocaleTransition({ children }: LocaleTransitionProps) {
     const frame = requestAnimationFrame(() => {
       setEntering(true);
     });
-    const timeout = window.setTimeout(() => setEntering(false), ENTER_MS);
+    const timeout = window.setTimeout(() => setEntering(false), localeEnterMs());
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(timeout);

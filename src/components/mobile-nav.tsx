@@ -71,7 +71,7 @@ export function MobileNav({
         aria-hidden={!open}
       >
         <nav
-          className={`absolute inset-0 flex flex-col bg-navy transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          className={`absolute inset-0 flex flex-col bg-navy transition-transform duration-[680ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1023px]:duration-[720ms] ${
             open ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -82,7 +82,7 @@ export function MobileNav({
 
           <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
             <p
-              className={`text-[0.65rem] font-semibold tracking-[0.28em] text-cyan-300/80 uppercase transition-all duration-300 delay-100 ${
+              className={`text-[0.65rem] font-semibold tracking-[0.28em] text-cyan-300/80 uppercase transition-all duration-500 delay-100 max-[1023px]:duration-[560ms] ${
                 open ? "translate-x-0 opacity-100" : "translate-x-3 opacity-0"
               }`}
             >
@@ -90,7 +90,7 @@ export function MobileNav({
             </p>
             <button
               type="button"
-              className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-all duration-300 hover:bg-white/10 ${
+              className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-all duration-500 hover:bg-white/10 max-[1023px]:duration-[560ms] ${
                 open ? "scale-100 opacity-100" : "scale-90 opacity-0"
               }`}
               aria-label={closeLabel}
@@ -104,10 +104,12 @@ export function MobileNav({
             {links.map((link, index) => (
               <li
                 key={link.href}
-                className={`transition-all duration-300 ease-out ${
+                className={`transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] max-[1023px]:duration-[580ms] ${
                   open ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"
                 }`}
-                style={{ transitionDelay: open ? `${120 + index * 55}ms` : "0ms" }}
+                style={{
+                  transitionDelay: open ? `${140 + index * 72}ms` : "0ms",
+                }}
               >
                 {link.href.startsWith("/#") ? (
                   <SmoothNavLink
@@ -132,10 +134,10 @@ export function MobileNav({
           </ul>
 
           <div
-            className={`relative shrink-0 px-6 pt-2 pb-[max(1.75rem,env(safe-area-inset-bottom))] transition-all duration-500 ease-out ${
+            className={`relative shrink-0 px-6 pt-2 pb-[max(1.75rem,env(safe-area-inset-bottom))] transition-all duration-[620ms] ease-[cubic-bezier(0.19,1,0.22,1)] max-[1023px]:duration-[680ms] ${
               open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
-            style={{ transitionDelay: open ? "320ms" : "0ms" }}
+            style={{ transitionDelay: open ? "400ms" : "0ms" }}
           >
             <Link
               href="/"

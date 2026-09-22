@@ -132,19 +132,30 @@ html {
 
 /* —— Scroll reveal (sitio; hero de marca sin tocar) —— */
 .motion-reveal {
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-duration-opacity: 1.05s;
+  --motion-duration-transform: 1.15s;
   opacity: 0;
   transform: translate3d(0, var(--motion-offset, 14px), 0);
   filter: blur(0);
   backface-visibility: hidden;
   transition:
-    opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity var(--motion-duration-opacity) var(--motion-ease),
+    transform var(--motion-duration-transform) var(--motion-ease);
   transition-delay: var(--motion-delay, 0ms);
 }
 
 .motion-reveal--visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 1023px) {
+  .motion-reveal {
+    --motion-ease: cubic-bezier(0.19, 1, 0.22, 1);
+    --motion-duration-opacity: 1.4s;
+    --motion-duration-transform: 1.55s;
+  }
 }
 
 @keyframes speaker-reveal {
@@ -160,6 +171,13 @@ html {
 
 .speaker-reveal {
   animation: speaker-reveal 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (max-width: 1023px) {
+  .speaker-reveal {
+    animation-duration: 1.05s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
 }
 
 @keyframes brand-hero-ring-draw {
@@ -215,6 +233,12 @@ html {
 :root {
   --locale-ease: cubic-bezier(0.19, 1, 0.22, 1);
   --locale-duration: 0.52s;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --locale-duration: 0.68s;
+  }
 }
 
 .lang-switch-indicator {
@@ -449,6 +473,10 @@ html {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .webinar-video-modal[open] {
+    animation: webinar-modal-in 0.55s cubic-bezier(0.19, 1, 0.22, 1) both;
+  }
+
   .congress-gallery-slide {
     animation: congress-gallery-slide-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
@@ -459,6 +487,17 @@ html {
 
   .congress-gallery-slide--next {
     animation-name: congress-gallery-slide-in-next;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .congress-gallery-slide {
+    animation-duration: 0.48s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .congress-gallery-mobile-nudge {
+    animation-duration: 1.15s;
   }
 }
 
@@ -719,6 +758,15 @@ html {
     width: 3.25rem;
     height: 3.25rem;
     font-size: 1.75rem;
+  }
+}
+
+@keyframes webinar-modal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

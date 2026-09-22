@@ -179,6 +179,8 @@ export const en = {
       lightboxTitleScript: "Buenos Aires",
       lightboxTitleDisplay: "Gallery",
       swipeHint: "Swipe to see more photos",
+      seeMore: "See more",
+      seeMoreAria: "View all photos from this day in full screen",
       swipeAria: "Photo gallery. Swipe horizontally.",
       photoInSelection: (current: number, inSelection: number) =>
         `${current} / ${inSelection}`,

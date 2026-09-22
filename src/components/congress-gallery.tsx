@@ -12,9 +12,18 @@ import {
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { StaticImage } from "@/components/static-image";
 import { useLocale } from "next-intl";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 const DESKTOP_GALLERY_MQ = "(min-width: 768px)";
+const MOBILE_GALLERY_MAX_DOTS = 7;
 
 function subscribeDesktopGallery(onStoreChange: () => void) {
   const mq = window.matchMedia(DESKTOP_GALLERY_MQ);
@@ -36,6 +45,20 @@ function useDesktopGallery() {
     getDesktopGallerySnapshot,
     getDesktopGalleryServerSnapshot,
   );
+}
+
+/** Maps photo index to one of at most 7 pagination dots. */
+/** At most 7 dots; advances one step per photo swipe and wraps 0 → 6 → 0. */
+function mobileGalleryDots(photoIndex: number, photoCount: number) {
+  const dotCount = Math.min(MOBILE_GALLERY_MAX_DOTS, photoCount);
+  if (dotCount <= 1) {
+    return { dotCount, activeDot: 0 };
+  }
+  const activeDot =
+    photoCount <= MOBILE_GALLERY_MAX_DOTS
+      ? photoIndex
+      : photoIndex % MOBILE_GALLERY_MAX_DOTS;
+  return { dotCount, activeDot };
 }
 
 function formatGalleryDayDate(isoDate: string, locale: string): string {
@@ -129,21 +152,17 @@ function CarouselArrow({
 }
 
 type GalleryMobileSwipeProps = {
-  slideIndex: number;
   files: string[];
   dayDir: CongressGalleryDayDir;
   dayTotal: number;
-  selectionStartIndex: number;
   photoAlt: string;
   swipeAria: string;
 };
 
 function GalleryMobileSwipe({
-  slideIndex,
   files,
   dayDir,
   dayTotal,
-  selectionStartIndex,
   photoAlt,
   swipeAria,
 }: GalleryMobileSwipeProps) {
@@ -154,6 +173,8 @@ function GalleryMobileSwipe({
   useLayoutEffect(() => {
     trackRef.current?.scrollTo({ left: 0, behavior: "instant" });
   }, []);
+
+  const { dotCount, activeDot } = mobileGalleryDots(activeIndex, files.length);
 
   const updateFromScroll = useCallback(() => {
     const track = trackRef.current;
@@ -178,11 +199,11 @@ function GalleryMobileSwipe({
         aria-label={swipeAria}
       >
         {files.map((file, index) => {
-          const photoNumber = selectionStartIndex + index + 1;
+          const photoNumber = index + 1;
           const isNudge = nudge && index === 0;
           return (
             <div
-              key={`${slideIndex}-${file}`}
+              key={file}
               className={`congress-gallery-mobile-slide relative aspect-[4/5] w-full shrink-0 snap-center ${
                 isNudge ? "congress-gallery-mobile-nudge" : ""
               }`}
@@ -206,15 +227,12 @@ function GalleryMobileSwipe({
       </div>
 
       {files.length > 1 ? (
-        <div
-          className="mt-3 flex justify-center gap-1.5"
-          aria-hidden
-        >
-          {files.map((file, index) => (
+        <div className="mt-3 flex justify-center gap-1.5" aria-hidden>
+          {Array.from({ length: dotCount }, (_, index) => (
             <span
-              key={file}
+              key={index}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                index === activeIndex
+                index === activeDot
                   ? "w-5 bg-cyan-600"
                   : "w-1.5 bg-navy/20"
               }`}
@@ -356,16 +374,18 @@ function GalleryCarousel({
 function LightboxBrandLine({
   bold,
   light,
+  className = "",
 }: {
   bold: string;
   light: string;
+  className?: string;
 }) {
   return (
-    <p className="mt-1.5 uppercase leading-none">
-      <span className="text-[0.62rem] font-semibold tracking-[0.24em] text-white/70 sm:text-[0.68rem]">
+    <p className={`shrink-0 uppercase leading-none ${className}`}>
+      <span className="text-[0.58rem] font-semibold tracking-[0.22em] text-white/70 sm:text-[0.65rem]">
         {bold}
       </span>{" "}
-      <span className="text-[0.62rem] font-light tracking-[0.38em] text-white/38 sm:text-[0.68rem]">
+      <span className="text-[0.58rem] font-light tracking-[0.32em] text-white/38 sm:text-[0.65rem]">
         {light}
       </span>
     </p>
@@ -650,16 +670,22 @@ function GalleryLightbox({
         </button>
 
         <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-4 px-4 pt-[max(1.35rem,env(safe-area-inset-top,0px))] pb-2 sm:px-8 sm:pt-5 sm:pb-3">
-          <div className="min-w-0">
+          <div className="min-w-0 max-w-[min(100%,calc(100%-5.5rem))] bg-[#0a0918]/75 pr-2 backdrop-blur-[3px] sm:max-w-none sm:bg-transparent sm:pr-0 sm:backdrop-blur-none">
             <h2 className="leading-[0.92]">
               <span className="font-script block text-[clamp(1.75rem,5vw,2.35rem)] leading-none text-cyan-400">
                 {titleScript}
               </span>
-              <span className="font-display -mt-0.5 block text-[clamp(1.35rem,3.8vw,1.85rem)] uppercase tracking-[0.03em] text-white">
-                {titleDisplay}
+              <span className="-mt-0.5 flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1 sm:gap-x-3">
+                <span className="font-display shrink-0 text-[clamp(1.35rem,3.8vw,1.85rem)] uppercase tracking-[0.03em] text-white">
+                  {titleDisplay}
+                </span>
+                <LightboxBrandLine
+                  bold={brandBold}
+                  light={brandLight}
+                  className="pb-0.5"
+                />
               </span>
             </h2>
-            <LightboxBrandLine bold={brandBold} light={brandLight} />
           </div>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <span className="text-[0.7rem] font-medium tabular-nums text-white/45 sm:text-xs">
@@ -718,8 +744,6 @@ export function CongressGallery() {
   const hero = current?.[0];
   const rest = current?.slice(1, 7) ?? [];
   const selectionStartIndex = slideIndex * CONGRESS_GALLERY_SELECTION_SIZE;
-
-  const mobileFiles = useMemo(() => current ?? [], [current]);
 
   const selectDay = (id: CongressGalleryDayId) => {
     setDayId(id);
@@ -877,12 +901,10 @@ export function CongressGallery() {
         <>
       <div className="mt-6 min-w-0 md:mt-10 md:hidden">
         <GalleryMobileSwipe
-          key={`${dayId}-${slideIndex}`}
-          slideIndex={slideIndex}
-          files={mobileFiles}
+          key={dayId}
+          files={dayFiles}
           dayDir={activeDay.dir}
           dayTotal={dayTotal}
-          selectionStartIndex={selectionStartIndex}
           photoAlt={copy.photoAlt}
           swipeAria={copy.swipeAria}
         />

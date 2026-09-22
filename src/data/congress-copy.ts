@@ -102,6 +102,8 @@ export const congressCopy = {
     lightboxTitleScript: "Buenos Aires",
     lightboxTitleDisplay: "Galería",
     swipeHint: "Deslizá para ver más fotos",
+    seeMore: "Ver más",
+    seeMoreAria: "Ver todas las fotos de la jornada en pantalla completa",
     swipeAria: "Galería de fotos. Deslizá horizontalmente.",
     photoInSelection: (current: number, inSelection: number) =>
       `${current} / ${inSelection}`,

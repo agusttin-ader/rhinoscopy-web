@@ -78,7 +78,9 @@ export function Logo({
     >
       {mark}
       {wordmark && (
-        <span className="font-brand text-[0.62rem] leading-none text-navy transition-colors group-hover:text-navy/80 sm:text-[0.72rem]">
+        <span
+          className="font-brand hidden leading-none text-navy transition-colors group-hover:text-navy/80 min-[1024px]:inline min-[1024px]:text-[0.62rem] min-[1280px]:text-[0.72rem]"
+        >
           Rhinoscopy
         </span>
       )}

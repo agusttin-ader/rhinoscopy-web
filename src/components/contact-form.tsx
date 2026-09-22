@@ -51,13 +51,13 @@ export function ContactForm() {
   }
 
   const inputClass =
-    "mt-2 w-full border-b border-navy/15 bg-transparent py-3 text-navy outline-none transition-colors duration-200 focus:border-cyan-600";
+    "mt-2 w-full min-h-11 border-b border-navy/15 bg-transparent py-3 text-base text-navy outline-none transition-colors duration-200 focus:border-cyan-600 sm:text-[inherit]";
   const labelClass =
     "text-[0.65rem] font-medium tracking-[0.2em] text-slate-400 uppercase";
 
   return (
     <form className="grid gap-6" onSubmit={onWhatsApp}>
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 min-[428px]:grid-cols-2">
         <label className="block">
           <span className={labelClass}>{contactCopy.nameLabel}</span>
           <input
@@ -94,14 +94,14 @@ export function ContactForm() {
       <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button
           type="submit"
-          className="w-full rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-bold tracking-[0.18em] text-white uppercase transition hover:bg-navy/90 sm:w-auto"
+          className="min-h-11 w-full rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-bold tracking-[0.18em] text-white uppercase transition hover:bg-navy/90 sm:w-auto"
         >
           {contactCopy.whatsappCta}
         </button>
         <button
           type="button"
           onClick={onEmail}
-          className="w-full rounded-full border border-navy/20 bg-white px-8 py-3.5 text-[0.72rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:border-navy/35 hover:bg-navy/[0.03] sm:w-auto"
+          className="min-h-11 w-full rounded-full border border-navy/20 bg-white px-8 py-3.5 text-[0.72rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:border-navy/35 hover:bg-navy/[0.03] sm:w-auto"
         >
           {contactCopy.emailCta}
         </button>

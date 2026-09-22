@@ -23,6 +23,74 @@ body {
   overflow-x: clip;
 }
 
+/* Contenedor principal: ancho y padding escalados por breakpoint (sin cambiar identidad visual). */
+@layer components {
+  .site-shell {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  @media (min-width: 375px) {
+    .site-shell {
+      padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 640px) {
+    .site-shell {
+      padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-shell {
+      padding-left: max(1.75rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1.75rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .site-shell {
+      max-width: 80rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .site-shell {
+      max-width: 84rem;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .site-shell {
+      max-width: 90rem;
+      padding-left: max(2rem, env(safe-area-inset-left, 0px));
+      padding-right: max(2rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  .site-shell--flush-x {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .site-scroll-mt {
+    scroll-margin-top: 4.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .site-scroll-mt {
+      scroll-margin-top: 4.5rem;
+    }
+  }
+}
+
 html {
   overflow-x: clip;
 }
@@ -539,11 +607,33 @@ html {
   }
 
   .congress-gallery-controls {
+    gap: 1.25rem;
+  }
+
+  .congress-gallery-mosaic {
+    max-height: min(52vh, 480px);
+  }
+
+  .congress-gallery-arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.35rem;
+  }
+}
+
+@media (min-width: 896px) {
+  .congress-gallery-controls {
     gap: 1.75rem;
   }
 
   .congress-gallery-mosaic {
     max-height: 560px;
+  }
+
+  .congress-gallery-arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.5rem;
   }
 }
 

@@ -67,7 +67,7 @@ export function MobileNav({
     createPortal(
       <div
         id="mobile-nav-drawer"
-        className={`fixed inset-0 z-[100] md:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-[100] min-[1024px]:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}
         aria-hidden={!open}
       >
         <nav
@@ -165,7 +165,7 @@ export function MobileNav({
     <>
       <button
         type="button"
-        className={`relative z-[101] inline-flex h-10 w-10 items-center justify-center rounded-full text-navy transition-all duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] ${
+        className={`relative z-[101] inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-navy transition-all duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] ${
           open
             ? "bg-navy text-white shadow-[0_10px_28px_-10px_rgba(38,36,84,0.55)]"
             : "bg-navy/[0.04] ring-1 ring-navy/10 hover:bg-navy/[0.08]"

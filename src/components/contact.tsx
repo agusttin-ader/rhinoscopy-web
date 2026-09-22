@@ -9,9 +9,9 @@ export async function Contact() {
   const { aboutCopy, contactCopy } = getLocaleData(locale);
 
   return (
-    <section id="contacto" className="scroll-mt-[4.5rem] bg-paper px-5 py-20 sm:px-6 sm:py-28">
+    <section id="contacto" className="site-scroll-mt bg-paper py-16 sm:py-24 lg:py-28">
       <div
-        className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-14 lg:gap-16"
+        className="site-shell grid min-w-0 gap-10 sm:gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-14 lg:gap-16"
       >
         <Reveal as="div" id="quienes-somos" className="min-w-0" offset={14}>
           <SectionHeading

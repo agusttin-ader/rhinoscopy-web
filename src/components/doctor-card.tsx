@@ -58,7 +58,7 @@ export function DoctorCard({
 
       <div className="min-w-0 flex-1 pr-1">
         <h4
-          className={`font-semibold leading-snug tracking-[-0.01em] text-navy ${
+          className={`break-words font-semibold leading-snug tracking-[-0.01em] text-navy ${
             large
               ? "text-[0.95rem] sm:text-[1.05rem]"
               : "text-[0.8125rem] sm:text-[0.875rem]"

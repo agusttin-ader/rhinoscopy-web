@@ -25,11 +25,13 @@ function SectionIntro({
   return (
     <Reveal
       as="div"
-      className="flex flex-col gap-6 border-b border-navy/10 pb-8 md:flex-row md:items-end md:justify-between"
+      className="flex min-w-0 flex-col gap-6 border-b border-navy/10 pb-8 md:flex-row md:items-end md:justify-between md:gap-8"
     >
-      <div className="max-w-2xl">
+      <div className="min-w-0 max-w-2xl">
         <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">{kicker}</p>
-        <h3 className="font-display mt-3 text-4xl text-navy md:text-5xl">{title}</h3>
+        <h3 className="font-display mt-3 text-[clamp(1.75rem,5.2vw,2.25rem)] text-navy md:text-5xl">
+          {title}
+        </h3>
         {lead ? <p className="mt-4 text-slate-600">{lead}</p> : null}
       </div>
       {children}
@@ -41,7 +43,7 @@ function CongressProgram() {
   const { congressCopy } = useLocaleData();
 
   return (
-    <section id="programa" className="scroll-mt-24">
+    <section id="programa" className="site-scroll-mt">
       <SectionIntro
         kicker={congressCopy.program.kicker}
         title={congressCopy.program.title.replace(".", "")}
@@ -53,7 +55,7 @@ function CongressProgram() {
           href={congress.assets.programPdf}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase transition hover:bg-navy/90"
+          className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase transition hover:bg-navy/90"
         >
           {congressCopy.program.pdfCta}
           <span aria-hidden="true">↗</span>
@@ -120,13 +122,13 @@ function CongressSpeakers() {
   };
 
   return (
-    <section id="speakers" ref={sectionRef} className="scroll-mt-24">
+    <section id="speakers" ref={sectionRef} className="site-scroll-mt">
       <SectionIntro
         kicker={congressCopy.speakers.kicker}
         title={congressCopy.speakers.title.replace(".", "")}
         lead={congressCopy.speakers.lead}
       >
-        <label className="w-full md:w-72">
+        <label className="w-full min-w-0 md:w-72 md:shrink-0">
           <span className="sr-only">{congressCopy.speakers.searchPlaceholder}</span>
           <input
             type="search"
@@ -136,7 +138,7 @@ function CongressSpeakers() {
               setExpanded(false);
             }}
             placeholder={congressCopy.speakers.searchPlaceholder}
-            className="w-full border-b border-navy/15 bg-transparent py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-cyan-500"
+            className="w-full min-h-11 border-b border-navy/15 bg-transparent py-2 text-sm text-navy outline-none placeholder:text-slate-400 focus:border-cyan-500"
           />
         </label>
       </SectionIntro>
@@ -149,7 +151,7 @@ function CongressSpeakers() {
         <p className="mt-12 text-center text-slate-500">{congressCopy.speakers.empty}</p>
       ) : (
         <div className="mt-10">
-          <ul className="grid gap-3 sm:gap-3.5 lg:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-3 min-[428px]:grid-cols-2 min-[428px]:gap-3.5 lg:gap-4 xl:grid-cols-3">
             {featured.map((speaker, index) => (
               <li key={speaker.id}>
                 <Reveal delay={Math.min(index, 6) * 42} offset={12}>
@@ -185,7 +187,7 @@ function CongressSpeakers() {
               type="button"
               onClick={toggleSpeakers}
               aria-expanded={expanded}
-              className="mt-6 flex w-full items-center justify-center gap-3 py-2 text-sm font-semibold text-navy transition hover:text-cyan-700"
+              className="mt-6 flex min-h-11 w-full items-center justify-center gap-3 py-2 text-sm font-semibold text-navy transition hover:text-cyan-700"
             >
               <span>
                 {expanded
@@ -213,14 +215,14 @@ function CongressCommittee() {
     useLocaleData();
 
   return (
-    <section id="comite" className="scroll-mt-24">
+    <section id="comite" className="site-scroll-mt">
       <SectionIntro
         kicker={congressCopy.committee.kicker}
         title={congressCopy.committee.title.replace(".", "")}
         lead={congressCopy.committee.lead}
       />
 
-      <ul className="mt-12 grid gap-4 sm:gap-5 md:grid-cols-3">
+      <ul className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {congress.organizingCommittee.map((member, index) => (
           <li key={member.id}>
             <Reveal delay={index * 48} offset={12} className="h-full">
@@ -262,8 +264,8 @@ export function CongressSection() {
       <CongressFamilyBand />
 
       <Reveal delay={60} offset={12}>
-      <div className="border-b border-navy/10 bg-paper px-5 py-8 sm:px-6 sm:py-12">
-        <div className="mx-auto max-w-6xl">
+      <div className="border-b border-navy/10 bg-paper py-8 sm:py-12">
+        <div className="site-shell">
           <p className="max-w-2xl text-slate-600">{congressCopy.lead}</p>
           <p className="mt-3 text-sm text-slate-500">
             {congress.event.venue} · {congress.event.address}
@@ -280,7 +282,7 @@ export function CongressSection() {
       </div>
       </Reveal>
 
-      <div className="mx-auto max-w-6xl space-y-24 px-6 py-20 sm:py-28">
+      <div className="site-shell min-w-0 space-y-16 py-16 sm:space-y-20 sm:py-20 lg:space-y-24 lg:py-28">
         <CongressProgram />
         <CongressCommittee />
         <CongressSpeakers />
@@ -291,7 +293,7 @@ export function CongressSection() {
         <div className="congress-section-rule" role="presentation" aria-hidden="true" />
       </div>
 
-      <div className="overflow-x-clip px-6 pb-20 pt-6 sm:pb-28 sm:pt-8">
+      <div className="site-shell min-w-0 overflow-x-clip pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-28">
         <CongressVerticalScreens />
       </div>
 

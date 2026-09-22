@@ -33,16 +33,16 @@ export function SectionHeading({
 
   const scriptSize =
     size === "full"
-      ? "text-[clamp(3.5rem,12vw,6.5rem)]"
+      ? "text-[clamp(2.85rem,11vw,6.5rem)]"
       : size === "narrow"
-        ? "text-[clamp(2.1rem,5.5vw,3rem)]"
-        : "text-[clamp(2.75rem,8vw,4.25rem)]";
+        ? "text-[clamp(1.95rem,5.2vw,3rem)]"
+        : "text-[clamp(2.5rem,7.5vw,4.25rem)]";
   const displaySize =
     size === "full"
-      ? "text-[clamp(2.75rem,9vw,5.5rem)]"
+      ? "text-[clamp(2.35rem,8.5vw,5.5rem)]"
       : size === "narrow"
-        ? "text-[clamp(1.65rem,4.5vw,2.5rem)]"
-        : "text-[clamp(2rem,6vw,3.25rem)]";
+        ? "text-[clamp(1.5rem,4.2vw,2.5rem)]"
+        : "text-[clamp(1.85rem,5.8vw,3.25rem)]";
 
   const displayColor = tone === "dark" ? "text-white" : "text-navy";
   const leadColor =

@@ -320,7 +320,7 @@ function GalleryCarousel({
         : "";
 
   return (
-    <div className="congress-gallery-controls flex items-center">
+    <div className="congress-gallery-controls flex min-w-0 items-center">
       {showArrows ? (
         <CarouselArrow direction="prev" onClick={onPrevSlide} ariaLabel={prevAria} />
       ) : (
@@ -828,19 +828,19 @@ export function CongressGallery() {
     lightbox === null ? -1 : lightbox.scope.indexOf(lightbox.file);
 
   return (
-    <section id="galeria" className="scroll-mt-24 overflow-x-clip">
-      <Reveal as="div" className="max-w-2xl border-b border-navy/10 pb-8">
+    <section id="galeria" className="site-scroll-mt min-w-0 overflow-x-clip">
+      <Reveal as="div" className="min-w-0 max-w-2xl border-b border-navy/10 pb-8">
         <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
           {copy.kicker}
         </p>
-        <h3 className="font-display mt-3 text-4xl text-navy md:text-5xl">
+        <h3 className="font-display mt-3 text-[clamp(1.75rem,5.2vw,2.25rem)] text-navy md:text-5xl">
           {copy.title.replace(".", "")}
         </h3>
         <p className="mt-4 text-slate-600">{copy.lead}</p>
       </Reveal>
 
       <div
-        className="mt-10 mb-1 grid w-full grid-cols-3 gap-3 md:mt-8 md:mb-2 md:flex md:justify-start md:gap-4"
+        className="mt-8 mb-1 grid w-full min-w-0 grid-cols-3 gap-2 min-[375px]:gap-3 md:mt-8 md:mb-2 md:flex md:justify-start md:gap-4"
         role="tablist"
         aria-label={copy.dayTabsAria}
       >
@@ -854,7 +854,7 @@ export function CongressGallery() {
               role="tab"
               aria-selected={selected}
               onClick={() => selectDay(day.id)}
-              className={`w-full border px-2 py-2.5 text-center text-[0.65rem] font-semibold tracking-wide uppercase transition sm:text-xs md:w-auto md:px-5 md:py-2.5 ${
+              className={`min-h-11 w-full min-w-0 border px-1.5 py-2.5 text-center text-[0.6rem] font-semibold tracking-wide uppercase transition min-[375px]:px-2 min-[375px]:text-[0.65rem] sm:text-xs md:w-auto md:px-5 md:py-2.5 ${
                 selected
                   ? "border-navy bg-navy text-white"
                   : "border-navy/15 bg-white text-navy/70 hover:border-navy/30 hover:text-navy"
@@ -875,7 +875,7 @@ export function CongressGallery() {
 
       {mosaicShared ? (
         <>
-      <div className="mt-8 md:mt-10 md:hidden">
+      <div className="mt-6 min-w-0 md:mt-10 md:hidden">
         <GalleryMobileSwipe
           key={`${dayId}-${slideIndex}`}
           slideIndex={slideIndex}

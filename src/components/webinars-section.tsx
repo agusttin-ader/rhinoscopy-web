@@ -184,13 +184,13 @@ function WebinarsDesktopHeader({
         <h2 className="mt-5 leading-[0.95] sm:mt-6">
           {webinarsCopy.titleScript ? (
             <span
-              className="font-script block text-[clamp(3.5rem,12vw,6.5rem)] leading-none text-cyan-400"
+              className="font-script block text-[clamp(2.85rem,11vw,6.5rem)] leading-none text-cyan-400"
             >
               {webinarsCopy.titleScript}
             </span>
           ) : null}
           <span
-            className="font-display -mt-0.5 block text-[clamp(2.75rem,9vw,5.5rem)] uppercase tracking-[0.02em] text-white"
+            className="font-display -mt-0.5 block text-[clamp(2.35rem,8.5vw,5.5rem)] uppercase tracking-[0.02em] text-white"
           >
             {webinarsCopy.titleDisplay}
           </span>
@@ -280,11 +280,11 @@ export function WebinarsSection() {
     <section
       ref={sectionRef}
       id="webinars"
-      className="relative scroll-mt-24 overflow-hidden bg-navy text-white"
+      className="site-scroll-mt relative overflow-hidden bg-navy text-white"
     >
       <DarkSectionAtmosphere />
 
-      <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32 md:py-36">
+      <div className="site-shell relative min-w-0 py-16 sm:py-24 md:py-32 lg:py-36">
         <Reveal className="md:hidden">
           <SectionHeading
             kicker={webinarsCopy.kicker}
@@ -298,7 +298,7 @@ export function WebinarsSection() {
           <WebinarsDesktopHeader latestWebinar={latestWebinar} />
         </Reveal>
 
-        <div className="mt-16 md:mt-24">
+        <div className="mt-12 sm:mt-16 md:mt-24">
           <Reveal offset={14}>
           <p className="text-[0.68rem] font-semibold tracking-[0.28em] text-white/35 uppercase">
             {webinarsCopy.visibleIntro}

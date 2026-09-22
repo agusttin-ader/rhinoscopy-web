@@ -13,12 +13,12 @@ export async function CertificateTeaser() {
   return (
     <section
       id="constancias"
-      className="relative scroll-mt-24 overflow-hidden bg-navy text-white"
+      className="site-scroll-mt relative overflow-hidden bg-navy text-white"
       aria-labelledby="constancias-teaser-title"
     >
       <DarkSectionAtmosphere />
 
-      <div className="relative mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28 md:py-32">
+      <div className="site-shell relative min-w-0 py-16 sm:py-24 md:py-32">
         <div
           className="grid min-w-0 grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14 xl:gap-16"
         >

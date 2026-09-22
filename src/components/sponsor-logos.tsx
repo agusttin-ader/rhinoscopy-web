@@ -8,14 +8,14 @@ export function SponsorLogos() {
   const { congressCopy } = useLocaleData();
 
   return (
-    <div className="border-t border-navy/8 bg-white px-6 py-12 sm:py-14">
-      <div className="mx-auto max-w-6xl">
+    <div className="border-t border-navy/8 bg-white py-12 sm:py-14">
+      <div className="site-shell min-w-0">
         <p className="text-center text-[0.68rem] font-semibold tracking-[0.28em] text-slate-400 uppercase">
           {congressCopy.sponsors.kicker}
         </p>
 
         <ul
-          className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-12 sm:mt-10 sm:gap-x-14 md:gap-x-16"
+          className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-10 min-[375px]:gap-x-8 sm:mt-10 sm:gap-x-14 sm:gap-y-12 md:gap-x-16 lg:gap-x-20"
           aria-label="Sponsors del encuentro"
         >
           {sponsorLogoList.map((sponsor) => {

@@ -106,7 +106,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
               }}
               type="button"
               onClick={() => selectLocale(code)}
-              className={`relative py-1.5 text-[0.68rem] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 ease-out ${
+              className={`relative inline-flex min-h-11 min-w-[2.25rem] items-center justify-center px-0.5 py-1.5 text-[0.68rem] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 ease-out ${
                 active ? "text-navy" : "text-navy/38 hover:text-navy/65"
               }`}
               aria-current={active ? "true" : undefined}

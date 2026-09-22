@@ -17,8 +17,8 @@ const VERTICAL_SCREEN_IMAGES = [
 
 export function CongressVerticalScreens() {
   return (
-    <div className="mx-auto max-w-6xl">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 md:gap-5">
+    <div className="min-w-0">
+      <div className="grid grid-cols-1 gap-3 min-[428px]:grid-cols-2 sm:grid-cols-3 sm:gap-4 md:gap-5 lg:gap-6">
         {VERTICAL_SCREEN_IMAGES.map(({ file, alt }) => (
           <div
             key={file}

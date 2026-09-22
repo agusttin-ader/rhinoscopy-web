@@ -10,7 +10,7 @@ export async function BrandHero() {
   return (
     <section
       id="inicio"
-      className="brand-hero relative isolate flex min-h-[calc(100dvh-4.5rem)] min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-navy text-white"
+      className="brand-hero relative isolate flex min-h-[calc(100dvh-4.5rem)] min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-navy text-white lg:min-h-0"
       aria-labelledby="brand-hero-heading"
     >
       <div
@@ -26,10 +26,10 @@ export async function BrandHero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid w-full max-w-6xl flex-1 grid-cols-1 content-center items-center gap-10 px-5 py-10 sm:px-6 sm:py-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-12 lg:gap-14">
-        <div className="flex w-full justify-center">
+      <div className="site-shell relative grid min-w-0 flex-1 grid-cols-1 content-center items-center gap-8 py-8 sm:gap-10 sm:py-10 md:py-14 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-12 lg:py-16 xl:gap-14 xl:py-20 2xl:py-24">
+        <div className="flex w-full min-w-0 justify-center lg:justify-end lg:pe-4">
           <div
-            className="relative h-[min(92vw,21rem)] w-[min(92vw,21rem)] sm:h-[22rem] sm:w-[22rem] md:h-[23rem] md:w-[23rem]"
+            className="relative h-[min(88vw,20rem)] w-[min(88vw,20rem)] min-[375px]:h-[min(92vw,21rem)] min-[375px]:w-[min(92vw,21rem)] sm:h-[22rem] sm:w-[22rem] md:h-[20rem] md:w-[20rem] lg:h-[23rem] lg:w-[23rem] xl:h-[25rem] xl:w-[25rem] 2xl:h-[27rem] 2xl:w-[27rem]"
           >
             <svg
               className="brand-hero-ring pointer-events-none absolute inset-0 h-full w-full text-brand-sky/55"
@@ -74,38 +74,38 @@ export async function BrandHero() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center md:items-start">
+        <div className="flex min-w-0 flex-col items-center lg:items-start">
           <p className="text-[0.7rem] font-semibold tracking-[0.32em] text-brand-sky/85 uppercase">
             {brandHeroCopy.kicker}
           </p>
 
-          <h1 id="brand-hero-heading" className="mt-4 max-w-xl">
-            <span className="block text-[0.78rem] font-bold tracking-[0.42em] text-white/90 uppercase sm:text-[0.82rem]">
+          <h1 id="brand-hero-heading" className="mt-4 w-full max-w-xl lg:max-w-2xl xl:max-w-[34rem]">
+            <span className="block text-[0.78rem] font-bold tracking-[0.42em] text-white/90 uppercase sm:text-[0.82rem] lg:text-[0.85rem]">
               Rhinoscopy
             </span>
-            <span className="font-display mt-3 block text-[clamp(1.85rem,5.5vw,2.75rem)] leading-[1.05] tracking-tight text-white">
+            <span className="font-display mt-3 block text-[clamp(1.85rem,5.5vw,2.75rem)] leading-[1.05] tracking-tight text-white lg:text-[clamp(2rem,2.35vw,3rem)]">
               {brandHeroCopy.headlineImpact}
             </span>
-            <span className="mt-4 block text-[clamp(1rem,2.8vw,1.2rem)] font-medium leading-snug text-brand-sky/95">
+            <span className="mt-4 block text-[clamp(1rem,2.8vw,1.2rem)] font-medium leading-snug text-brand-sky/95 lg:text-[clamp(1.05rem,1.35vw,1.35rem)]">
               {brandHeroCopy.tagline}
             </span>
           </h1>
 
-          <p className="mt-5 max-w-lg text-center text-sm leading-relaxed text-white/70 sm:text-base md:text-left">
+          <p className="mt-5 max-w-lg text-center text-sm leading-relaxed text-white/70 sm:max-w-xl sm:text-base md:max-w-2xl lg:text-left lg:max-w-xl lg:text-[1.05rem] xl:max-w-2xl">
             {brandHeroCopy.lead}
           </p>
 
-          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
+          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:justify-center lg:max-w-md lg:justify-start">
             <a
               href="#congreso"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"
             >
               {brandHeroCopy.ctaCongress}
               <span aria-hidden="true">↓</span>
             </a>
             <a
               href="#webinars"
-              className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition hover:border-brand-sky/50 hover:bg-white/10"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition hover:border-brand-sky/50 hover:bg-white/10"
             >
               {brandHeroCopy.ctaWebinars}
             </a>

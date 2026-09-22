@@ -23,7 +23,7 @@ export async function SiteFooter() {
         aria-hidden="true"
       />
 
-      <Reveal className="mx-auto max-w-6xl px-5 pb-8 pt-14 sm:px-6 sm:pt-16" offset={14}>
+      <Reveal className="site-shell min-w-0 pb-8 pt-12 sm:pt-16" offset={14}>
         <div className="grid gap-10 border-b border-white/10 pb-12 sm:gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <Link
@@ -40,7 +40,7 @@ export async function SiteFooter() {
                 aria-hidden
               />
               <span
-                className="font-brand text-[0.62rem] leading-none text-white transition-colors group-hover:text-white/85 sm:text-[0.72rem]"
+                className="font-brand min-w-0 text-[0.58rem] leading-none text-white transition-colors group-hover:text-white/85 min-[375px]:text-[0.62rem] sm:text-[0.72rem]"
               >
                 Rhinoscopy
               </span>

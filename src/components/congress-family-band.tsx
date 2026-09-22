@@ -37,8 +37,8 @@ export function CongressFamilyBand() {
         </div>
 
         <figcaption className="congress-family-caption absolute inset-x-0 bottom-0 z-[3] px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-8 sm:pb-9 md:px-12 md:pb-11 lg:px-16 lg:pb-12">
-          <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
-            <div className="max-w-2xl border-l-2 border-cyan-400/80 pl-3.5 sm:border-cyan-400/70 sm:pl-5">
+          <div className="site-shell site-shell--flush-x mx-auto flex flex-col gap-3 sm:gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
+            <div className="min-w-0 max-w-2xl border-l-2 border-cyan-400/80 pl-3.5 sm:border-cyan-400/70 sm:pl-5">
               <p className="text-[0.62rem] font-semibold tracking-[0.32em] text-cyan-300/95 uppercase sm:text-[0.65rem] sm:tracking-[0.34em]">
                 {copy.kicker}
               </p>
@@ -49,7 +49,7 @@ export function CongressFamilyBand() {
                 <span className="font-script block text-[1.75rem] leading-none text-cyan-100/95 sm:inline sm:text-[2.35rem] md:text-[2.6rem]">
                   {copy.titleScript}
                 </span>
-                <span className="font-display mt-0.5 block text-[2rem] leading-none tracking-tight sm:ml-3 sm:mt-0 sm:inline sm:text-5xl md:text-[3.15rem]">
+                <span className="font-display mt-0.5 block text-[clamp(1.65rem,7vw,2rem)] leading-none tracking-tight sm:ml-3 sm:mt-0 sm:inline sm:text-5xl md:text-[3.15rem]">
                   {copy.titleDisplay}
                 </span>
               </h2>

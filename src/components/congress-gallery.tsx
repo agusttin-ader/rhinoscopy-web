@@ -184,9 +184,8 @@ type GalleryMobileSwipeProps = {
   swipeAria: string;
 };
 
-function mobileGalleryAspectRatio(orientation: "portrait" | "landscape") {
-  return orientation === "landscape" ? 3 / 2 : 4 / 5;
-}
+/** Placeholder width/height until the photo’s natural dimensions are known. */
+const MOBILE_GALLERY_PLACEHOLDER_ASPECT = 4 / 5;
 
 function MobileGalleryFrame({
   src,
@@ -198,40 +197,37 @@ function MobileGalleryFrame({
   priority?: boolean;
 }) {
   const shellRef = useRef<HTMLDivElement>(null);
-  const [orientation, setOrientation] = useState<"portrait" | "landscape">(
-    "portrait",
-  );
+  const aspectRatioRef = useRef<number>(MOBILE_GALLERY_PLACEHOLDER_ASPECT);
   const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
   const [imageVisible, setImageVisible] = useState(false);
 
-  const syncFrameHeight = useCallback(
-    (nextOrientation: "portrait" | "landscape") => {
-      const width = shellRef.current?.clientWidth ?? 0;
-      if (width <= 0) return;
-      const ratio = mobileGalleryAspectRatio(nextOrientation);
-      setFrameHeight(Math.round(width / ratio));
-    },
-    [],
-  );
+  const syncFrameHeight = useCallback((widthOverHeight?: number) => {
+    if (widthOverHeight !== undefined && widthOverHeight > 0) {
+      aspectRatioRef.current = widthOverHeight;
+    }
+    const width = shellRef.current?.clientWidth ?? 0;
+    if (width <= 0) return;
+    setFrameHeight(Math.round(width / aspectRatioRef.current));
+  }, []);
 
   useLayoutEffect(() => {
-    syncFrameHeight(orientation);
-  }, [orientation, syncFrameHeight]);
+    syncFrameHeight();
+  }, [syncFrameHeight]);
 
   useEffect(() => {
     const shell = shellRef.current;
     if (!shell) return;
     const observer = new ResizeObserver(() => {
-      syncFrameHeight(orientation);
+      syncFrameHeight();
     });
     observer.observe(shell);
     return () => observer.disconnect();
-  }, [orientation, syncFrameHeight]);
+  }, [syncFrameHeight]);
 
   return (
     <div
       ref={shellRef}
-      className={`congress-gallery-mobile-frame relative w-full overflow-hidden bg-[#ebe8e1] ${
+      className={`congress-gallery-mobile-frame relative w-full overflow-hidden bg-paper ${
         frameHeight === undefined ? "aspect-[4/5]" : ""
       }`}
       style={frameHeight !== undefined ? { height: frameHeight } : undefined}
@@ -251,12 +247,7 @@ function MobileGalleryFrame({
         onLoad={(event) => {
           const img = event.currentTarget;
           if (img.naturalWidth <= 0 || img.naturalHeight <= 0) return;
-          const nextOrientation =
-            img.naturalWidth > img.naturalHeight * 1.08
-              ? "landscape"
-              : "portrait";
-          setOrientation(nextOrientation);
-          syncFrameHeight(nextOrientation);
+          syncFrameHeight(img.naturalWidth / img.naturalHeight);
           requestAnimationFrame(() => setImageVisible(true));
         }}
       />

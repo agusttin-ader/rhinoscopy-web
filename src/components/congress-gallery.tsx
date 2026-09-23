@@ -15,7 +15,6 @@ import { useLocale } from "next-intl";
 import {
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -59,6 +58,31 @@ function mobileGalleryDots(photoIndex: number, photoCount: number) {
       ? photoIndex
       : photoIndex % MOBILE_GALLERY_MAX_DOTS;
   return { dotCount, activeDot };
+}
+
+function useLightboxSwipe(onPrev: () => void, onNext: () => void) {
+  const startRef = useRef<{ x: number; y: number } | null>(null);
+
+  return {
+    onTouchStart: (event: React.TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      startRef.current = { x: touch.clientX, y: touch.clientY };
+    },
+    onTouchEnd: (event: React.TouchEvent) => {
+      const start = startRef.current;
+      const touch = event.changedTouches[0];
+      startRef.current = null;
+      if (!start || !touch) return;
+
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.15) return;
+
+      if (dx > 0) onPrev();
+      else onNext();
+    },
+  };
 }
 
 function formatGalleryDayDate(isoDate: string, locale: string): string {
@@ -166,64 +190,63 @@ function GalleryMobileSwipe({
   photoAlt,
   swipeAria,
 }: GalleryMobileSwipeProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [nudge, setNudge] = useState(() => files.length > 1);
 
-  useLayoutEffect(() => {
-    trackRef.current?.scrollTo({ left: 0, behavior: "instant" });
+  const goPrev = useCallback(() => {
+    setActiveIndex((index) => Math.max(0, index - 1));
+    setNudge(false);
   }, []);
 
+  const goNext = useCallback(() => {
+    setActiveIndex((index) => Math.min(files.length - 1, index + 1));
+    setNudge(false);
+  }, [files.length]);
+
+  const swipe = useLightboxSwipe(goPrev, goNext);
+
+  const file = files[activeIndex];
   const { dotCount, activeDot } = mobileGalleryDots(activeIndex, files.length);
 
-  const updateFromScroll = useCallback(() => {
-    const track = trackRef.current;
-    if (!track || files.length === 0) return;
-    const width = track.clientWidth;
-    if (width <= 0) return;
-    const index = Math.min(
-      files.length - 1,
-      Math.max(0, Math.round(track.scrollLeft / width)),
-    );
-    setActiveIndex(index);
-    if (track.scrollLeft > 8) setNudge(false);
-  }, [files.length]);
+  useEffect(() => {
+    if (!file) return;
+    prefetchCongressGalleryImage(file, dayDir, "preview");
+    const prev = files[activeIndex - 1];
+    const next = files[activeIndex + 1];
+    if (prev) prefetchCongressGalleryImage(prev, dayDir, "preview");
+    if (next) prefetchCongressGalleryImage(next, dayDir, "preview");
+  }, [activeIndex, file, files, dayDir]);
+
+  if (!file) return null;
+
+  const photoNumber = activeIndex + 1;
 
   return (
     <div className="relative">
       <div
-        ref={trackRef}
-        onScroll={updateFromScroll}
-        className="congress-gallery-mobile-track congress-gallery-slide"
+        className={`congress-gallery-mobile-slide relative aspect-[4/5] w-full touch-pan-y ${
+          nudge && activeIndex === 0 ? "congress-gallery-mobile-nudge" : ""
+        }`}
         aria-roledescription="carousel"
         aria-label={swipeAria}
+        onAnimationEnd={
+          nudge && activeIndex === 0 ? () => setNudge(false) : undefined
+        }
+        {...swipe}
       >
-        {files.map((file, index) => {
-          const photoNumber = index + 1;
-          const isNudge = nudge && index === 0;
-          return (
-            <div
-              key={file}
-              className={`congress-gallery-mobile-slide relative aspect-[4/5] w-full shrink-0 snap-center ${
-                isNudge ? "congress-gallery-mobile-nudge" : ""
-              }`}
-              aria-hidden={index !== activeIndex}
-              onAnimationEnd={
-                index === 0 ? () => setNudge(false) : undefined
-              }
-            >
-              <div className="relative h-full w-full overflow-hidden bg-navy/5">
-                <StaticImage
-                  src={congressGallerySrc(file, "preview", dayDir)}
-                  alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
-                  fill
-                  sizes="100vw"
-                  priority={index === 0}
-                />
-              </div>
-            </div>
-          );
-        })}
+        <div className="relative h-full w-full overflow-hidden bg-navy/5">
+          <StaticImage
+            key={file}
+            src={congressGallerySrc(file, "preview", dayDir)}
+            alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
+            fill
+            sizes="100vw"
+            priority={activeIndex === 0}
+          />
+        </div>
+        <p className="sr-only" aria-live="polite">
+          {photoNumber} / {dayTotal}
+        </p>
       </div>
 
       {files.length > 1 ? (
@@ -565,31 +588,6 @@ function LightboxPhotoStage({
       </div>
     </div>
   );
-}
-
-function useLightboxSwipe(onPrev: () => void, onNext: () => void) {
-  const startRef = useRef<{ x: number; y: number } | null>(null);
-
-  return {
-    onTouchStart: (event: React.TouchEvent) => {
-      const touch = event.touches[0];
-      if (!touch) return;
-      startRef.current = { x: touch.clientX, y: touch.clientY };
-    },
-    onTouchEnd: (event: React.TouchEvent) => {
-      const start = startRef.current;
-      const touch = event.changedTouches[0];
-      startRef.current = null;
-      if (!start || !touch) return;
-
-      const dx = touch.clientX - start.x;
-      const dy = touch.clientY - start.y;
-      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.15) return;
-
-      if (dx > 0) onPrev();
-      else onNext();
-    },
-  };
 }
 
 function GalleryLightbox({

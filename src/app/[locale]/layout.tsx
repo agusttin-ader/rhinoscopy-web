@@ -1,5 +1,6 @@
-import { LocaleTransition } from "@/components/locale-transition";
 import { GoogleAnalytics } from "@/components/google-analytics";
+import { HtmlLang } from "@/components/html-lang";
+import { LocaleTransition } from "@/components/locale-transition";
 import { ScrollToTopOnRefresh } from "@/components/scroll-to-top-on-refresh";
 import { SeoJsonLd } from "@/components/seo-json-ld";
 import { WhatsappFloat } from "@/components/whatsapp-float";
@@ -8,21 +9,7 @@ import { rootMetadataBase } from "@/lib/seo";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { Marck_Script, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
-import "../globals.css";
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const marckScript = Marck_Script({
-  variable: "--font-script",
-  subsets: ["latin", "cyrillic"],
-  weight: "400",
-});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,19 +33,15 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      className={`${montserrat.variable} ${marckScript.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col font-sans">
-        <GoogleAnalytics />
-        <SeoJsonLd />
-        <NextIntlClientProvider messages={messages}>
-          <ScrollToTopOnRefresh />
-          <LocaleTransition>{children}</LocaleTransition>
-          <WhatsappFloat />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <HtmlLang locale={locale} />
+      <GoogleAnalytics />
+      <SeoJsonLd />
+      <NextIntlClientProvider messages={messages}>
+        <ScrollToTopOnRefresh />
+        <LocaleTransition>{children}</LocaleTransition>
+        <WhatsappFloat />
+      </NextIntlClientProvider>
+    </>
   );
 }

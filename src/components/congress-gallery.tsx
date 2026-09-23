@@ -10,6 +10,7 @@ import {
   prefetchCongressGalleryImage,
 } from "@/data/congress-gallery";
 import { useLocaleData } from "@/hooks/use-locale-data";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { StaticImage } from "@/components/static-image";
 import { useLocale } from "next-intl";
 import {
@@ -197,6 +198,7 @@ function MobileGalleryFrame({
   priority?: boolean;
 }) {
   const shellRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const aspectRatioRef = useRef<number>(MOBILE_GALLERY_PLACEHOLDER_ASPECT);
   const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
   const [imageVisible, setImageVisible] = useState(false);
@@ -210,9 +212,25 @@ function MobileGalleryFrame({
     setFrameHeight(Math.round(width / aspectRatioRef.current));
   }, []);
 
+  const revealImage = useCallback(
+    (img: HTMLImageElement) => {
+      if (img.naturalWidth <= 0 || img.naturalHeight <= 0) return;
+      syncFrameHeight(img.naturalWidth / img.naturalHeight);
+      setImageVisible(true);
+    },
+    [syncFrameHeight],
+  );
+
   useLayoutEffect(() => {
     syncFrameHeight();
-  }, [syncFrameHeight]);
+  }, [syncFrameHeight, src]);
+
+  useLayoutEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete) {
+      revealImage(img);
+    }
+  }, [revealImage]);
 
   useEffect(() => {
     const shell = shellRef.current;
@@ -224,6 +242,10 @@ function MobileGalleryFrame({
     return () => observer.disconnect();
   }, [syncFrameHeight]);
 
+  const photoStateClass = imageVisible
+    ? "congress-gallery-mobile-photo--in"
+    : "congress-gallery-mobile-photo--out";
+
   return (
     <div
       ref={shellRef}
@@ -233,6 +255,7 @@ function MobileGalleryFrame({
       style={frameHeight !== undefined ? { height: frameHeight } : undefined}
     >
       <StaticImage
+        imgRef={imgRef}
         src={src}
         alt={alt}
         fill
@@ -240,15 +263,10 @@ function MobileGalleryFrame({
         priority={priority}
         objectFit="contain"
         className={`congress-gallery-mobile-photo motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:!transition-none ${
-          imageVisible
-            ? "congress-gallery-mobile-photo--in"
-            : "congress-gallery-mobile-photo--out"
-        }`}
+          priority ? "congress-gallery-mobile-photo--priority " : ""
+        }${photoStateClass}`}
         onLoad={(event) => {
-          const img = event.currentTarget;
-          if (img.naturalWidth <= 0 || img.naturalHeight <= 0) return;
-          syncFrameHeight(img.naturalWidth / img.naturalHeight);
-          requestAnimationFrame(() => setImageVisible(true));
+          revealImage(event.currentTarget);
         }}
       />
     </div>
@@ -678,27 +696,51 @@ function GalleryLightbox({
   dayDir,
 }: GalleryLightboxProps) {
   const swipe = useLightboxSwipe(onPrev, onNext);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const unlockScroll = lockBodyScroll();
+
+    if (!dialog.open) {
+      dialog.showModal();
+    }
+
+    const blockBackgroundScroll = (event: Event) => {
+      event.preventDefault();
+    };
+
+    document.addEventListener("wheel", blockBackgroundScroll, { passive: false });
+    document.addEventListener("touchmove", blockBackgroundScroll, { passive: false });
+
     return () => {
-      document.body.style.overflow = prev;
+      document.removeEventListener("wheel", blockBackgroundScroll);
+      document.removeEventListener("touchmove", blockBackgroundScroll);
+      unlockScroll();
+      if (dialog.open) {
+        dialog.close();
+      }
     };
   }, []);
 
   return (
     <dialog
-      open
-      className="congress-lightbox fixed inset-0 z-[100] m-0 h-[100dvh] max-h-[100dvh] w-full max-w-none overflow-hidden border-0 bg-[#0a0918] p-0 backdrop:bg-[#0a0918]"
+      ref={dialogRef}
+      className="congress-lightbox fixed inset-0 z-[100] m-0 h-[100dvh] max-h-[100dvh] w-full max-w-none overflow-hidden overscroll-none border-0 bg-[#0a0918] p-0 backdrop:bg-[#0a0918]"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
       }}
       aria-modal
       aria-label={`${photoAlt}. ${swipeAria}`}
     >
       <div
-        className="relative h-[100dvh] max-h-[100dvh] w-full touch-pan-y"
+        className="relative h-[100dvh] max-h-[100dvh] w-full overscroll-none"
         onClick={(e) => e.stopPropagation()}
         onTouchStart={swipe.onTouchStart}
         onTouchEnd={swipe.onTouchEnd}
@@ -779,6 +821,14 @@ export function CongressGallery() {
   const { congressCopy } = useLocaleData();
   const copy = congressCopy.gallery;
   const isDesktopGallery = useDesktopGallery();
+
+  useEffect(() => {
+    const day1 = CONGRESS_GALLERY_DAYS.find((day) => day.id === "day1");
+    if (!day1) return;
+    for (const file of day1.files.slice(0, 2)) {
+      prefetchCongressGalleryImage(file, day1.dir, "preview");
+    }
+  }, []);
 
   const [dayId, setDayId] = useState<CongressGalleryDayId>("day1");
   const [slideIndex, setSlideIndex] = useState(0);

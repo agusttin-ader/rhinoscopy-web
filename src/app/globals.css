@@ -23,6 +23,11 @@ body {
   overflow-x: clip;
 }
 
+html.scroll-locked {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 /* Contenedor principal: ancho y padding escalados por breakpoint (sin cambiar identidad visual). */
 @layer components {
   .site-shell {
@@ -651,10 +656,6 @@ html {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .webinar-video-modal[open] {
-    animation: webinar-modal-in 0.55s cubic-bezier(0.19, 1, 0.22, 1) both;
-  }
-
   .congress-gallery-slide {
     animation: congress-gallery-slide-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
@@ -836,6 +837,12 @@ html {
     transform: scale(1);
   }
 
+  .congress-gallery-mobile-photo--priority.congress-gallery-mobile-photo--in {
+    transition:
+      opacity 0.26s cubic-bezier(0.14, 1, 0.28, 1) 0s,
+      transform 0.42s cubic-bezier(0.14, 1, 0.28, 1) 0s;
+  }
+
   .congress-gallery-mobile-photo--out {
     opacity: 0;
     transform: scale(0.982);
@@ -993,15 +1000,6 @@ html {
     width: 3.25rem;
     height: 3.25rem;
     font-size: 1.75rem;
-  }
-}
-
-@keyframes webinar-modal-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 

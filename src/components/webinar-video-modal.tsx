@@ -104,7 +104,7 @@ export function WebinarVideoModal({
       }}
     >
       <div
-        className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overscroll-none"
+        className="relative h-[100dvh] max-h-[100dvh] w-full overscroll-none sm:flex sm:flex-col"
         onClick={(event) => event.stopPropagation()}
       >
         <div
@@ -112,7 +112,7 @@ export function WebinarVideoModal({
           aria-hidden
         />
 
-        <div className="relative z-20 flex shrink-0 items-start justify-between gap-4 px-4 pt-[max(1.35rem,env(safe-area-inset-top,0px))] pb-1 sm:px-8 sm:pt-5 sm:pb-3">
+        <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-4 px-4 pt-[max(1.35rem,env(safe-area-inset-top,0px))] pb-1 sm:relative sm:shrink-0 sm:px-8 sm:pt-5 sm:pb-3">
           <div className="min-w-0 max-w-[min(100%,calc(100%-3.5rem))] bg-[#0a0918]/75 pr-2 backdrop-blur-[3px] sm:max-w-[min(72%,42rem)] sm:bg-transparent sm:pr-0 sm:backdrop-blur-none">
             <WebinarTopicHeading
               id={titleId}
@@ -135,7 +135,7 @@ export function WebinarVideoModal({
         </div>
 
         <div
-          className="relative z-10 flex min-h-0 flex-1 items-center justify-center px-3 sm:grid sm:grid-cols-[minmax(0,1fr)_min(100%,56rem)_minmax(0,1fr)] sm:items-center sm:gap-x-5 sm:px-8 lg:px-16 lg:gap-x-8 xl:px-20"
+          className="absolute inset-0 z-10 flex items-center justify-center px-3 sm:relative sm:flex sm:min-h-0 sm:flex-1 sm:grid sm:grid-cols-[minmax(0,1fr)_min(100%,56rem)_minmax(0,1fr)] sm:items-center sm:gap-x-5 sm:px-8 lg:px-16 lg:gap-x-8 xl:px-20"
         >
           <div
             className="pointer-events-none hidden h-full min-h-0 w-full items-center justify-center px-2 sm:flex sm:justify-self-center"
@@ -174,7 +174,7 @@ export function WebinarVideoModal({
           </div>
         </div>
 
-        <p className="relative z-20 shrink-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-2 text-center sm:pb-5 sm:pt-3">
+        <p className="absolute inset-x-0 bottom-0 z-20 px-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-2 text-center sm:relative sm:shrink-0 sm:pb-5 sm:pt-3">
           <a
             href={player.youtubeUrl}
             target="_blank"

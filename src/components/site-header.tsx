@@ -72,10 +72,10 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
       <div className="site-shell flex h-[4.25rem] min-w-0 items-center justify-between gap-2 sm:h-[4.5rem] sm:gap-3">
         <Logo
           wordmark
-          className="min-w-0 shrink transition-opacity duration-200 hover:opacity-80"
+          className="min-w-0 flex-1 overflow-hidden pr-1 transition-opacity duration-200 hover:opacity-80 min-[1024px]:flex-none"
         />
 
-        <div className="flex items-center gap-2 min-[1024px]:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 min-[375px]:gap-2 min-[1024px]:hidden">
           <LanguageSwitcher />
           <MobileNav
             links={homeLinks}

@@ -608,6 +608,30 @@ html {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .congress-gallery-mobile-frame {
+    transition: height 1.05s cubic-bezier(0.14, 1, 0.28, 1);
+  }
+
+  .congress-gallery-mobile-photo {
+    opacity: 0;
+    transform: scale(0.982);
+    transition:
+      opacity 0.68s cubic-bezier(0.14, 1, 0.28, 1) 0.1s,
+      transform 1.05s cubic-bezier(0.14, 1, 0.28, 1);
+  }
+
+  .congress-gallery-mobile-photo--in {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .congress-gallery-mobile-photo--out {
+    opacity: 0;
+    transform: scale(0.982);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .congress-gallery-mobile-nudge {
     animation: congress-gallery-mobile-nudge 0.9s cubic-bezier(0.33, 1, 0.68, 1) 0.4s 1
       both;
@@ -954,6 +978,18 @@ html {
 
   .congress-gallery-mobile-nudge {
     animation: none;
+  }
+
+  .congress-gallery-mobile-frame,
+  .congress-gallery-mobile-photo {
+    transition: none;
+  }
+
+  .congress-gallery-mobile-photo,
+  .congress-gallery-mobile-photo--in,
+  .congress-gallery-mobile-photo--out {
+    opacity: 1;
+    transform: none;
   }
 
   .congress-lightbox,

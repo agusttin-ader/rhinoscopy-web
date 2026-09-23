@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactEventHandler } from "react";
 
 type StaticImageProps = {
   src: string;
@@ -12,6 +12,7 @@ type StaticImageProps = {
   priority?: boolean;
   sizes?: string;
   objectFit?: "cover" | "contain";
+  onLoad?: ReactEventHandler<HTMLImageElement>;
 };
 
 /** Imagen estática desde `/public` — lazy por defecto, sin Image Optimization de Vercel. */
@@ -26,6 +27,7 @@ export function StaticImage({
   priority = false,
   sizes,
   objectFit = "cover",
+  onLoad,
 }: StaticImageProps) {
   const loading = priority ? "eager" : "lazy";
   const fetchPriority = priority ? ("high" as const) : undefined;
@@ -44,6 +46,7 @@ export function StaticImage({
         fetchPriority={fetchPriority}
         className={`absolute inset-0 h-full w-full ${fit} ${className}`.trim()}
         style={style}
+        onLoad={onLoad}
       />
     );
   }

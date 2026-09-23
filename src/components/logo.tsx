@@ -40,7 +40,7 @@ export function Logo({
               ? "h-10 w-10 object-contain"
               : "h-8 w-8 object-contain"
             : wordmark
-              ? "h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11"
+              ? "h-8 w-8 shrink-0 object-contain min-[375px]:h-9 min-[375px]:w-9 sm:h-10 sm:w-10"
               : "h-9 w-auto sm:h-10"
       }
       priority={!badge}
@@ -73,13 +73,13 @@ export function Logo({
   return (
     <SmoothNavLink
       href="/"
-      className={`group inline-flex items-center gap-2.5 sm:gap-3 ${className}`}
+      className={`group inline-flex min-w-0 max-w-full items-center gap-1.5 min-[375px]:gap-2 sm:gap-3 ${className}`}
       aria-label="Rhinoscopy, inicio"
     >
       {mark}
       {wordmark && (
         <span
-          className="font-brand hidden leading-none text-navy transition-colors group-hover:text-navy/80 min-[1024px]:inline min-[1024px]:text-[0.62rem] min-[1280px]:text-[0.72rem]"
+          className="font-brand min-w-0 truncate leading-none text-navy transition-colors group-hover:text-navy/80 text-[0.48rem] tracking-[0.14em] min-[360px]:text-[0.52rem] min-[390px]:text-[0.55rem] sm:text-[0.58rem] min-[1024px]:text-[0.62rem] min-[1280px]:text-[0.72rem] min-[1024px]:tracking-normal"
         >
           Rhinoscopy
         </span>

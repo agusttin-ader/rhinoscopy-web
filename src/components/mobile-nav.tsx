@@ -153,7 +153,7 @@ export function MobileNav({
                 unoptimized
                 className="h-auto w-full max-w-[9.5rem] object-contain drop-shadow-[0_0_24px_rgba(95,198,238,0.2)]"
               />
-              <span className="text-[0.62rem] font-semibold tracking-[0.32em] text-white/45 uppercase">
+              <span className="text-[0.55rem] font-semibold tracking-[0.28em] text-white/45 uppercase">
                 Rhinoscopy
               </span>
             </Link>
@@ -167,10 +167,8 @@ export function MobileNav({
     <>
       <button
         type="button"
-        className={`relative z-[101] inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-navy transition-all duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] ${
-          open
-            ? "bg-navy text-white shadow-[0_10px_28px_-10px_rgba(38,36,84,0.55)]"
-            : "bg-navy/[0.04] ring-1 ring-navy/10 hover:bg-navy/[0.08]"
+        className={`relative z-[101] inline-flex h-11 w-11 shrink-0 items-center justify-center text-navy transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] ${
+          open ? "text-navy" : "hover:text-navy/75"
         }`}
         aria-expanded={open}
         aria-controls="mobile-nav-drawer"

@@ -15,6 +15,7 @@ import { useLocale } from "next-intl";
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -183,6 +184,86 @@ type GalleryMobileSwipeProps = {
   swipeAria: string;
 };
 
+function mobileGalleryAspectRatio(orientation: "portrait" | "landscape") {
+  return orientation === "landscape" ? 3 / 2 : 4 / 5;
+}
+
+function MobileGalleryFrame({
+  src,
+  alt,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  const shellRef = useRef<HTMLDivElement>(null);
+  const [orientation, setOrientation] = useState<"portrait" | "landscape">(
+    "portrait",
+  );
+  const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
+  const [imageVisible, setImageVisible] = useState(false);
+
+  const syncFrameHeight = useCallback(
+    (nextOrientation: "portrait" | "landscape") => {
+      const width = shellRef.current?.clientWidth ?? 0;
+      if (width <= 0) return;
+      const ratio = mobileGalleryAspectRatio(nextOrientation);
+      setFrameHeight(Math.round(width / ratio));
+    },
+    [],
+  );
+
+  useLayoutEffect(() => {
+    syncFrameHeight(orientation);
+  }, [orientation, syncFrameHeight]);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const observer = new ResizeObserver(() => {
+      syncFrameHeight(orientation);
+    });
+    observer.observe(shell);
+    return () => observer.disconnect();
+  }, [orientation, syncFrameHeight]);
+
+  return (
+    <div
+      ref={shellRef}
+      className={`congress-gallery-mobile-frame relative w-full overflow-hidden bg-[#ebe8e1] ${
+        frameHeight === undefined ? "aspect-[4/5]" : ""
+      }`}
+      style={frameHeight !== undefined ? { height: frameHeight } : undefined}
+    >
+      <StaticImage
+        src={src}
+        alt={alt}
+        fill
+        sizes="100vw"
+        priority={priority}
+        objectFit="contain"
+        className={`congress-gallery-mobile-photo motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:!transition-none ${
+          imageVisible
+            ? "congress-gallery-mobile-photo--in"
+            : "congress-gallery-mobile-photo--out"
+        }`}
+        onLoad={(event) => {
+          const img = event.currentTarget;
+          if (img.naturalWidth <= 0 || img.naturalHeight <= 0) return;
+          const nextOrientation =
+            img.naturalWidth > img.naturalHeight * 1.08
+              ? "landscape"
+              : "portrait";
+          setOrientation(nextOrientation);
+          syncFrameHeight(nextOrientation);
+          requestAnimationFrame(() => setImageVisible(true));
+        }}
+      />
+    </div>
+  );
+}
+
 function GalleryMobileSwipe({
   files,
   dayDir,
@@ -224,7 +305,7 @@ function GalleryMobileSwipe({
   return (
     <div className="relative">
       <div
-        className={`congress-gallery-mobile-slide relative aspect-[4/5] w-full touch-pan-y ${
+        className={`congress-gallery-mobile-slide relative w-full touch-pan-y ${
           nudge && activeIndex === 0 ? "congress-gallery-mobile-nudge" : ""
         }`}
         aria-roledescription="carousel"
@@ -234,16 +315,12 @@ function GalleryMobileSwipe({
         }
         {...swipe}
       >
-        <div className="relative h-full w-full overflow-hidden bg-navy/5">
-          <StaticImage
-            key={file}
-            src={congressGallerySrc(file, "preview", dayDir)}
-            alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
-            fill
-            sizes="100vw"
-            priority={activeIndex === 0}
-          />
-        </div>
+        <MobileGalleryFrame
+          key={file}
+          src={congressGallerySrc(file, "preview", dayDir)}
+          alt={`${photoAlt} (${photoNumber}/${dayTotal})`}
+          priority={activeIndex === 0}
+        />
         <p className="sr-only" aria-live="polite">
           {photoNumber} / {dayTotal}
         </p>
@@ -254,7 +331,7 @@ function GalleryMobileSwipe({
           {Array.from({ length: dotCount }, (_, index) => (
             <span
               key={index}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              className={`h-1.5 rounded-full transition-all duration-[620ms] ease-[cubic-bezier(0.14,1,0.28,1)] ${
                 index === activeDot
                   ? "w-5 bg-cyan-600"
                   : "w-1.5 bg-navy/20"

@@ -10,7 +10,7 @@ export async function BrandHero() {
   return (
     <section
       id="inicio"
-      className="brand-hero relative isolate flex min-h-[calc(100dvh-4.5rem)] min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-navy text-white lg:min-h-0"
+      className="brand-hero relative isolate flex flex-col overflow-hidden bg-navy text-white"
       aria-labelledby="brand-hero-heading"
     >
       <div
@@ -26,11 +26,10 @@ export async function BrandHero() {
         aria-hidden="true"
       />
 
-      <div className="site-shell relative grid min-w-0 flex-1 grid-cols-1 content-center items-center gap-8 py-8 sm:gap-10 sm:py-10 md:py-14 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-12 lg:py-16 xl:gap-14 xl:py-20 2xl:py-24">
-        <div className="flex w-full min-w-0 justify-center lg:justify-end lg:pe-4">
-          <div
-            className="relative h-[min(88vw,20rem)] w-[min(88vw,20rem)] min-[375px]:h-[min(92vw,21rem)] min-[375px]:w-[min(92vw,21rem)] sm:h-[22rem] sm:w-[22rem] md:h-[20rem] md:w-[20rem] lg:h-[23rem] lg:w-[23rem] xl:h-[25rem] xl:w-[25rem] 2xl:h-[27rem] 2xl:w-[27rem]"
-          >
+      <div className="brand-hero-inner site-shell relative min-w-0 flex-1">
+        <div className="brand-hero-columns">
+        <div className="brand-hero-visual flex min-w-0 justify-center">
+          <div className="brand-hero-logo-frame relative">
             <svg
               className="brand-hero-ring pointer-events-none absolute inset-0 h-full w-full text-brand-sky/55"
               viewBox="0 0 200 200"
@@ -49,7 +48,7 @@ export async function BrandHero() {
             </svg>
 
             <span
-              className="brand-hero-dot brand-hero-dot-1 absolute top-[1%] right-[14%] h-2 w-2 rounded-full bg-brand-sky shadow-[0_0_12px_rgba(95,198,238,0.65)]"
+              className="brand-hero-dot brand-hero-dot-1 absolute top-[1%] right-[14%] h-2 w-2 rounded-full bg-brand-sky"
               aria-hidden="true"
             />
             <span
@@ -74,7 +73,7 @@ export async function BrandHero() {
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-col items-center lg:items-start">
+        <div className="brand-hero-copy flex min-w-0 flex-col items-center text-center lg:items-start lg:text-left">
           <p className="text-[0.7rem] font-semibold tracking-[0.32em] text-brand-sky/85 uppercase">
             {brandHeroCopy.kicker}
           </p>
@@ -91,7 +90,7 @@ export async function BrandHero() {
             </span>
           </h1>
 
-          <p className="mt-5 max-w-lg text-center text-sm leading-relaxed text-white/70 sm:max-w-xl sm:text-base md:max-w-2xl lg:text-left lg:max-w-xl lg:text-[1.05rem] xl:max-w-2xl">
+          <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/70 sm:max-w-xl sm:text-base md:max-w-2xl lg:max-w-xl lg:text-[1.05rem] xl:max-w-2xl">
             {brandHeroCopy.lead}
           </p>
 
@@ -110,6 +109,7 @@ export async function BrandHero() {
               {brandHeroCopy.ctaWebinars}
             </a>
           </div>
+        </div>
         </div>
       </div>
     </section>

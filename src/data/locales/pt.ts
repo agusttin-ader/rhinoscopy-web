@@ -59,7 +59,7 @@ export const pt = {
     instagramUrl: "https://www.instagram.com/rhinoscopyofficial/",
   },
   brandHeroCopy: {
-    kicker: "Rhinoscopy Meet 2026",
+    kicker: "Educação médica em rinologia",
     headlineImpact: "Formação de excelência em rinologia",
     tagline: "Comunidade de educação médica em rinologia e endoscopia nasal",
     lead:

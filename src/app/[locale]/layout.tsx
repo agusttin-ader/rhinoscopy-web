@@ -1,5 +1,4 @@
 import { GoogleAnalytics } from "@/components/google-analytics";
-import { PageRevealProvider } from "@/components/page-reveal-provider";
 import { HtmlLang } from "@/components/html-lang";
 import { LocaleTransition } from "@/components/locale-transition";
 import { ScrollToTopOnRefresh } from "@/components/scroll-to-top-on-refresh";
@@ -39,11 +38,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       <GoogleAnalytics />
       <SeoJsonLd />
       <NextIntlClientProvider messages={messages}>
-        <PageRevealProvider>
-          <ScrollToTopOnRefresh />
-          <LocaleTransition>{children}</LocaleTransition>
-          <WhatsappFloat />
-        </PageRevealProvider>
+        <ScrollToTopOnRefresh />
+        <LocaleTransition>{children}</LocaleTransition>
+        <WhatsappFloat />
       </NextIntlClientProvider>
     </>
   );

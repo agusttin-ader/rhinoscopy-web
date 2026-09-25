@@ -25,6 +25,14 @@ export default function RootLayout({ children }: Props) {
       className={`${montserrat.variable} ${marckScript.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="preload"
+          href="/images/rhinoscopy-logo-hero-sombra.png"
+          as="image"
+          type="image/png"
+        />
+      </head>
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );

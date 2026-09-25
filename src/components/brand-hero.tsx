@@ -28,7 +28,7 @@ export async function BrandHero() {
 
       <div className="brand-hero-inner site-shell relative min-w-0 flex-1">
         <div className="brand-hero-columns">
-        <div className="brand-hero-visual flex min-w-0 justify-center">
+        <div className="brand-hero-visual page-reveal-target page-reveal-item page-reveal-item--visual flex min-w-0 justify-center">
           <div className="brand-hero-logo-frame relative">
             <svg
               className="brand-hero-ring pointer-events-none absolute inset-0 h-full w-full text-brand-sky/55"
@@ -74,27 +74,27 @@ export async function BrandHero() {
         </div>
 
         <div className="brand-hero-copy flex min-w-0 flex-col items-center text-center lg:items-start lg:text-left">
-          <p className="text-[0.7rem] font-semibold tracking-[0.32em] text-brand-sky/85 uppercase">
+          <p className="page-reveal-target page-reveal-item page-reveal-item--eyebrow text-[0.7rem] font-semibold tracking-[0.32em] text-brand-sky/85 uppercase">
             {brandHeroCopy.kicker}
           </p>
 
           <h1 id="brand-hero-heading" className="mt-4 w-full max-w-xl lg:max-w-2xl xl:max-w-[34rem]">
-            <span className="block text-[0.78rem] font-bold tracking-[0.42em] text-white/90 uppercase sm:text-[0.82rem] lg:text-[0.85rem]">
+            <span className="page-reveal-target page-reveal-item page-reveal-item--brand block text-[0.78rem] font-bold tracking-[0.42em] text-white/90 uppercase sm:text-[0.82rem] lg:text-[0.85rem]">
               Rhinoscopy
             </span>
-            <span className="font-display mt-3 block text-[clamp(1.85rem,5.5vw,2.75rem)] leading-[1.05] tracking-tight text-white lg:text-[clamp(2rem,2.35vw,3rem)]">
+            <span className="page-reveal-target page-reveal-item page-reveal-item--title font-display mt-3 block text-[clamp(1.85rem,5.5vw,2.75rem)] leading-[1.05] tracking-tight text-white lg:text-[clamp(2rem,2.35vw,3rem)]">
               {brandHeroCopy.headlineImpact}
             </span>
-            <span className="mt-4 block text-[clamp(1rem,2.8vw,1.2rem)] font-medium leading-snug text-brand-sky/95 lg:text-[clamp(1.05rem,1.35vw,1.35rem)]">
+            <span className="page-reveal-target page-reveal-item page-reveal-item--tagline mt-4 block text-[clamp(1rem,2.8vw,1.2rem)] font-medium leading-snug text-brand-sky/95 lg:text-[clamp(1.05rem,1.35vw,1.35rem)]">
               {brandHeroCopy.tagline}
             </span>
           </h1>
 
-          <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/70 sm:max-w-xl sm:text-base md:max-w-2xl lg:max-w-xl lg:text-[1.05rem] xl:max-w-2xl">
+          <p className="page-reveal-target page-reveal-item page-reveal-item--lead mt-5 max-w-lg text-sm leading-relaxed text-white/70 sm:max-w-xl sm:text-base md:max-w-2xl lg:max-w-xl lg:text-[1.05rem] xl:max-w-2xl">
             {brandHeroCopy.lead}
           </p>
 
-          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:justify-center lg:max-w-md lg:justify-start">
+          <div className="page-reveal-target page-reveal-item page-reveal-item--ctas mt-8 flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:justify-center lg:max-w-md lg:justify-start">
             <a
               href="#congreso"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"

@@ -65,7 +65,7 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
 
   return (
     <header
-      className={`${positionClass} z-40 bg-white/90 shadow-[0_8px_32px_-24px_rgba(38,36,84,0.28)] backdrop-blur-xl transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none ${
+      className={`page-reveal-target page-reveal-item page-reveal-item--header ${positionClass} z-40 bg-white/90 shadow-[0_8px_32px_-24px_rgba(38,36,84,0.28)] backdrop-blur-xl transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >

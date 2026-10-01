@@ -1,8 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import {
-  parseMeet2026CertificateFile,
-} from "@/lib/constancias-categories";
+import { parseMeet2026CertificateFile } from "@/lib/constancias-categories";
+import { resolveCertificateCategoryLabel } from "@/lib/constancias-committee-roles";
 
 export const CONSTANCIAS_PUBLIC_DIR = path.join(
   "images",
@@ -63,9 +62,7 @@ export function displayNameFromCertificateFile(fileName: string): string {
 }
 
 function categoryLabelFromFile(fileName: string): string {
-  const meet = parseMeet2026CertificateFile(fileName);
-  if (meet) return meet.categoryLabel;
-  return "Certificado";
+  return resolveCertificateCategoryLabel(fileName);
 }
 
 async function listPdfFiles(

@@ -10,7 +10,8 @@
     "images:optimize": "node scripts/optimize-public-images.mjs",
     "constancia:meet": "node scripts/generate-meet-constancia.mjs",
     "constancia:meet:batch": "node scripts/generate-meet-constancia-batch.mjs",
-    "constancia:meet:bulk-franco": "node scripts/generate-meet-constancia-bulk-franco.mjs"
+    "constancia:meet:bulk-franco": "node scripts/generate-meet-constancia-bulk-franco.mjs",
+    "constancia:meet:optimize": "node scripts/optimize-meet-certificados.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

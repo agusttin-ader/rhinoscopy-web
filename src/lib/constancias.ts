@@ -1,5 +1,8 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
+import {
+  parseMeet2026CertificateFile,
+} from "@/lib/constancias-categories";
 
 export const CONSTANCIAS_PUBLIC_DIR = path.join(
   "images",
@@ -14,7 +17,10 @@ export type ConstanciaMatch = {
   eventId: string;
   eventLabel: string;
   fileName: string;
+  /** Ruta relativa dentro del evento (p. ej. Certificados/foo.pdf). */
+  relativePath: string;
   displayName: string;
+  categoryLabel: string;
   downloadUrl: string;
 };
 
@@ -41,8 +47,11 @@ function eventLabel(folder: string) {
   return folder.replace(/[-_]+/g, " ");
 }
 
-/** Invierte el slug del PDF a un nombre legible (heurística). */
+/** Invierte el slug del PDF a un nombre legible (heurística legacy). */
 export function displayNameFromCertificateFile(fileName: string): string {
+  const meet = parseMeet2026CertificateFile(fileName);
+  if (meet) return meet.displayName;
+
   const base = fileName.replace(/\.pdf$/i, "");
   const parts = base.split("-").filter(Boolean);
   const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -51,6 +60,34 @@ export function displayNameFromCertificateFile(fileName: string): string {
   if (p.length === 3) return `${p[2]} ${p[0]} ${p[1]}`;
   if (p.length === 2) return `${p[1]} ${p[0]}`;
   return p.join(" ");
+}
+
+function categoryLabelFromFile(fileName: string): string {
+  const meet = parseMeet2026CertificateFile(fileName);
+  if (meet) return meet.categoryLabel;
+  return "Certificado";
+}
+
+async function listPdfFiles(
+  dir: string,
+  prefix = "",
+): Promise<{ fileName: string; relativePath: string }[]> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const out: { fileName: string; relativePath: string }[] = [];
+
+  for (const entry of entries) {
+    if (entry.name.startsWith(".")) continue;
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      out.push(...(await listPdfFiles(full, rel)));
+      continue;
+    }
+    if (!entry.name.toLowerCase().endsWith(".pdf")) continue;
+    out.push({ fileName: entry.name, relativePath: rel });
+  }
+
+  return out;
 }
 
 export async function searchConstancias(
@@ -73,28 +110,34 @@ export async function searchConstancias(
 
   for (const eventId of events) {
     const dir = path.join(ROOT, eventId);
-    const files = await readdir(dir);
+    const files = await listPdfFiles(dir);
 
-    for (const fileName of files) {
-      if (!fileName.toLowerCase().endsWith(".pdf")) continue;
-
+    for (const { fileName, relativePath } of files) {
       const haystack = fold(
         fileName.replace(/\.pdf$/i, "").replace(/[-_]+/g, " "),
       );
       if (!tokens.every((token) => haystack.includes(token))) continue;
 
+      const urlPath = `/${CONSTANCIAS_PUBLIC_DIR}/${eventId}/${relativePath
+        .split("/")
+        .map((segment) => encodeURIComponent(segment))
+        .join("/")}`;
+
       matches.push({
         eventId,
         eventLabel: eventLabel(eventId),
         fileName,
+        relativePath,
         displayName: displayNameFromCertificateFile(fileName),
-        downloadUrl: `/${CONSTANCIAS_PUBLIC_DIR}/${eventId}/${encodeURIComponent(fileName)}`,
+        categoryLabel: categoryLabelFromFile(fileName),
+        downloadUrl: urlPath,
       });
     }
   }
 
   const sorted = matches.sort((a, b) =>
-    a.displayName.localeCompare(b.displayName, "es", { sensitivity: "base" }),
+    a.displayName.localeCompare(b.displayName, "es", { sensitivity: "base" }) ||
+    a.categoryLabel.localeCompare(b.categoryLabel, "es", { sensitivity: "base" }),
   );
   const total = sorted.length;
   const truncated = total > MAX_CONSTANCIA_SEARCH_RESULTS;

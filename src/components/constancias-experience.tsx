@@ -13,7 +13,9 @@ type Match = {
   eventId: string;
   eventLabel: string;
   fileName: string;
+  relativePath: string;
   displayName: string;
+  categoryLabel: string;
   downloadUrl: string;
 };
 
@@ -172,28 +174,19 @@ export function ConstanciasExperience() {
             </div>
           ) : (
             <>
-              <div
-                className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
-              >
-                <p
-                  className="text-[0.72rem] font-semibold tracking-[0.28em] text-cyan-300/90 uppercase sm:text-[0.75rem]"
-                >
-                  {constanciasCopy.resultsCount(search.total)}
+              {search.truncated ? (
+                <p className="mb-6 max-w-md text-[0.8rem] font-light leading-relaxed text-white/45">
+                  {constanciasCopy.resultsTruncated(
+                    search.results.length,
+                    search.total,
+                  )}
                 </p>
-                {search.truncated ? (
-                  <p className="max-w-md text-[0.8rem] font-light leading-relaxed text-white/45">
-                    {constanciasCopy.resultsTruncated(
-                      search.results.length,
-                      search.total,
-                    )}
-                  </p>
-                ) : null}
-              </div>
+              ) : null}
 
               <ul className="border-t border-white/[0.08]">
                 {search.results.map((item) => (
                   <li
-                    key={`${item.eventId}-${item.fileName}`}
+                    key={`${item.eventId}-${item.relativePath}`}
                     className="border-b border-white/[0.08]"
                   >
                     <div
@@ -201,14 +194,14 @@ export function ConstanciasExperience() {
                     >
                       <div className="min-w-0 flex-1">
                         <p
-                          className="truncate text-[1.05rem] font-medium tracking-[0.02em] text-white/95 sm:text-[1.15rem]"
+                          className="truncate text-[0.82rem] font-semibold tracking-[0.22em] text-white uppercase sm:text-[0.88rem]"
                         >
-                          {item.displayName}
+                          {item.categoryLabel}
                         </p>
                         <p
-                          className="mt-1 truncate text-[0.7rem] font-light tracking-[0.18em] text-white/38 uppercase"
+                          className="mt-1.5 truncate text-[1.02rem] font-medium tracking-[0.02em] text-white/75 sm:text-[1.1rem]"
                         >
-                          {item.eventLabel}
+                          {item.displayName}
                         </p>
                       </div>
                       <CertificateResultActions

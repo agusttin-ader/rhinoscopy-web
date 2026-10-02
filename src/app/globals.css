@@ -254,6 +254,54 @@ html {
   transform: translate3d(0, 0, 0);
 }
 
+.motion-reveal.motion-reveal--sponsor {
+  transform: translate3d(0, var(--motion-offset, 10px), 0) scale(0.86);
+}
+
+.motion-reveal.motion-reveal--sponsor.motion-reveal--visible {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.sponsor-logo-hit {
+  display: block;
+  transform-origin: center;
+}
+
+.sponsor-logo-img {
+  transform-origin: center;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease,
+    filter 0.45s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sponsor-logo-hit:hover .sponsor-logo-img,
+  .sponsor-logo-hit:focus-visible .sponsor-logo-img {
+    transform: scale(1.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal.motion-reveal--sponsor {
+    transform: translate3d(0, var(--motion-offset, 10px), 0);
+  }
+
+  .motion-reveal.motion-reveal--sponsor.motion-reveal--visible {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .sponsor-logo-img {
+    transition: opacity 0.35s ease, filter 0.35s ease;
+  }
+
+  .sponsor-logo-hit:hover .sponsor-logo-img,
+  .sponsor-logo-hit:focus-visible .sponsor-logo-img {
+    transform: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .motion-reveal {
     --motion-ease: cubic-bezier(0.19, 1, 0.22, 1);

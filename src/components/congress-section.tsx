@@ -288,7 +288,7 @@ export function CongressSection() {
         <CongressSpeakers />
       </div>
 
-      <div className="site-shell site-shell--gallery min-w-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
+      <div className="min-w-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
         <CongressGallery />
       </div>
 

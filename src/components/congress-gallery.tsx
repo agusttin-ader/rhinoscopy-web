@@ -969,21 +969,22 @@ export function CongressGallery() {
 
   return (
     <section id="galeria" className="site-scroll-mt min-w-0 overflow-x-clip">
-      <Reveal as="div" className="min-w-0 max-w-2xl border-b border-navy/10 pb-8">
-        <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
-          {copy.kicker}
-        </p>
-        <h3 className="font-display mt-3 text-[clamp(1.75rem,5.2vw,2.25rem)] text-navy md:text-5xl">
-          {copy.title.replace(".", "")}
-        </h3>
-        <p className="mt-4 text-slate-600">{copy.lead}</p>
-      </Reveal>
+      <div className="site-shell min-w-0">
+        <Reveal as="div" className="min-w-0 max-w-2xl border-b border-navy/10 pb-8">
+          <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
+            {copy.kicker}
+          </p>
+          <h3 className="font-display mt-3 text-[clamp(1.75rem,5.2vw,2.25rem)] text-navy md:text-5xl">
+            {copy.title.replace(".", "")}
+          </h3>
+          <p className="mt-4 text-slate-600">{copy.lead}</p>
+        </Reveal>
 
-      <div
-        className="mt-8 mb-1 grid w-full min-w-0 grid-cols-2 gap-2 min-[375px]:gap-3 min-[480px]:grid-cols-4 md:mt-8 md:mb-2 md:grid md:grid-cols-4 md:gap-4 lg:flex lg:flex-nowrap lg:justify-start"
-        role="tablist"
-        aria-label={copy.dayTabsAria}
-      >
+        <div
+          className="mt-8 mb-1 grid w-full min-w-0 grid-cols-2 gap-2 min-[375px]:gap-3 min-[480px]:grid-cols-4 md:mt-8 md:mb-2 md:grid md:grid-cols-4 md:gap-4 lg:flex lg:flex-nowrap lg:justify-start"
+          role="tablist"
+          aria-label={copy.dayTabsAria}
+        >
         {CONGRESS_GALLERY_DAYS.map((day, index) => {
           const selected = day.id === dayId;
           const dateLabel = formatGalleryDayDate(day.date, locale);
@@ -1023,11 +1024,12 @@ export function CongressGallery() {
             </button>
           );
         })}
-      </div>
+        </div>
 
-      {dayTotal === 0 ? (
-        <p className="mt-12 text-left text-sm text-slate-500">{copy.dayEmpty}</p>
-      ) : null}
+        {dayTotal === 0 ? (
+          <p className="mt-12 text-left text-sm text-slate-500">{copy.dayEmpty}</p>
+        ) : null}
+      </div>
 
       {mosaicShared ? (
         <>

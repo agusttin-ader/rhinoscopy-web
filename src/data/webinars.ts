@@ -21,7 +21,6 @@ export const webinarsCopy = {
   comingSoon: "YouTube — próximamente",
   openOnYoutube: "Abrir en YouTube",
   closePlayer: "Cerrar reproductor",
-  instagramCta: "Ver en Instagram",
   sourceNote:
     "Videos en youtube.com/@RhinoscopyArg. Nuevas charlas se suman al canal y acá cuando estén publicadas.",
   showLess: "Ver menos",
@@ -72,15 +71,6 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/DbnjByZOKhJ/",
   },
   {
-    id: "accesos-expandidos-dolci",
-    topic: "La clave para los accesos expandidos laterales",
-    speaker: "Dr. Ricardo Dolci",
-    dateLabel: "Temporada Rhinoscopy 2026",
-    flyerSrc: "/images/webinars/accesos-expandidos-dolci.webp",
-    youtubeUrl: "https://www.youtube.com/watch?v=u8-BVG60erU",
-    instagramUrl: "",
-  },
-  {
     id: "dorso-nasal-sousa",
     topic: "Tratamiento del dorso nasal: un abordaje escultural",
     speaker: "Dr. Renato Sousa",
@@ -88,15 +78,6 @@ export const webinars: Webinar[] = [
     flyerSrc: "/images/webinars/dorso-nasal-sousa.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=smfoOBnJOrc",
     instagramUrl: "https://www.instagram.com/p/DbBwosuhq3E/",
-  },
-  {
-    id: "expansion-columelar-luis-chinski",
-    topic: "Expansión columelar",
-    speaker: "Dr. Luis Chinski",
-    dateLabel: "Temporada Rhinoscopy 2026",
-    flyerSrc: "/images/webinars/expansion-columelar-luis-chinski.webp",
-    youtubeUrl: "https://www.youtube.com/watch?v=UEdwzfWsqec",
-    instagramUrl: "",
   },
   {
     id: "oxigeno-hiperbarico-yapur",
@@ -108,6 +89,16 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/Da0asdMOlNt/",
   },
   {
+    id: "inmunologicos-rinosinusitis-cincura",
+    topic:
+      "Inmunológicos en la rinosinusitis crónica: ¿cuándo y cómo utilizarlos?",
+    speaker: "Dra. Carolina Cincurá",
+    dateLabel: "Jueves 2 de julio",
+    flyerSrc: "/images/webinars/inmunologicos-rinosinusitis-cincura.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=DNd1k-vG-hI",
+    instagramUrl: "",
+  },
+  {
     id: "abordaje-endonasal-tepedino",
     topic: "Abordaje endoscópico endonasal basado en anatomía y estrategias quirúrgicas",
     speaker: "Dr. Miguel Tepedino",
@@ -115,16 +106,6 @@ export const webinars: Webinar[] = [
     flyerSrc: "/images/webinars/abordaje-endonasal-tepedino.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=rIltJVLrsGk",
     instagramUrl: "https://www.instagram.com/p/DZ-MMGQuj8E/",
-  },
-  {
-    id: "inmunologicos-rinosinusitis-cincura",
-    topic:
-      "Inmunológicos en la rinosinusitis crónica: ¿cuándo y cómo utilizarlos?",
-    speaker: "Dra. Carolina Cincurá",
-    dateLabel: "Temporada Rhinoscopy 2026",
-    flyerSrc: "/images/webinars/inmunologicos-rinosinusitis-cincura.webp",
-    youtubeUrl: "https://www.youtube.com/watch?v=DNd1k-vG-hI",
-    instagramUrl: "",
   },
   {
     id: "rehabilitacion-respiratoria-nasal",
@@ -164,6 +145,15 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/DYAL_7fjjG6/",
   },
   {
+    id: "expansion-columelar-luis-chinski",
+    topic: "Expansión columelar",
+    speaker: "Dr. Luis Chinski",
+    dateLabel: "Jueves 30 de abril",
+    flyerSrc: "/images/webinars/expansion-columelar-luis-chinski.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=UEdwzfWsqec",
+    instagramUrl: "",
+  },
+  {
     id: "derecho-salud",
     topic: "Derecho a la salud y acceso de los pacientes",
     speaker: "Federico Ferrari",
@@ -171,6 +161,15 @@ export const webinars: Webinar[] = [
     flyerSrc: "/images/webinars/derecho-salud.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=wK1DLBcVeH0",
     instagramUrl: "https://www.instagram.com/p/DXXUSSEDtQV/",
+  },
+  {
+    id: "accesos-expandidos-dolci",
+    topic: "La clave para los accesos expandidos laterales",
+    speaker: "Dr. Ricardo Dolci",
+    dateLabel: "Jueves 16 de abril",
+    flyerSrc: "/images/webinars/accesos-expandidos-dolci.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=u8-BVG60erU",
+    instagramUrl: "",
   },
   {
     id: "laterorrinia-cajelli-diorio",

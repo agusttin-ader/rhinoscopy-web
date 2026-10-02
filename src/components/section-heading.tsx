@@ -63,7 +63,7 @@ export function SectionHeading({
       <p className={kickerClass}>{kicker}</p>
       <TitleTag
         className={`leading-[0.95] ${
-          size === "narrow" ? "mt-3 sm:mt-4" : "mt-5 sm:mt-6"
+          size === "narrow" ? "mt-3 sm:mt-4" : "mt-4 sm:mt-5"
         }`}
       >
         {titleScript ? (
@@ -91,10 +91,10 @@ export function SectionHeading({
         <p
           className={`max-w-lg ${leadColor} ${centered ? "mx-auto" : ""} ${
             size === "full"
-              ? "mt-5 text-base sm:mt-6 sm:text-lg"
+              ? "mt-4 text-base sm:mt-5 sm:text-lg"
               : size === "narrow"
-                ? "mt-4 text-sm leading-relaxed"
-                : "mt-6 text-base"
+                ? "mt-3.5 text-sm leading-relaxed sm:mt-4"
+                : "mt-5 text-base"
           }`}
         >
           {lead}

@@ -245,7 +245,6 @@ export const en = {
     comingSoon: "YouTube — coming soon",
     openOnYoutube: "Open on YouTube",
     closePlayer: "Close player",
-    instagramCta: "View on Instagram",
     sourceNote:
       "Watch on youtube.com/@RhinoscopyArg. New talks appear here once published on the channel.",
     showLess: "Show less",

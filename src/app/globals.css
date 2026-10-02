@@ -87,24 +87,24 @@ html.scroll-locked {
 
   /** Padding vertical coherente entre secciones (mobile-first). */
   .site-section-y {
-    padding-block: 2.75rem;
+    padding-block: 2.5rem;
   }
 
   @media (min-width: 640px) {
     .site-section-y {
-      padding-block: 3.5rem;
+      padding-block: 3.25rem;
     }
   }
 
   @media (min-width: 768px) {
     .site-section-y {
-      padding-block: 4.25rem;
+      padding-block: 3.75rem;
     }
   }
 
   @media (min-width: 1024px) {
     .site-section-y {
-      padding-block: 5rem;
+      padding-block: 4.5rem;
     }
   }
 

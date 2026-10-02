@@ -11,7 +11,7 @@ export async function Contact() {
   return (
     <section id="contacto" className="site-scroll-mt bg-paper site-section-y">
       <div
-        className="site-shell grid min-w-0 gap-8 sm:gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-12 lg:gap-14"
+        className="site-shell grid min-w-0 gap-7 sm:gap-9 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-10 lg:gap-12"
       >
         <Reveal as="div" id="quienes-somos" className="min-w-0" offset={14}>
           <SectionHeading

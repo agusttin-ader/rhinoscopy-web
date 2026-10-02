@@ -15,9 +15,67 @@ import {
   type WebinarPlayerState,
 } from "@/components/webinar-video-modal";
 import { webinars, webinarsVisibleCount, type Webinar } from "@/data/webinars";
+import { SOMBRA_LOGO_PATH } from "@/lib/site-url";
 
 const WEBINAR_THUMB_CLASS =
   "w-full max-w-[min(100%,30rem)] shrink-0 sm:max-w-[28rem] md:max-w-[30rem] lg:w-[clamp(16.5rem,38vw,34rem)] lg:max-w-[34rem]";
+
+/** Marca Rhinoscopy (R del hero) en el margen vacío del zigzag — desktop. */
+function WebinarRowWatermark({ side }: { side: "left" | "right" }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden lg:block"
+      aria-hidden="true"
+    >
+      <div
+        className={`absolute top-1/2 aspect-square w-[9.5rem] -translate-y-1/2 xl:w-[11rem] ${
+          side === "left" ? "left-2 xl:left-10" : "right-2 xl:right-10"
+        }`}
+      >
+        <StaticImage
+          src={SOMBRA_LOGO_PATH}
+          alt=""
+          fill
+          sizes="(min-width: 1280px) 11rem, 9.5rem"
+          objectFit="contain"
+          className="opacity-[0.18] brightness-[0.62] saturate-[0.55] drop-shadow-[0_0_48px_rgba(95,198,238,0.14)]"
+        />
+      </div>
+    </div>
+  );
+}
+
+function WebinarListItem({
+  webinar,
+  index,
+  lazyImage,
+  onPlay,
+  className,
+  revealDelay,
+}: {
+  webinar: Webinar;
+  index: number;
+  lazyImage?: boolean;
+  onPlay: (webinar: Webinar) => void;
+  className?: string;
+  revealDelay: number;
+}) {
+  const watermarkSide = index % 2 === 1 ? "left" : "right";
+
+  return (
+    <li className={`relative ${className ?? ""}`}>
+      <WebinarRowWatermark side={watermarkSide} />
+      <Reveal delay={revealDelay} offset={12} className="relative z-[1]">
+        <WebinarRow
+          webinar={webinar}
+          index={index}
+          lazyImage={lazyImage}
+          onPlay={onPlay}
+        />
+      </Reveal>
+    </li>
+  );
+}
 
 function WebinarVisual({
   flyerSrc,
@@ -82,7 +140,6 @@ function WebinarRow({
 }) {
   const { webinarsCopy } = useLocaleData();
   const hasVideo = Boolean(webinar.youtubeUrl);
-  const hasInstagram = Boolean(webinar.instagramUrl?.trim());
   const isHeader = placement === "header";
   const flip = !isHeader && index % 2 === 1;
 
@@ -94,7 +151,7 @@ function WebinarRow({
       className={
         isHeader
           ? "group flex flex-col gap-4 sm:gap-5"
-          : `group flex w-full max-w-[min(100%,50rem)] flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:max-w-[52rem] xl:gap-10 ${
+          : `group flex w-full max-w-[min(100%,50rem)] flex-col gap-4 sm:gap-5 lg:flex-row lg:items-start lg:gap-7 xl:max-w-[52rem] xl:gap-8 ${
               flip ? "lg:ms-auto lg:flex-row-reverse" : "lg:me-auto"
             }`
       }
@@ -120,12 +177,7 @@ function WebinarRow({
             />
           </button>
         ) : (
-          <a
-            href={webinar.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={thumbClassName}
-          >
+          <div className={thumbClassName}>
             <WebinarVisual
               flyerSrc={webinar.flyerSrc}
               topic={webinar.topic}
@@ -133,7 +185,7 @@ function WebinarRow({
               lazy={lazyImage}
               comingSoonLabel={webinarsCopy.comingSoon}
             />
-          </a>
+          </div>
         )}
       </div>
 
@@ -149,13 +201,13 @@ function WebinarRow({
         </p>
         <WebinarTopicHeading
           topic={webinar.topic}
-          className="mt-2 line-clamp-4 lg:mt-3"
+          className="mt-1.5 line-clamp-4 sm:mt-2 lg:mt-2.5"
         />
-        <p className="mt-2 text-sm text-white/45 sm:mt-3 sm:text-base">
+        <p className="mt-1.5 text-sm text-white/45 sm:mt-2 sm:text-base">
           {webinar.speaker}
         </p>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 sm:mt-6">
+        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 sm:mt-5">
           {hasVideo ? (
             <>
               <button
@@ -180,16 +232,6 @@ function WebinarRow({
               {webinarsCopy.comingSoon}
             </p>
           )}
-          {hasInstagram ? (
-            <a
-              href={webinar.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[0.68rem] tracking-[0.18em] text-white/35 uppercase underline-offset-[6px] transition-colors duration-200 hover:text-white/70 hover:underline"
-            >
-              {webinarsCopy.instagramCta}
-            </a>
-          ) : null}
         </div>
       </div>
     </article>
@@ -214,7 +256,7 @@ function WebinarsDesktopHeader({
           {webinarsCopy.kicker}
         </p>
 
-        <h2 className="mt-4 leading-[0.95] sm:mt-5">
+        <h2 className="mt-3 leading-[0.95] sm:mt-4">
           {webinarsCopy.titleScript ? (
             <span
               className="font-script block text-[clamp(2.85rem,11vw,6.5rem)] leading-none text-cyan-400"
@@ -229,7 +271,7 @@ function WebinarsDesktopHeader({
           </span>
         </h2>
 
-        <p className="mt-5 max-w-lg text-base font-light leading-relaxed text-white/55 sm:mt-6 sm:text-lg">
+        <p className="mt-4 max-w-lg text-base font-light leading-relaxed text-white/55 sm:mt-5 sm:text-lg">
           {webinarsCopy.lead}
         </p>
       </div>
@@ -325,7 +367,7 @@ export function WebinarsSection() {
   };
 
   const listItemPadding =
-    "border-t border-white/[0.08] py-7 sm:py-8 md:py-9 lg:py-10";
+    "border-t border-white/[0.08] py-6 sm:py-7 md:py-8 lg:py-9";
 
   return (
     <section
@@ -352,43 +394,38 @@ export function WebinarsSection() {
           />
         </Reveal>
 
-        <div className="mt-8 sm:mt-10 md:mt-12">
+        <div className="mt-6 sm:mt-8 md:mt-10">
           <Reveal offset={14}>
             <p className="text-[0.65rem] font-semibold tracking-[0.26em] text-white/35 uppercase sm:text-[0.68rem] sm:tracking-[0.28em]">
               {webinarsCopy.visibleIntro}
             </p>
           </Reveal>
 
-          <div className="mt-5 sm:mt-6">
+          <div className="mt-4 sm:mt-5">
             <ul className="space-y-0 [overflow-anchor:none]">
               {featured.map((webinar, index) => (
-                <li
+                <WebinarListItem
                   key={webinar.id}
+                  webinar={webinar}
+                  index={index}
+                  onPlay={openPlayer}
+                  revealDelay={Math.min(index, 5) * 40}
                   className={`${listItemPadding} ${
                     webinar.id === latestWebinar?.id ? "md:hidden" : ""
                   }`}
-                >
-                  <Reveal delay={Math.min(index, 5) * 40} offset={12}>
-                    <WebinarRow
-                      webinar={webinar}
-                      index={index}
-                      onPlay={openPlayer}
-                    />
-                  </Reveal>
-                </li>
+                />
               ))}
               {expanded
                 ? rest.map((webinar, index) => (
-                    <li key={webinar.id} className={listItemPadding}>
-                      <Reveal delay={Math.min(index, 8) * 38} offset={12}>
-                        <WebinarRow
-                          webinar={webinar}
-                          index={webinarsVisibleCount + index}
-                          lazyImage
-                          onPlay={openPlayer}
-                        />
-                      </Reveal>
-                    </li>
+                    <WebinarListItem
+                      key={webinar.id}
+                      webinar={webinar}
+                      index={webinarsVisibleCount + index}
+                      lazyImage
+                      onPlay={openPlayer}
+                      revealDelay={Math.min(index, 8) * 38}
+                      className={listItemPadding}
+                    />
                   ))
                 : null}
             </ul>

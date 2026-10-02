@@ -245,7 +245,6 @@ export const pt = {
     comingSoon: "YouTube — em breve",
     openOnYoutube: "Abrir no YouTube",
     closePlayer: "Fechar reprodutor",
-    instagramCta: "Ver no Instagram",
     sourceNote:
       "Vídeos em youtube.com/@RhinoscopyArg. Novas palestras entram aqui quando estiverem publicadas no canal.",
     showLess: "Ver menos",

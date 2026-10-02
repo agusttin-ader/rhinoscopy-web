@@ -20,7 +20,7 @@ export async function CertificateTeaser() {
 
       <div className="site-shell relative min-w-0 site-section-y">
         <div
-          className="grid min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-10 xl:gap-12"
+          className="grid min-w-0 grid-cols-1 gap-5 sm:gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-8 xl:gap-10"
         >
           <div className="lg:col-start-1 lg:row-start-1">
             <Reveal className="max-w-2xl" offset={14}>

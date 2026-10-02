@@ -20,17 +20,9 @@ const en: Record<string, WebinarText> = {
     topic: "Endoscopic transorbital access routes",
     dateLabel: "Thursday, August 6",
   },
-  "accesos-expandidos-dolci": {
-    topic: "The key to expanded lateral access routes",
-    dateLabel: "Rhinoscopy 2026 season",
-  },
   "dorso-nasal-sousa": {
     topic: "Dorsal nasal treatment: a sculptural approach",
     dateLabel: "Thursday, July 23",
-  },
-  "expansion-columelar-luis-chinski": {
-    topic: "Columellar expansion",
-    dateLabel: "Rhinoscopy 2026 season",
   },
   "oxigeno-hiperbarico-yapur": {
     topic: "Hyperbaric oxygen therapy in facial filler complications",
@@ -42,7 +34,7 @@ const en: Record<string, WebinarText> = {
   },
   "inmunologicos-rinosinusitis-cincura": {
     topic: "Biologics in chronic rhinosinusitis: when and how to use them",
-    dateLabel: "Rhinoscopy 2026 season",
+    dateLabel: "Thursday, July 2",
   },
   "rehabilitacion-respiratoria-nasal": {
     topic: "Nasal respiratory rehabilitation after functional surgery",
@@ -69,6 +61,14 @@ const en: Record<string, WebinarText> = {
     topic: "Preservation lateral rhinoplasties and thick-skin rhinoplasty",
     dateLabel: "Thursday, April 9",
   },
+  "expansion-columelar-luis-chinski": {
+    topic: "Columellar expansion",
+    dateLabel: "Thursday, April 30",
+  },
+  "accesos-expandidos-dolci": {
+    topic: "The key to expanded lateral access routes",
+    dateLabel: "Thursday, April 16",
+  },
 };
 
 const pt: Record<string, WebinarText> = {
@@ -88,17 +88,9 @@ const pt: Record<string, WebinarText> = {
     topic: "Acessos endoscópicos transorbitários",
     dateLabel: "Quinta-feira, 6 de agosto",
   },
-  "accesos-expandidos-dolci": {
-    topic: "A chave para os acessos expandidos laterais",
-    dateLabel: "Temporada Rhinoscopy 2026",
-  },
   "dorso-nasal-sousa": {
     topic: "Tratamento do dorso nasal: uma abordagem escultural",
     dateLabel: "Quinta-feira, 23 de julho",
-  },
-  "expansion-columelar-luis-chinski": {
-    topic: "Expansão columelar",
-    dateLabel: "Temporada Rhinoscopy 2026",
   },
   "oxigeno-hiperbarico-yapur": {
     topic: "Oxigenoterapia hiperbárica em complicações de preenchimentos faciais",
@@ -111,7 +103,7 @@ const pt: Record<string, WebinarText> = {
   "inmunologicos-rinosinusitis-cincura": {
     topic:
       "Imunobiológicos na rinossinusite crônica: quando e como utilizar",
-    dateLabel: "Temporada Rhinoscopy 2026",
+    dateLabel: "Quinta-feira, 2 de julho",
   },
   "rehabilitacion-respiratoria-nasal": {
     topic: "Reabilitação respiratória nasal após cirurgia funcional",
@@ -137,6 +129,14 @@ const pt: Record<string, WebinarText> = {
   "laterorrinia-cajelli-diorio": {
     topic: "Laterorrinias por preservação de dorso e rinoplastia em pele grossa",
     dateLabel: "Quinta-feira, 9 de abril",
+  },
+  "expansion-columelar-luis-chinski": {
+    topic: "Expansão columelar",
+    dateLabel: "Quinta-feira, 30 de abril",
+  },
+  "accesos-expandidos-dolci": {
+    topic: "A chave para os acessos expandidos laterais",
+    dateLabel: "Quinta-feira, 16 de abril",
   },
 };
 

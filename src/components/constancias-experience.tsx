@@ -74,7 +74,7 @@ export function ConstanciasExperience() {
   return (
     <>
       <div
-        className="mt-6 grid min-w-0 grid-cols-1 gap-8 sm:mt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-start lg:gap-10 xl:gap-12"
+        className="mt-5 grid min-w-0 grid-cols-1 gap-7 sm:mt-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-start lg:gap-8 xl:gap-10"
       >
         <div className="min-w-0 lg:max-w-[26rem]">
           <Reveal offset={14}>
@@ -96,7 +96,7 @@ export function ConstanciasExperience() {
           </Reveal>
 
           <Reveal delay={90} offset={12}>
-          <form onSubmit={onSubmit} className="mt-9 lg:mt-10">
+          <form onSubmit={onSubmit} className="mt-8 lg:mt-9">
             <p className="text-[0.62rem] font-medium tracking-[0.24em] text-cyan-300/75 uppercase">
               {constanciasCopy.availableEvent}
             </p>

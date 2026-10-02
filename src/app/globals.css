@@ -42,9 +42,9 @@ html.scroll-locked {
 
   /* Teléfonos muy angostos: un poco menos inset para que no se apriete el contenido. */
   @media (max-width: 374px) {
-    .site-shell:not(.site-shell--gallery):not(.site-shell--footer):not(
-        .site-shell--flush-x
-      ) {
+    .site-shell:not(.site-shell--gallery):not(.site-shell--header):not(
+        .site-shell--footer
+      ):not(.site-shell--flush-x) {
       padding-left: max(1.625rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.625rem, env(safe-area-inset-right, 0px));
     }
@@ -119,42 +119,48 @@ html.scroll-locked {
     }
   }
 
-  /** Galería del congreso: márgenes anteriores (sin inset extra). */
-  .site-shell.site-shell--gallery {
+  /** Header y galería: márgenes base (sin inset extra del cuerpo). */
+  .site-shell.site-shell--gallery,
+  .site-shell.site-shell--header {
     padding-left: max(1rem, env(safe-area-inset-left, 0px));
     padding-right: max(1rem, env(safe-area-inset-right, 0px));
   }
 
   @media (min-width: 375px) {
-    .site-shell.site-shell--gallery {
+    .site-shell.site-shell--gallery,
+    .site-shell.site-shell--header {
       padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (min-width: 640px) {
-    .site-shell.site-shell--gallery {
+    .site-shell.site-shell--gallery,
+    .site-shell.site-shell--header {
       padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (min-width: 1024px) {
-    .site-shell.site-shell--gallery {
+    .site-shell.site-shell--gallery,
+    .site-shell.site-shell--header {
       padding-left: max(1.75rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.75rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (min-width: 1280px) {
-    .site-shell.site-shell--gallery {
+    .site-shell.site-shell--gallery,
+    .site-shell.site-shell--header {
       padding-left: max(1.75rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.75rem, env(safe-area-inset-right, 0px));
     }
   }
 
   @media (min-width: 1920px) {
-    .site-shell.site-shell--gallery {
+    .site-shell.site-shell--gallery,
+    .site-shell.site-shell--header {
       padding-left: max(2rem, env(safe-area-inset-left, 0px));
       padding-right: max(2rem, env(safe-area-inset-right, 0px));
     }

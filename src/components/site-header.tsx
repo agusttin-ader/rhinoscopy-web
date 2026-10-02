@@ -69,7 +69,9 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="site-shell flex h-[4.25rem] min-w-0 items-center justify-between gap-2 sm:h-[4.5rem] sm:gap-3">
+      <div
+        className="site-shell site-shell--header flex h-[4.25rem] min-w-0 items-center justify-between gap-2 sm:h-[4.5rem] sm:gap-3"
+      >
         <Logo
           wordmark
           className="min-w-0 flex-1 overflow-hidden pr-1 transition-opacity duration-200 hover:opacity-80 min-[1024px]:flex-none"

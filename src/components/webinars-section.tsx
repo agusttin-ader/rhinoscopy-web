@@ -28,8 +28,8 @@ function WebinarRowWatermark({ side }: { side: "left" | "right" }) {
       aria-hidden="true"
     >
       <div
-        className={`absolute top-1/2 aspect-square w-[9.5rem] -translate-y-1/2 xl:w-[11rem] ${
-          side === "left" ? "left-2 xl:left-10" : "right-2 xl:right-10"
+        className={`absolute top-1/2 aspect-square w-[7.5rem] -translate-y-1/2 lg:w-[9.5rem] xl:w-[11rem] ${
+          side === "left" ? "left-0 lg:left-2 xl:left-10" : "right-0 lg:right-2 xl:right-10"
         }`}
       >
         <StaticImage
@@ -373,7 +373,7 @@ export function WebinarsSection() {
     <section
       ref={sectionRef}
       id="webinars"
-      className="site-scroll-mt relative overflow-x-clip bg-navy text-white"
+      className="site-scroll-mt relative min-w-0 overflow-x-clip bg-navy text-white"
     >
       <DarkSectionAtmosphere />
 

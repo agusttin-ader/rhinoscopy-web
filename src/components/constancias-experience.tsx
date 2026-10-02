@@ -190,7 +190,7 @@ export function ConstanciasExperience() {
                     className="border-b border-white/[0.08]"
                   >
                     <div
-                      className="group flex items-center gap-5 py-5 sm:gap-8 sm:py-6"
+                      className="group flex min-w-0 items-center gap-4 py-5 sm:gap-8 sm:py-6"
                     >
                       <div className="min-w-0 flex-1">
                         <p

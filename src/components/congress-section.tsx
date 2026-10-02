@@ -256,7 +256,7 @@ export function CongressSection() {
   const { congressCopy } = useLocaleData();
 
   return (
-    <section className="overflow-x-clip bg-paper">
+    <section className="min-w-0 overflow-x-clip bg-paper">
       <Reveal offset={16}>
         <CongressMeetPresentation />
       </Reveal>
@@ -286,6 +286,9 @@ export function CongressSection() {
         <CongressProgram />
         <CongressCommittee />
         <CongressSpeakers />
+      </div>
+
+      <div className="site-shell site-shell--gallery min-w-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
         <CongressGallery />
       </div>
 

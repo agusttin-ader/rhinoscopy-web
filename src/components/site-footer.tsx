@@ -23,7 +23,10 @@ export async function SiteFooter() {
         aria-hidden="true"
       />
 
-      <Reveal className="site-shell min-w-0 pb-8 pt-12 sm:pt-16" offset={14}>
+      <Reveal
+        className="site-shell site-fab-pad-bottom min-w-0 pt-12 sm:pt-16"
+        offset={14}
+      >
         <div className="grid gap-10 border-b border-white/10 pb-12 sm:gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
             <Link
@@ -138,16 +141,20 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-8 max-w-xl space-y-2 text-xs">
-          <p className="text-white/70">
-            © {year} {site.name}. {footerPage.rightsReserved}
-          </p>
-          <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
+        <div
+          className="mt-8 flex min-w-0 flex-col gap-6 text-xs sm:gap-5 md:flex-row md:items-end md:justify-between md:gap-8"
+        >
+          <div className="min-w-0 max-w-xl space-y-2">
+            <p className="text-white/70">
+              © {year} {site.name}. {footerPage.rightsReserved}
+            </p>
+            <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
+          </div>
           <a
             href="https://www.agustinaderdev.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2.5 text-white/65 transition hover:text-white/80"
+            className="site-fab-inset-end inline-flex max-w-full shrink-0 items-center gap-2 self-end text-right text-white/65 transition hover:text-white/80 min-[375px]:gap-2.5 max-md:mt-1 md:self-auto"
           >
             <Image
               src="/images/logo-dev/logo-dev.webp"
@@ -155,10 +162,12 @@ export async function SiteFooter() {
               width={256}
               height={202}
               unoptimized
-              className="h-7 w-auto object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
+              className="h-6 w-auto shrink-0 object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
             />
-            <span>
-              {footerPage.developedBy}{" "}
+            <span className="min-w-0 leading-snug">
+              <span className="block text-[0.68rem] sm:inline sm:text-xs">
+                {footerPage.developedBy}
+              </span>{" "}
               <span className="font-medium text-white/85">Agustin Ader</span>
             </span>
           </a>

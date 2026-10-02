@@ -18,9 +18,9 @@ export async function CertificateTeaser() {
     >
       <DarkSectionAtmosphere />
 
-      <div className="site-shell relative min-w-0 py-16 sm:py-24 md:py-32">
+      <div className="site-shell relative min-w-0 site-section-y">
         <div
-          className="grid min-w-0 grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14 xl:gap-16"
+          className="grid min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-10 xl:gap-12"
         >
           <div className="lg:col-start-1 lg:row-start-1">
             <Reveal className="max-w-2xl" offset={14}>

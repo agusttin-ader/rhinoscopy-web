@@ -114,7 +114,10 @@ export function rootMetadataBase(): Metadata {
     description:
       "Rhinoscopy: otorrinolaringología, rinología y rinoscopia. Formación en endoscopía nasal, cirugía rinológica y ORL. Webinars y congreso Rhinoscopy Meet.",
     icons: {
-      icon: [{ url: "/icon.png", type: "image/png", sizes: "48x48" }],
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon.png", type: "image/png", sizes: "48x48" },
+      ],
       apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
     },
     formatDetection: {

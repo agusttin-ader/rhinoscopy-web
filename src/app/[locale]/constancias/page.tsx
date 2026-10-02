@@ -58,7 +58,7 @@ export default async function ConstanciasPage({ params }: Props) {
       >
         <DarkSectionAtmosphere />
 
-        <div className="site-shell relative min-w-0 flex-1 pb-16 pt-8 sm:pb-20 sm:pt-10 md:pb-24 md:pt-14">
+        <div className="site-shell relative min-w-0 flex-1 pb-12 pt-6 sm:pb-16 sm:pt-8 md:pb-20 md:pt-10">
           <Link
             href="/"
             className="text-[0.68rem] font-semibold tracking-[0.18em] text-white/45 uppercase transition-colors hover:text-cyan-300"

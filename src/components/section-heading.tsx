@@ -91,7 +91,7 @@ export function SectionHeading({
         <p
           className={`max-w-lg ${leadColor} ${centered ? "mx-auto" : ""} ${
             size === "full"
-              ? "mt-8 text-lg"
+              ? "mt-5 text-base sm:mt-6 sm:text-lg"
               : size === "narrow"
                 ? "mt-4 text-sm leading-relaxed"
                 : "mt-6 text-base"

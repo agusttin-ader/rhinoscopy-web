@@ -22,6 +22,8 @@ export const constanciasCopy = {
   resultTitle: "Certificado de asistencia",
   viewCta: "Ver certificado",
   downloadCta: "Descargar PDF",
+  viewerBack: "← Certificados",
+  viewerIframeTitle: "Certificado Rhinoscopy Meet 2026",
   resultsCount: (n: number) =>
     n === 1 ? "1 certificado" : `${n} certificados`,
   resultsTruncated: (shown: number, total: number) =>

@@ -210,6 +210,8 @@ export const en = {
     resultTitle: "Certificate of attendance",
     viewCta: "View certificate",
     downloadCta: "Download PDF",
+    viewerBack: "← Certificates",
+    viewerIframeTitle: "Rhinoscopy Meet 2026 certificate",
     resultsCount: (n: number) =>
       n === 1 ? "1 certificate" : `${n} certificates`,
     resultsTruncated: (shown: number, total: number) =>
@@ -319,6 +321,7 @@ export const en = {
     },
     constancias: {
       title: "Certificates | Rhinoscopy",
+      viewerTitle: "Certificate",
       description:
         "Rhinoscopy Meet 2026 attendance certificates for otolaryngologists and rhinology professionals.",
       keywords: [

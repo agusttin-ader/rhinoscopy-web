@@ -282,7 +282,7 @@ export function CongressSection() {
       </div>
       </Reveal>
 
-      <div className="site-shell min-w-0 space-y-16 py-16 sm:space-y-20 sm:py-20 lg:space-y-24 lg:py-28">
+      <div className="site-shell min-w-0 space-y-12 py-12 sm:space-y-16 sm:py-14 md:py-16 lg:space-y-20 lg:py-20">
         <CongressProgram />
         <CongressCommittee />
         <CongressSpeakers />

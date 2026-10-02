@@ -16,7 +16,6 @@ import {
 } from "@/components/webinar-video-modal";
 import { webinars, webinarsVisibleCount, type Webinar } from "@/data/webinars";
 
-/** Mismo ancho de miniatura que las filas del listado (desktop). */
 const WEBINAR_THUMB_CLASS =
   "w-full max-w-[min(100%,30rem)] shrink-0 sm:max-w-[28rem] md:max-w-[30rem] lg:w-[clamp(16.5rem,38vw,34rem)] lg:max-w-[34rem]";
 
@@ -83,6 +82,7 @@ function WebinarRow({
 }) {
   const { webinarsCopy } = useLocaleData();
   const hasVideo = Boolean(webinar.youtubeUrl);
+  const hasInstagram = Boolean(webinar.instagramUrl?.trim());
   const isHeader = placement === "header";
   const flip = !isHeader && index % 2 === 1;
 
@@ -94,13 +94,13 @@ function WebinarRow({
       className={
         isHeader
           ? "group flex flex-col gap-4 sm:gap-5"
-          : `group flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-12 ${
-              flip ? "lg:flex-row-reverse" : ""
+          : `group flex w-full max-w-[min(100%,50rem)] flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:max-w-[52rem] xl:gap-10 ${
+              flip ? "lg:ms-auto lg:flex-row-reverse" : "lg:me-auto"
             }`
       }
     >
       <div
-        className={`${WEBINAR_THUMB_CLASS} ${!isHeader && flip ? "lg:ms-auto" : ""} ${
+        className={`${WEBINAR_THUMB_CLASS} ${
           isHeader ? "max-w-full" : ""
         }`}
       >
@@ -141,7 +141,7 @@ function WebinarRow({
         className={
           isHeader
             ? "min-w-0 flex-1 md:pt-1 lg:max-w-none xl:max-w-none"
-            : "min-w-0 flex-1 lg:max-w-[28rem] lg:pt-1 xl:max-w-[32rem]"
+            : "min-w-0 flex-none lg:max-w-[28rem] lg:pt-1 xl:max-w-[32rem]"
         }
       >
         <p className="text-[0.68rem] font-medium tracking-[0.28em] text-cyan-300/75 uppercase">
@@ -151,7 +151,9 @@ function WebinarRow({
           topic={webinar.topic}
           className="mt-2 line-clamp-4 lg:mt-3"
         />
-        <p className="mt-2 text-sm text-white/45 sm:mt-3 sm:text-base">{webinar.speaker}</p>
+        <p className="mt-2 text-sm text-white/45 sm:mt-3 sm:text-base">
+          {webinar.speaker}
+        </p>
 
         <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 sm:mt-6">
           {hasVideo ? (
@@ -178,14 +180,16 @@ function WebinarRow({
               {webinarsCopy.comingSoon}
             </p>
           )}
-          <a
-            href={webinar.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[0.68rem] tracking-[0.18em] text-white/35 uppercase underline-offset-[6px] transition-colors duration-200 hover:text-white/70 hover:underline"
-          >
-            {webinarsCopy.instagramCta}
-          </a>
+          {hasInstagram ? (
+            <a
+              href={webinar.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[0.68rem] tracking-[0.18em] text-white/35 uppercase underline-offset-[6px] transition-colors duration-200 hover:text-white/70 hover:underline"
+            >
+              {webinarsCopy.instagramCta}
+            </a>
+          ) : null}
         </div>
       </div>
     </article>
@@ -203,14 +207,14 @@ function WebinarsDesktopHeader({
 
   return (
     <div
-      className="hidden md:grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-start md:gap-x-8 lg:gap-x-12"
+      className="hidden md:grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:items-start md:gap-x-6 lg:gap-x-10"
     >
       <div className="min-w-0">
         <p className="text-[0.72rem] font-semibold tracking-[0.38em] text-cyan-300/80 uppercase">
           {webinarsCopy.kicker}
         </p>
 
-        <h2 className="mt-5 leading-[0.95] sm:mt-6">
+        <h2 className="mt-4 leading-[0.95] sm:mt-5">
           {webinarsCopy.titleScript ? (
             <span
               className="font-script block text-[clamp(2.85rem,11vw,6.5rem)] leading-none text-cyan-400"
@@ -225,14 +229,14 @@ function WebinarsDesktopHeader({
           </span>
         </h2>
 
-        <p className="mt-8 max-w-lg text-lg font-light leading-relaxed text-white/55">
+        <p className="mt-5 max-w-lg text-base font-light leading-relaxed text-white/55 sm:mt-6 sm:text-lg">
           {webinarsCopy.lead}
         </p>
       </div>
 
       {latestWebinar ? (
-        <div className="min-w-0 pt-6 sm:pt-[1.625rem]">
-          <div className="mx-auto w-full lg:max-w-[clamp(16.5rem,38vw,34rem)]">
+        <div className="min-w-0 lg:pt-1">
+          <div className="mx-auto w-full max-w-[32rem] lg:ms-auto lg:me-0">
             <WebinarRow
               webinar={latestWebinar}
               index={0}
@@ -320,6 +324,9 @@ export function WebinarsSection() {
     });
   };
 
+  const listItemPadding =
+    "border-t border-white/[0.08] py-7 sm:py-8 md:py-9 lg:py-10";
+
   return (
     <section
       ref={sectionRef}
@@ -328,7 +335,7 @@ export function WebinarsSection() {
     >
       <DarkSectionAtmosphere />
 
-      <div className="site-shell relative min-w-0 py-16 sm:py-24 md:py-32 lg:py-36">
+      <div className="site-shell relative min-w-0 site-section-y">
         <Reveal className="md:hidden">
           <SectionHeading
             kicker={webinarsCopy.kicker}
@@ -345,19 +352,19 @@ export function WebinarsSection() {
           />
         </Reveal>
 
-        <div className="mt-12 sm:mt-16 md:mt-24">
+        <div className="mt-8 sm:mt-10 md:mt-12">
           <Reveal offset={14}>
-          <p className="text-[0.68rem] font-semibold tracking-[0.28em] text-white/35 uppercase">
-            {webinarsCopy.visibleIntro}
-          </p>
+            <p className="text-[0.65rem] font-semibold tracking-[0.26em] text-white/35 uppercase sm:text-[0.68rem] sm:tracking-[0.28em]">
+              {webinarsCopy.visibleIntro}
+            </p>
           </Reveal>
 
-          <div className="mt-10">
+          <div className="mt-5 sm:mt-6">
             <ul className="space-y-0 [overflow-anchor:none]">
               {featured.map((webinar, index) => (
                 <li
                   key={webinar.id}
-                  className={`border-t border-white/[0.08] py-10 md:py-14 ${
+                  className={`${listItemPadding} ${
                     webinar.id === latestWebinar?.id ? "md:hidden" : ""
                   }`}
                 >
@@ -372,17 +379,14 @@ export function WebinarsSection() {
               ))}
               {expanded
                 ? rest.map((webinar, index) => (
-                    <li
-                      key={webinar.id}
-                      className="border-t border-white/[0.08] py-10 md:py-14"
-                    >
+                    <li key={webinar.id} className={listItemPadding}>
                       <Reveal delay={Math.min(index, 8) * 38} offset={12}>
-                      <WebinarRow
-                        webinar={webinar}
-                        index={webinarsVisibleCount + index}
-                        lazyImage
-                        onPlay={openPlayer}
-                      />
+                        <WebinarRow
+                          webinar={webinar}
+                          index={webinarsVisibleCount + index}
+                          lazyImage
+                          onPlay={openPlayer}
+                        />
                       </Reveal>
                     </li>
                   ))
@@ -397,7 +401,7 @@ export function WebinarsSection() {
                   toggleWebinars();
                 }}
                 aria-expanded={expanded}
-                className="mt-6 flex w-full items-center justify-center gap-3 py-2 text-sm font-semibold text-white/90 transition-colors duration-200 hover:text-cyan-300 [overflow-anchor:auto]"
+                className="mt-4 flex w-full items-center justify-center gap-3 py-2 text-sm font-semibold text-white/90 transition-colors duration-200 hover:text-cyan-300 sm:mt-5 [overflow-anchor:auto]"
               >
                 <span>
                   {expanded
@@ -419,7 +423,7 @@ export function WebinarsSection() {
 
         {webinarsCopy.sourceNote ? (
           <Reveal delay={100} offset={10}>
-            <p className="mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-white/30">
+            <p className="mx-auto mt-6 max-w-2xl text-center text-xs leading-relaxed text-white/30 sm:mt-8">
               {webinarsCopy.sourceNote}
             </p>
           </Reveal>

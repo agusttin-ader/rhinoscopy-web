@@ -210,6 +210,8 @@ export const pt = {
     resultTitle: "Certificado de participação",
     viewCta: "Ver certificado",
     downloadCta: "Baixar PDF",
+    viewerBack: "← Certificados",
+    viewerIframeTitle: "Certificado Rhinoscopy Meet 2026",
     resultsCount: (n: number) =>
       n === 1 ? "1 certificado" : `${n} certificados`,
     resultsTruncated: (shown: number, total: number) =>
@@ -319,6 +321,7 @@ export const pt = {
     },
     constancias: {
       title: "Certificados | Rhinoscopy",
+      viewerTitle: "Certificado",
       description:
         "Certificados de participação do Rhinoscopy Meet 2026 para otorrinolaringologistas e profissionais de rinologia.",
       keywords: [

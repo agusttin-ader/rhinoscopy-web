@@ -17,6 +17,7 @@ type Match = {
   displayName: string;
   categoryLabel: string;
   downloadUrl: string;
+  viewUrl: string;
 };
 
 type SearchState = {
@@ -73,7 +74,7 @@ export function ConstanciasExperience() {
   return (
     <>
       <div
-        className="mt-8 grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-start lg:gap-12 xl:gap-16"
+        className="mt-6 grid min-w-0 grid-cols-1 gap-8 sm:mt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-start lg:gap-10 xl:gap-12"
       >
         <div className="min-w-0 lg:max-w-[26rem]">
           <Reveal offset={14}>
@@ -152,7 +153,7 @@ export function ConstanciasExperience() {
       {search ? (
         <Reveal
           as="section"
-          className="mt-14 sm:mt-16"
+          className="mt-10 sm:mt-12"
           offset={16}
           aria-live="polite"
           aria-label="Resultados de búsqueda"
@@ -207,6 +208,7 @@ export function ConstanciasExperience() {
                       <CertificateResultActions
                         displayName={item.displayName}
                         downloadUrl={item.downloadUrl}
+                        viewUrl={item.viewUrl}
                       />
                     </div>
                   </li>

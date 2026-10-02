@@ -237,7 +237,7 @@ export const en = {
     titleDisplay: "Webinars",
     titleScript: "live",
     lead:
-      "Weekly talks with community specialists. YouTube videos will be added as they become available.",
+      "Talks with community specialists. We only list webinars available on our YouTube channel.",
     watchCta: "Watch webinar",
     watchCtaAria: (topic: string) => `Play: ${topic}`,
     comingSoon: "YouTube — coming soon",
@@ -245,7 +245,7 @@ export const en = {
     closePlayer: "Close player",
     instagramCta: "View on Instagram",
     sourceNote:
-      "Library rebuilt from Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Earlier talks may not be indexed.",
+      "Watch on youtube.com/@RhinoscopyArg. New talks appear here once published on the channel.",
     showLess: "Show less",
     moreWebinars: (n: number) =>
       n === 1 ? "View 1 more webinar" : `View ${n} more webinars`,

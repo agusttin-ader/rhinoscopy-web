@@ -237,7 +237,7 @@ export const pt = {
     titleDisplay: "Webinars",
     titleScript: "ao vivo",
     lead:
-      "Palestras semanais com especialistas da comunidade. Os vídeos no YouTube serão adicionados conforme estiverem prontos.",
+      "Palestras com especialistas da comunidade. Listamos apenas webinars com vídeo no nosso canal do YouTube.",
     watchCta: "Ver webinar",
     watchCtaAria: (topic: string) => `Reproduzir: ${topic}`,
     comingSoon: "YouTube — em breve",
@@ -245,7 +245,7 @@ export const pt = {
     closePlayer: "Fechar reprodutor",
     instagramCta: "Ver no Instagram",
     sourceNote:
-      "Biblioteca reconstruída a partir do Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Palestras anteriores podem não estar indexadas.",
+      "Vídeos em youtube.com/@RhinoscopyArg. Novas palestras entram aqui quando estiverem publicadas no canal.",
     showLess: "Ver menos",
     moreWebinars: (n: number) =>
       n === 1 ? "Ver 1 webinar a mais" : `Ver ${n} webinars a mais`,

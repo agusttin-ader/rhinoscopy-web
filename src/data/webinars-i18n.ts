@@ -12,14 +12,6 @@ const en: Record<string, WebinarText> = {
     topic: "Otoplasty in cupped pinnae",
     dateLabel: "Thursday, September 3",
   },
-  "sinusitis-odontogena": {
-    topic: "Odontogenic sinusitis",
-    dateLabel: "Thursday, August 27",
-  },
-  "transorbitarios-arteaga": {
-    topic: "Endoscopic transorbital approaches: review, classification, and update",
-    dateLabel: "Thursday, August 20",
-  },
   "valvula-nasal-cpap": {
     topic: "Nasal valve and CPAP therapy",
     dateLabel: "Thursday, August 13",
@@ -28,13 +20,17 @@ const en: Record<string, WebinarText> = {
     topic: "Endoscopic transorbital access routes",
     dateLabel: "Thursday, August 6",
   },
-  "piel-gruesa-punta-nasal": {
-    topic: "Thick skin management: definition and nasal tip support",
-    dateLabel: "Thursday, July 30",
+  "accesos-expandidos-dolci": {
+    topic: "The key to expanded lateral access routes",
+    dateLabel: "Rhinoscopy 2026 season",
   },
   "dorso-nasal-sousa": {
     topic: "Dorsal nasal treatment: a sculptural approach",
     dateLabel: "Thursday, July 23",
+  },
+  "expansion-columelar-luis-chinski": {
+    topic: "Columellar expansion",
+    dateLabel: "Rhinoscopy 2026 season",
   },
   "oxigeno-hiperbarico-yapur": {
     topic: "Hyperbaric oxygen therapy in facial filler complications",
@@ -44,6 +40,10 @@ const en: Record<string, WebinarText> = {
     topic: "Anatomy-based endoscopic endonasal approach and surgical strategies",
     dateLabel: "Thursday, June 25",
   },
+  "inmunologicos-rinosinusitis-cincura": {
+    topic: "Biologics in chronic rhinosinusitis: when and how to use them",
+    dateLabel: "Rhinoscopy 2026 season",
+  },
   "rehabilitacion-respiratoria-nasal": {
     topic: "Nasal respiratory rehabilitation after functional surgery",
     dateLabel: "Thursday, June 11",
@@ -52,16 +52,9 @@ const en: Record<string, WebinarText> = {
     topic: "Endo-DCR: from clinic to operating room",
     dateLabel: "Thursday, June 4",
   },
-  "fosa-pterigopalatina": {
-    topic: "Pterygopalatine fossa / infratemporal fossa surgery",
-    dateLabel: "Thursday, May 28",
-  },
-  "revision-rinosinusal": {
-    topic: "Challenges and causes of revision in endoscopic rhinosinusal surgery",
-    dateLabel: "Thursday, May 21",
-  },
   "septoplastia-endoscopica": {
-    topic: "Endoscopic septoplasty: uses in rhinoplasty and posterior deviations",
+    topic:
+      "Endoscopic septoplasty: uses in rhinoplasty and posterior deviations",
     dateLabel: "Thursday, May 14",
   },
   "perforaciones-septales": {
@@ -76,14 +69,6 @@ const en: Record<string, WebinarText> = {
     topic: "Preservation lateral rhinoplasties and thick-skin rhinoplasty",
     dateLabel: "Thursday, April 9",
   },
-  "redes-sociales-santos": {
-    topic: "Social media as allies in your medical practice",
-    dateLabel: "Thursday, November 6",
-  },
-  "preservacion-doble-chinski": {
-    topic: "Preservation with double replacement",
-    dateLabel: "Thursday, July 31",
-  },
 };
 
 const pt: Record<string, WebinarText> = {
@@ -95,14 +80,6 @@ const pt: Record<string, WebinarText> = {
     topic: "Otoplastia em pavilhões em concha",
     dateLabel: "Quinta-feira, 3 de setembro",
   },
-  "sinusitis-odontogena": {
-    topic: "Sinusite odontogênica",
-    dateLabel: "Quinta-feira, 27 de agosto",
-  },
-  "transorbitarios-arteaga": {
-    topic: "Abordagens endoscópicas transorbitárias: revisão, classificação e atualização",
-    dateLabel: "Quinta-feira, 20 de agosto",
-  },
   "valvula-nasal-cpap": {
     topic: "Válvula nasal e terapia com CPAP",
     dateLabel: "Quinta-feira, 13 de agosto",
@@ -111,13 +88,17 @@ const pt: Record<string, WebinarText> = {
     topic: "Acessos endoscópicos transorbitários",
     dateLabel: "Quinta-feira, 6 de agosto",
   },
-  "piel-gruesa-punta-nasal": {
-    topic: "Manejo da pele grossa: definição e suporte da ponta nasal",
-    dateLabel: "Quinta-feira, 30 de julho",
+  "accesos-expandidos-dolci": {
+    topic: "A chave para os acessos expandidos laterais",
+    dateLabel: "Temporada Rhinoscopy 2026",
   },
   "dorso-nasal-sousa": {
     topic: "Tratamento do dorso nasal: uma abordagem escultural",
     dateLabel: "Quinta-feira, 23 de julho",
+  },
+  "expansion-columelar-luis-chinski": {
+    topic: "Expansão columelar",
+    dateLabel: "Temporada Rhinoscopy 2026",
   },
   "oxigeno-hiperbarico-yapur": {
     topic: "Oxigenoterapia hiperbárica em complicações de preenchimentos faciais",
@@ -127,6 +108,11 @@ const pt: Record<string, WebinarText> = {
     topic: "Abordagem endoscópica endonasal baseada em anatomia e estratégias cirúrgicas",
     dateLabel: "Quinta-feira, 25 de junho",
   },
+  "inmunologicos-rinosinusitis-cincura": {
+    topic:
+      "Imunobiológicos na rinossinusite crônica: quando e como utilizar",
+    dateLabel: "Temporada Rhinoscopy 2026",
+  },
   "rehabilitacion-respiratoria-nasal": {
     topic: "Reabilitação respiratória nasal após cirurgia funcional",
     dateLabel: "Quinta-feira, 11 de junho",
@@ -135,16 +121,9 @@ const pt: Record<string, WebinarText> = {
     topic: "Endo-DCR: da consulta ao centro cirúrgico",
     dateLabel: "Quinta-feira, 4 de junho",
   },
-  "fosa-pterigopalatina": {
-    topic: "Cirurgia da fossa pterigopalatina / fossa infratemporal",
-    dateLabel: "Quinta-feira, 28 de maio",
-  },
-  "revision-rinosinusal": {
-    topic: "Desafios e causas de revisão na cirurgia endoscópica rinossinusal",
-    dateLabel: "Quinta-feira, 21 de maio",
-  },
   "septoplastia-endoscopica": {
-    topic: "Septoplastia endoscópica: utilidades na rinoplastia e desvios posteriores",
+    topic:
+      "Septoplastia endoscópica: utilidades na rinoplastia e desvios posteriores",
     dateLabel: "Quinta-feira, 14 de maio",
   },
   "perforaciones-septales": {
@@ -158,14 +137,6 @@ const pt: Record<string, WebinarText> = {
   "laterorrinia-cajelli-diorio": {
     topic: "Laterorrinias por preservação de dorso e rinoplastia em pele grossa",
     dateLabel: "Quinta-feira, 9 de abril",
-  },
-  "redes-sociales-santos": {
-    topic: "Redes sociais como aliadas no seu consultório médico",
-    dateLabel: "Quinta-feira, 6 de novembro",
-  },
-  "preservacion-doble-chinski": {
-    topic: "Preservação com dupla substituição",
-    dateLabel: "Quinta-feira, 31 de julho",
   },
 };
 

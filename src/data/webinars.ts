@@ -1,12 +1,11 @@
-/** Webinars Rhinoscopy — listado desde flyers @rhinoscopyofficial (abr.–sept. 2026). */
+/** Webinars publicados en YouTube (@RhinoscopyArg). */
 export type Webinar = {
   id: string;
   topic: string;
   speaker: string;
   dateLabel: string;
-  /** Flyer guardado en /public (desde Instagram) */
+  /** Flyer en /public */
   flyerSrc: string;
-  /** Vacío = placeholder hasta publicar en YouTube */
   youtubeUrl: string;
   instagramUrl: string;
 };
@@ -16,7 +15,7 @@ export const webinarsCopy = {
   titleDisplay: "Webinars",
   titleScript: "en vivo",
   lead:
-    "Charlas semanales con especialistas de la comunidad. Los videos en YouTube se irán sumando a medida que estén listos.",
+    "Charlas con especialistas de la comunidad. Solo listamos webinars con video en nuestro canal de YouTube.",
   watchCta: "Ver webinar",
   watchCtaAria: (topic: string) => `Reproducir: ${topic}`,
   comingSoon: "YouTube — próximamente",
@@ -24,7 +23,7 @@ export const webinarsCopy = {
   closePlayer: "Cerrar reproductor",
   instagramCta: "Ver en Instagram",
   sourceNote:
-    "Biblioteca reconstruida desde Instagram (@rhinoscopyofficial / @dr.lopezmoris.rinologia). Puede haber charlas anteriores no indexadas.",
+    "Videos en youtube.com/@RhinoscopyArg. Nuevas charlas se suman al canal y acá cuando estén publicadas.",
   showLess: "Ver menos",
   moreWebinars: (n: number) =>
     n === 1 ? "Ver 1 webinar más" : `Ver ${n} webinars más`,
@@ -34,7 +33,7 @@ export const webinarsCopy = {
 /** Cuántos se muestran antes del desplegable */
 export const webinarsVisibleCount = 3;
 
-/** Más reciente primero (temporada 2026 en IG). */
+/** Más reciente primero (fecha de la charla). */
 export const webinars: Webinar[] = [
   {
     id: "poliposis-nasosinusal",
@@ -55,24 +54,6 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/Dcv3YYEuzf_/",
   },
   {
-    id: "sinusitis-odontogena",
-    topic: "Sinusitis odontógena",
-    speaker: "Dr. Carlos Marino",
-    dateLabel: "Jueves 27 de agosto",
-    flyerSrc: "/images/webinars/sinusitis-odontogena.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DceoROch3wy/",
-  },
-  {
-    id: "transorbitarios-arteaga",
-    topic: "Abordajes endoscópicos transorbitarios: revisión, clasificación y actualización",
-    speaker: "Dra. Patricia Arteaga",
-    dateLabel: "Jueves 20 de agosto",
-    flyerSrc: "/images/webinars/transorbitarios-arteaga.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DcOUfHmuSaS/",
-  },
-  {
     id: "valvula-nasal-cpap",
     topic: "Válvula nasal y terapia con CPAP",
     speaker: "Dr. Rodolfo Lugo Saldaña",
@@ -91,13 +72,13 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/DbnjByZOKhJ/",
   },
   {
-    id: "piel-gruesa-punta-nasal",
-    topic: "Manejo de la piel gruesa: definición y soporte de la punta nasal",
-    speaker: "Dr. Jonathan Cordero",
-    dateLabel: "Jueves 30 de julio",
-    flyerSrc: "/images/webinars/piel-gruesa-punta-nasal.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DbT5le_hJVP/",
+    id: "accesos-expandidos-dolci",
+    topic: "La clave para los accesos expandidos laterales",
+    speaker: "Dr. Ricardo Dolci",
+    dateLabel: "Temporada Rhinoscopy 2026",
+    flyerSrc: "/images/webinars/accesos-expandidos-dolci.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=u8-BVG60erU",
+    instagramUrl: "",
   },
   {
     id: "dorso-nasal-sousa",
@@ -107,6 +88,15 @@ export const webinars: Webinar[] = [
     flyerSrc: "/images/webinars/dorso-nasal-sousa.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=smfoOBnJOrc",
     instagramUrl: "https://www.instagram.com/p/DbBwosuhq3E/",
+  },
+  {
+    id: "expansion-columelar-luis-chinski",
+    topic: "Expansión columelar",
+    speaker: "Dr. Luis Chinski",
+    dateLabel: "Temporada Rhinoscopy 2026",
+    flyerSrc: "/images/webinars/expansion-columelar-luis-chinski.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=UEdwzfWsqec",
+    instagramUrl: "",
   },
   {
     id: "oxigeno-hiperbarico-yapur",
@@ -127,6 +117,16 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/DZ-MMGQuj8E/",
   },
   {
+    id: "inmunologicos-rinosinusitis-cincura",
+    topic:
+      "Inmunológicos en la rinosinusitis crónica: ¿cuándo y cómo utilizarlos?",
+    speaker: "Dra. Carolina Cincurá",
+    dateLabel: "Temporada Rhinoscopy 2026",
+    flyerSrc: "/images/webinars/inmunologicos-rinosinusitis-cincura.webp",
+    youtubeUrl: "https://www.youtube.com/watch?v=DNd1k-vG-hI",
+    instagramUrl: "",
+  },
+  {
     id: "rehabilitacion-respiratoria-nasal",
     topic: "Rehabilitación respiratoria nasal tras cirugía funcional",
     speaker: "Dr. Raúl Martínez Vite",
@@ -145,30 +145,13 @@ export const webinars: Webinar[] = [
     instagramUrl: "https://www.instagram.com/p/DZITq9WuNHk/",
   },
   {
-    id: "fosa-pterigopalatina",
-    topic: "Cirugía de fosa pterigopalatina / fosa infratemporal",
-    speaker: "Dr. Juan Ramón Curi",
-    dateLabel: "Jueves 28 de mayo",
-    flyerSrc: "/images/webinars/fosa-pterigopalatina.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DY2zjX7B_iE/",
-  },
-  {
-    id: "revision-rinosinusal",
-    topic: "Desafíos y causas de revisión en cirugía endoscópica rinosinusal",
-    speaker: "Dra. Valeria Cugnu",
-    dateLabel: "Jueves 21 de mayo",
-    flyerSrc: "/images/webinars/revision-rinosinusal.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DYj2ZyfOnbN/",
-  },
-  {
     id: "septoplastia-endoscopica",
-    topic: "Septoplastia endoscópica: utilidades en rinoplastia y desvíos posteriores",
-    speaker: "Dr. Marcel Dauvallle Ceballos",
+    topic:
+      "Septoplastia endoscópica: utilidades en rinoplastia y en manejo de desvíos posteriores",
+    speaker: "Dr. Marcel Sauvalle",
     dateLabel: "Jueves 14 de mayo",
     flyerSrc: "/images/webinars/septoplastia-endoscopica.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=4fjnSBW4YRU",
     instagramUrl: "https://www.instagram.com/p/DYQG6orB212/",
   },
   {
@@ -177,7 +160,7 @@ export const webinars: Webinar[] = [
     speaker: "Dr. Pablo Fernández",
     dateLabel: "Jueves 7 de mayo",
     flyerSrc: "/images/webinars/perforaciones-septales.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=1DIq7QUNwWA",
     instagramUrl: "https://www.instagram.com/p/DYAL_7fjjG6/",
   },
   {
@@ -186,7 +169,7 @@ export const webinars: Webinar[] = [
     speaker: "Federico Ferrari",
     dateLabel: "Jueves 23 de abril",
     flyerSrc: "/images/webinars/derecho-salud.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=wK1DLBcVeH0",
     instagramUrl: "https://www.instagram.com/p/DXXUSSEDtQV/",
   },
   {
@@ -195,25 +178,7 @@ export const webinars: Webinar[] = [
     speaker: "Dra. Laura Cajelli y Dra. Romina Di Iorio",
     dateLabel: "Jueves 9 de abril",
     flyerSrc: "/images/webinars/laterorrinia-cajelli-diorio.webp",
-    youtubeUrl: "",
+    youtubeUrl: "https://www.youtube.com/watch?v=G2UExTci9Bo",
     instagramUrl: "https://www.instagram.com/p/DW4CXuuDm3s/",
-  },
-  {
-    id: "redes-sociales-santos",
-    topic: "Las redes sociales como aliadas en tu consultorio médico",
-    speaker: "Lic. Soledad Santos",
-    dateLabel: "Jueves 6 de noviembre",
-    flyerSrc: "/images/webinars/redes-sociales-santos.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DQmbp6qDrRj/",
-  },
-  {
-    id: "preservacion-doble-chinski",
-    topic: "Preservación con doble reemplazo",
-    speaker: "Dr. Hernán Chinski",
-    dateLabel: "Jueves 31 de julio",
-    flyerSrc: "/images/webinars/preservacion-doble-chinski.webp",
-    youtubeUrl: "",
-    instagramUrl: "https://www.instagram.com/p/DMoQkZcu4uN/",
   },
 ];

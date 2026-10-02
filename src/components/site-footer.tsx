@@ -138,20 +138,16 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div
-          className="mt-8 flex flex-col gap-6 text-xs sm:gap-4 md:flex-row md:items-end md:justify-between"
-        >
-          <div className="max-w-xl space-y-2">
-            <p className="text-white/70">
-              © {year} {site.name}. {footerPage.rightsReserved}
-            </p>
-            <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
-          </div>
+        <div className="mt-8 max-w-xl space-y-2 text-xs">
+          <p className="text-white/70">
+            © {year} {site.name}. {footerPage.rightsReserved}
+          </p>
+          <p className="leading-relaxed text-white/40">{footerCopy.legal}</p>
           <a
             href="https://www.agustinaderdev.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center gap-2.5 text-white/65 transition hover:text-white/80"
+            className="mt-4 inline-flex items-center gap-2.5 text-white/65 transition hover:text-white/80"
           >
             <Image
               src="/images/logo-dev/logo-dev.webp"

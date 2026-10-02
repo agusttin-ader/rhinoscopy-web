@@ -1,6 +1,5 @@
 import Image from "next/image";
-
-const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
+import { meetLogoHeight, meetLogoSrc, meetLogoWidth } from "@/data/meet-brand";
 
 type VisualSize = "teaser" | "page";
 
@@ -32,10 +31,10 @@ export function CertificateVisual({
       aria-hidden="true"
     >
       <Image
-        src={MEET_LOGO_DARK}
+        src={meetLogoSrc}
         alt=""
-        width={1200}
-        height={520}
+        width={meetLogoWidth}
+        height={meetLogoHeight}
         priority={emphasis === "page"}
         className={meetLogoClassName(emphasis)}
       />

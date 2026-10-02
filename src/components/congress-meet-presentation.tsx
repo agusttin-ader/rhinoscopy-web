@@ -1,9 +1,8 @@
 "use client";
 
 import { useLocaleData } from "@/hooks/use-locale-data";
+import { meetLogoHeight, meetLogoSrc, meetLogoWidth } from "@/data/meet-brand";
 import Image from "next/image";
-
-const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
 
 /** Presentación visual de Rhinoscopy Meet 2026 dentro de #congreso (no es el hero de marca). */
 export function CongressMeetPresentation() {
@@ -40,10 +39,10 @@ export function CongressMeetPresentation() {
           <div className="mt-4 flex w-full justify-center sm:mt-7">
             <div className="w-full max-w-[min(92vw,22rem)] sm:max-w-xl md:max-w-2xl lg:max-w-[40rem] xl:max-w-[46rem] 2xl:max-w-[52rem]">
               <Image
-                src={MEET_LOGO_DARK}
+                src={meetLogoSrc}
                 alt="Rhinoscopy Meet 2026"
-                width={1200}
-                height={520}
+                width={meetLogoWidth}
+                height={meetLogoHeight}
                 priority
                 className="h-auto w-full drop-shadow-[0_24px_60px_rgba(0,0,0,0.4)]"
               />

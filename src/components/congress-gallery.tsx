@@ -9,6 +9,7 @@ import {
   congressGallerySrc,
   prefetchCongressGalleryImage,
 } from "@/data/congress-gallery";
+import { meetLogoAspect, meetLogoSrc } from "@/data/meet-brand";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { StaticImage } from "@/components/static-image";
@@ -536,15 +537,14 @@ type GalleryLightboxProps = {
   dayDir: CongressGalleryDayDir;
 };
 
-const MEET_LOGO_DARK = "/images/LOGO-RHINOSCOPY-MEET-3-FONDO-OSCURO.png";
-
 function LightboxMeetWatermark({ className }: { className?: string }) {
   return (
     <div
-      className={`relative aspect-[1200/520] w-full max-w-[240px] opacity-[0.12] brightness-[0.85] sm:max-w-[280px] ${className ?? ""}`}
+      className={`relative w-full max-w-[240px] opacity-[0.12] brightness-[0.85] sm:max-w-[280px] ${className ?? ""}`}
+      style={{ aspectRatio: meetLogoAspect }}
     >
       <StaticImage
-        src={MEET_LOGO_DARK}
+        src={meetLogoSrc}
         alt=""
         fill
         sizes="280px"

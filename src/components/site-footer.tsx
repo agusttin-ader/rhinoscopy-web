@@ -24,7 +24,7 @@ export async function SiteFooter() {
       />
 
       <Reveal
-        className="site-shell site-fab-pad-bottom min-w-0 pt-12 sm:pt-16"
+        className="site-shell site-shell--footer site-fab-pad-bottom min-w-0 pt-12 sm:pt-16"
         offset={14}
       >
         <div className="grid gap-10 border-b border-white/10 pb-12 sm:gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
@@ -154,7 +154,7 @@ export async function SiteFooter() {
             href="https://www.agustinaderdev.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="site-fab-inset-end inline-flex max-w-full shrink-0 items-center gap-2 self-end text-right text-white/65 transition hover:text-white/80 min-[375px]:gap-2.5 max-md:mt-1 md:self-auto"
+            className="inline-flex max-w-full shrink-0 items-center gap-2 self-start text-left text-white/65 transition hover:text-white/80 min-[375px]:gap-2.5 max-md:mt-1 md:site-fab-inset-end md:self-auto md:text-right"
           >
             <Image
               src="/images/logo-dev/logo-dev.webp"
@@ -164,10 +164,8 @@ export async function SiteFooter() {
               unoptimized
               className="h-6 w-auto shrink-0 object-contain drop-shadow-[0_0_1.5px_rgba(255,255,255,0.85)] sm:h-8"
             />
-            <span className="min-w-0 leading-snug">
-              <span className="block text-[0.68rem] sm:inline sm:text-xs">
-                {footerPage.developedBy}
-              </span>{" "}
+            <span className="min-w-0 text-left leading-snug">
+              {footerPage.developedBy}{" "}
               <span className="font-medium text-white/85">Agustin Ader</span>
             </span>
           </a>

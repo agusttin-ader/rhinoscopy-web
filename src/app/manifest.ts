@@ -22,14 +22,14 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/apple-icon.png",
-        sizes: "180x180",
+        src: "/icon-192.png",
+        sizes: "192x192",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/images/logo-rhinoscopy-hd.png",
-        sizes: "1024x1024",
+        src: "/apple-icon.png",
+        sizes: "180x180",
         type: "image/png",
         purpose: "any",
       },

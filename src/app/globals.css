@@ -42,7 +42,9 @@ html.scroll-locked {
 
   /* Teléfonos muy angostos: un poco menos inset para que no se apriete el contenido. */
   @media (max-width: 374px) {
-    .site-shell:not(.site-shell--gallery):not(.site-shell--flush-x) {
+    .site-shell:not(.site-shell--gallery):not(.site-shell--footer):not(
+        .site-shell--flush-x
+      ) {
       padding-left: max(1.625rem, env(safe-area-inset-left, 0px));
       padding-right: max(1.625rem, env(safe-area-inset-right, 0px));
     }
@@ -59,12 +61,14 @@ html.scroll-locked {
     }
   }
 
-  /** Margen derecho para alinear créditos / acciones junto al FAB. */
-  .site-fab-inset-end {
-    margin-inline-end: max(
-      5rem,
-      calc(3.5rem + 1.25rem + env(safe-area-inset-right, 0px))
-    );
+  /** Margen derecho para créditos junto al FAB (solo desktop; en mobile queda alineado al texto). */
+  @media (min-width: 768px) {
+    .site-fab-inset-end {
+      margin-inline-end: max(
+        5rem,
+        calc(3.5rem + 1.25rem + env(safe-area-inset-right, 0px))
+      );
+    }
   }
 
   @media (min-width: 375px) {
@@ -153,6 +157,47 @@ html.scroll-locked {
     .site-shell.site-shell--gallery {
       padding-left: max(2rem, env(safe-area-inset-left, 0px));
       padding-right: max(2rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  /** Footer: márgenes más finos que el resto del sitio. */
+  .site-shell.site-shell--footer {
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  }
+
+  @media (min-width: 375px) {
+    .site-shell.site-shell--footer {
+      padding-left: max(1.75rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1.75rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 640px) {
+    .site-shell.site-shell--footer {
+      padding-left: max(2.25rem, env(safe-area-inset-left, 0px));
+      padding-right: max(2.25rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-shell.site-shell--footer {
+      padding-left: max(2.75rem, env(safe-area-inset-left, 0px));
+      padding-right: max(2.75rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .site-shell.site-shell--footer {
+      padding-left: max(3.25rem, env(safe-area-inset-left, 0px));
+      padding-right: max(3.25rem, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .site-shell.site-shell--footer {
+      padding-left: max(3.5rem, env(safe-area-inset-left, 0px));
+      padding-right: max(3.5rem, env(safe-area-inset-right, 0px));
     }
   }
 

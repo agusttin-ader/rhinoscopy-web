@@ -1,6 +1,5 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { constanciaViewPageUrl } from "@/lib/constancia-pdf-url";
 import { parseMeet2026CertificateFile } from "@/lib/constancias-categories";
 import { resolveCertificateCategoryLabel } from "@/lib/constancias-committee-roles";
 
@@ -22,8 +21,6 @@ export type ConstanciaMatch = {
   displayName: string;
   categoryLabel: string;
   downloadUrl: string;
-  /** Página HTML con favicon y título de Rhinoscopy (no abre el PDF crudo). */
-  viewUrl: string;
 };
 
 export type ConstanciaSearchResult = {
@@ -133,7 +130,6 @@ export async function searchConstancias(
         displayName,
         categoryLabel: categoryLabelFromFile(fileName),
         downloadUrl: urlPath,
-        viewUrl: constanciaViewPageUrl(urlPath, displayName),
       });
     }
   }

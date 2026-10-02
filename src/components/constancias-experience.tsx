@@ -17,7 +17,6 @@ type Match = {
   displayName: string;
   categoryLabel: string;
   downloadUrl: string;
-  viewUrl: string;
 };
 
 type SearchState = {
@@ -208,7 +207,6 @@ export function ConstanciasExperience() {
                       <CertificateResultActions
                         displayName={item.displayName}
                         downloadUrl={item.downloadUrl}
-                        viewUrl={item.viewUrl}
                       />
                     </div>
                   </li>

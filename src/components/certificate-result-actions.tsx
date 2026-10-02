@@ -9,7 +9,6 @@ import { useLocaleData } from "@/hooks/use-locale-data";
 type CertificateResultActionsProps = {
   displayName: string;
   downloadUrl: string;
-  viewUrl: string;
 };
 
 const iconClass = "h-[1.15rem] w-[1.15rem] sm:h-5 sm:w-5";
@@ -20,14 +19,13 @@ const actionClassName =
 export function CertificateResultActions({
   displayName,
   downloadUrl,
-  viewUrl,
 }: CertificateResultActionsProps) {
   const { constanciasCopy } = useLocaleData();
 
   return (
     <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
       <a
-        href={viewUrl}
+        href={downloadUrl}
         target="_blank"
         rel="noopener noreferrer"
         title={constanciasCopy.viewCta}

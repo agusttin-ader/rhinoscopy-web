@@ -88,7 +88,6 @@ export const es = {
     },
     constancias: {
       title: "Certificados | Rhinoscopy",
-      viewerTitle: "Certificado",
       description:
         "Certificados de asistencia del congreso Rhinoscopy Meet 2026 para otorrinolaringólogos y profesionales de rinología y rinoscopia.",
       keywords: [

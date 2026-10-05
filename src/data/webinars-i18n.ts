@@ -4,6 +4,47 @@ import type { AppLocale } from "@/i18n/routing";
 type WebinarText = Pick<Webinar, "topic" | "dateLabel">;
 
 const en: Record<string, WebinarText> = {
+  "mucoceles-rinosinusales-hocsman": {
+    topic: "Management of rhinosinusal mucoceles",
+    dateLabel: "Thursday, October 1",
+  },
+  "rinoplastia-preservacion-z-flap-ragoni": {
+    topic: "Preservation rhinoplasty with Z flap",
+    dateLabel: "Thursday, September 24",
+  },
+  "micoticas-rinosinusales-hadad": {
+    topic: "Rhinosinusal mycotic diseases",
+    dateLabel: "Thursday, September 18",
+  },
+  "perforaciones-septales-cataldo": {
+    topic: "Management of septal perforations",
+    dateLabel: "Thursday, August 27",
+  },
+  "onlay-tip-grafts-urquiola": {
+    topic: "Onlay tip grafts",
+    dateLabel: "Thursday, April 2",
+  },
+  "rinoplastia-secundaria-kochol": {
+    topic: "Redesigning the nose: advances in secondary rhinoplasty",
+    dateLabel: "Thursday, March 26",
+  },
+  "reparacion-perforaciones-nazar": {
+    topic: "Repair of septal perforations",
+    dateLabel: "Thursday, March 19",
+  },
+  "rsccpn-biologicos-riolfi": {
+    topic:
+      "CRSwNP: selecting patients for biologic therapy",
+    dateLabel: "Thursday, March 12",
+  },
+  "perlas-rinoplastia-secundaria-lopez-rivera": {
+    topic: "Pearls in secondary rhinoplasty",
+    dateLabel: "Thursday, March 5",
+  },
+  "redes-sociales-santos": {
+    topic: "Social media as allies in your medical practice",
+    dateLabel: "Thursday, November 6",
+  },
   "poliposis-nasosinusal": {
     topic: "Surgical management of nasosinusal polyposis",
     dateLabel: "Thursday, September 10",
@@ -72,6 +113,47 @@ const en: Record<string, WebinarText> = {
 };
 
 const pt: Record<string, WebinarText> = {
+  "mucoceles-rinosinusales-hocsman": {
+    topic: "Manejo de mucoceles rinossinusais",
+    dateLabel: "Quinta-feira, 1 de outubro",
+  },
+  "rinoplastia-preservacion-z-flap-ragoni": {
+    topic: "Rinoplastia de preservação em Z flap",
+    dateLabel: "Quinta-feira, 24 de setembro",
+  },
+  "micoticas-rinosinusales-hadad": {
+    topic: "Doenças micóticas rinossinusais",
+    dateLabel: "Quinta-feira, 18 de setembro",
+  },
+  "perforaciones-septales-cataldo": {
+    topic: "Manejo de perfurações septais",
+    dateLabel: "Quinta-feira, 27 de agosto",
+  },
+  "onlay-tip-grafts-urquiola": {
+    topic: "Onlay tip grafts",
+    dateLabel: "Quinta-feira, 2 de abril",
+  },
+  "rinoplastia-secundaria-kochol": {
+    topic: "Redesenhando o nariz: avanços em rinoplastia secundária",
+    dateLabel: "Quinta-feira, 26 de março",
+  },
+  "reparacion-perforaciones-nazar": {
+    topic: "Reparação de perfurações septais",
+    dateLabel: "Quinta-feira, 19 de março",
+  },
+  "rsccpn-biologicos-riolfi": {
+    topic:
+      "RSCcPN: seleção do paciente candidato a tratamento com biológicos",
+    dateLabel: "Quinta-feira, 12 de março",
+  },
+  "perlas-rinoplastia-secundaria-lopez-rivera": {
+    topic: "Pérolas em rinoplastia secundária",
+    dateLabel: "Quinta-feira, 5 de março",
+  },
+  "redes-sociales-santos": {
+    topic: "As redes sociais como aliadas no seu consultório médico",
+    dateLabel: "Quinta-feira, 6 de novembro",
+  },
   "poliposis-nasosinusal": {
     topic: "Manejo cirúrgico da polipose nasossinusal",
     dateLabel: "Quinta-feira, 10 de setembro",

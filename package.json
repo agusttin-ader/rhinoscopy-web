@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "images:optimize": "node scripts/optimize-public-images.mjs",
+    "videos:recap": "node scripts/optimize-recap-video.mjs",
+    "videos:recap-poster": "node scripts/recap-video-poster.mjs",
     "constancia:meet": "node scripts/generate-meet-constancia.mjs",
     "constancia:meet:batch": "node scripts/generate-meet-constancia-batch.mjs",
     "constancia:meet:bulk-franco": "node scripts/generate-meet-constancia-bulk-franco.mjs",

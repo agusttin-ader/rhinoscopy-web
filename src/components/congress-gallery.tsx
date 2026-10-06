@@ -968,9 +968,15 @@ export function CongressGallery() {
     lightbox === null ? -1 : lightbox.scope.indexOf(lightbox.file);
 
   return (
-    <section id="galeria" className="site-scroll-mt min-w-0 overflow-x-clip">
+    <section
+      id="galeria"
+      className="site-scroll-mt min-w-0 overflow-x-clip pt-10 sm:pt-12 md:pt-14"
+    >
       <div className="site-shell min-w-0">
-        <Reveal as="div" className="min-w-0 max-w-2xl border-b border-navy/10 pb-8">
+        <Reveal
+          as="div"
+          className="min-w-0 max-w-2xl border-b border-navy/10 pb-10"
+        >
           <p className="text-[0.7rem] tracking-[0.28em] text-cyan-600 uppercase">
             {copy.kicker}
           </p>

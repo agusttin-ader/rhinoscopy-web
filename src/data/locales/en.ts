@@ -158,6 +158,16 @@ export const en = {
       accreditationLead:
         "Accreditation hours and requirements will be announced when confirmed.",
     },
+    recap: {
+      kicker: "Rhinoscopy Meet 2026",
+      title: "Video recap.",
+      lead:
+        "A glimpse of the event in Buenos Aires.",
+      playAria: "Play congress recap video",
+      posterAlt: "Preview of the Rhinoscopy Meet 2026 recap video",
+      modalTitle: "Rhinoscopy Meet 2026 recap",
+      closeModal: "Close player",
+    },
     gallery: {
       kicker: "Rhinoscopy Meet 2026",
       title: "Gallery.",

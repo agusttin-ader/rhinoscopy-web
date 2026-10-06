@@ -81,6 +81,15 @@ export const congressCopy = {
     accreditationLead:
       "Los horarios y requisitos de acreditación se informarán cuando estén confirmados.",
   },
+  recap: {
+    kicker: "Rhinoscopy Meet 2026",
+    title: "Resumen en video.",
+    lead: "Un vistazo al encuentro en Buenos Aires.",
+    playAria: "Reproducir resumen del congreso",
+    posterAlt: "Vista previa del resumen en video de Rhinoscopy Meet 2026",
+    modalTitle: "Resumen Rhinoscopy Meet 2026",
+    closeModal: "Cerrar reproductor",
+  },
   gallery: {
     kicker: "Rhinoscopy Meet 2026",
     title: "Galería.",

@@ -20,6 +20,12 @@
 # production
 /build
 
+# Video masters (solo se commitea el export web)
+/public/videos/*.source.mp4
+/public/videos/Rhinoscopy Meet 2026.mp4
+/public/videos/.recap-poster-frame.jpg
+/public/videos/.recap-encode-tmp.mp4
+
 # misc
 .DS_Store
 .venv-pdf/

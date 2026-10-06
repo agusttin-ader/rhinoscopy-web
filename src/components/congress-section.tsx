@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CongressFamilyBand } from "@/components/congress-family-band";
 import { CongressGallery } from "@/components/congress-gallery";
+import { CongressRecapVideo } from "@/components/congress-recap-video";
 import { CongressVerticalScreens } from "@/components/congress-vertical-screens";
 import { CongressMeetPresentation } from "@/components/congress-meet-presentation";
 import { Reveal } from "@/components/motion/reveal";
@@ -287,6 +288,8 @@ export function CongressSection() {
         <CongressCommittee />
         <CongressSpeakers />
       </div>
+
+      <CongressRecapVideo />
 
       <div className="min-w-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
         <CongressGallery />

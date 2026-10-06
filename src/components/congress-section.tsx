@@ -262,6 +262,8 @@ export function CongressSection() {
         <CongressMeetPresentation />
       </Reveal>
 
+      <CongressRecapVideo />
+
       <CongressFamilyBand />
 
       <Reveal delay={60} offset={12}>
@@ -288,8 +290,6 @@ export function CongressSection() {
         <CongressCommittee />
         <CongressSpeakers />
       </div>
-
-      <CongressRecapVideo />
 
       <div className="min-w-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
         <CongressGallery />

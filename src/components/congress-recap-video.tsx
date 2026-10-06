@@ -175,7 +175,7 @@ export function CongressRecapVideo() {
     <>
       <section
         id="resumen-congreso"
-        className="site-scroll-mt min-w-0 border-b border-navy/10 bg-paper pb-12 sm:pb-14 md:pb-16"
+        className="site-scroll-mt min-w-0 border-b border-navy/10 bg-paper pt-10 pb-12 sm:pt-12 sm:pb-14 md:pt-14 md:pb-16"
       >
         <div className="site-shell min-w-0">
           <Reveal as="div" className="min-w-0 max-w-2xl">

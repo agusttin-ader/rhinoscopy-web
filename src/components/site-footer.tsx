@@ -154,7 +154,7 @@ export async function SiteFooter() {
             href="https://www.agustinaderdev.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex max-w-full shrink-0 items-center gap-2 self-start text-left text-white/65 transition hover:text-white/80 min-[375px]:gap-2.5 max-md:mt-1 md:site-fab-inset-end md:self-auto md:text-right"
+            className="site-fab-inset-end inline-flex shrink-0 items-center gap-2 self-start text-left text-white/65 transition hover:text-white/80 min-[375px]:gap-2.5 max-md:mt-1 md:self-auto md:text-right"
           >
             <Image
               src="/images/logo-dev/logo-dev.webp"

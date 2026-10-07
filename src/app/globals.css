@@ -1165,7 +1165,9 @@ html {
     width: 100%;
     max-width: 100%;
     margin-left: 0;
-    padding-inline: 0;
+    /* Mismo criterio horizontal que `.site-shell` (títulos y tabs van inset; las flechas no al borde). */
+    padding-left: max(3.25rem, env(safe-area-inset-left, 0px));
+    padding-right: max(3.25rem, env(safe-area-inset-right, 0px));
   }
 
   .congress-gallery-frame {
@@ -1173,7 +1175,7 @@ html {
   }
 
   .congress-gallery-controls {
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .congress-gallery-mosaic {
@@ -1204,6 +1206,11 @@ html {
 }
 
 @media (min-width: 1024px) {
+  .congress-gallery-bleed {
+    padding-left: max(4.25rem, env(safe-area-inset-left, 0px));
+    padding-right: max(4.25rem, env(safe-area-inset-right, 0px));
+  }
+
   .congress-gallery-controls {
     gap: 2.25rem;
   }
@@ -1214,6 +1221,11 @@ html {
 }
 
 @media (min-width: 1280px) {
+  .congress-gallery-bleed {
+    padding-left: max(5.25rem, env(safe-area-inset-left, 0px));
+    padding-right: max(5.25rem, env(safe-area-inset-right, 0px));
+  }
+
   .congress-gallery-frame {
     max-width: 80rem;
   }
@@ -1239,6 +1251,11 @@ html {
 }
 
 @media (min-width: 1920px) {
+  .congress-gallery-bleed {
+    padding-left: max(5.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(5.5rem, env(safe-area-inset-right, 0px));
+  }
+
   .congress-gallery-frame {
     max-width: 90rem;
   }

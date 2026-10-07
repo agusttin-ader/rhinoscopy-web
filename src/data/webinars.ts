@@ -32,7 +32,7 @@ export const webinarsCopy = {
 /** Cuántos se muestran antes del desplegable */
 export const webinarsVisibleCount = 3;
 
-/** Poliposis primero (último webinar realizado); resto como en el canal de abajo hacia arriba (@RhinoscopyArg). */
+/** Orden inverso al listado del canal @RhinoscopyArg (abajo en YouTube = primero acá). */
 export const webinars: Webinar[] = [
 
   {
@@ -222,7 +222,7 @@ export const webinars: Webinar[] = [
     id: "onlay-tip-grafts-urquiola",
     topic: "Onlay tip grafts",
     speaker: "Dr. Federico Urquiola",
-    dateLabel: "Jueves 2 de abril",
+    dateLabel: "Jueves 2 de octubre",
     flyerSrc: "/images/webinars/onlay-tip-grafts-urquiola.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=tA4YB8wv63c",
     instagramUrl: "",
@@ -240,7 +240,7 @@ export const webinars: Webinar[] = [
     id: "perforaciones-septales-cataldo",
     topic: "Manejo de perforaciones septales",
     speaker: "Dr. Rodrigo Cataldo de la Cortina",
-    dateLabel: "Jueves 27 de agosto",
+    dateLabel: "Jueves 25 de septiembre",
     flyerSrc: "/images/webinars/perforaciones-septales-cataldo.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=otJc9Inwkv0",
     instagramUrl: "",
@@ -258,7 +258,7 @@ export const webinars: Webinar[] = [
     id: "rinoplastia-preservacion-z-flap-ragoni",
     topic: "Rinoplastia de preservación en Z flap",
     speaker: "Dra. Ana Clara Ragoni",
-    dateLabel: "Jueves 24 de septiembre",
+    dateLabel: "Jueves 11 de septiembre",
     flyerSrc: "/images/webinars/rinoplastia-preservacion-z-flap-ragoni.webp",
     youtubeUrl: "https://www.youtube.com/watch?v=hfxC9UsCrq0",
     instagramUrl: "",

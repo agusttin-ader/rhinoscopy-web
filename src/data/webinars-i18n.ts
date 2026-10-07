@@ -10,7 +10,7 @@ const en: Record<string, WebinarText> = {
   },
   "rinoplastia-preservacion-z-flap-ragoni": {
     topic: "Preservation rhinoplasty with Z flap",
-    dateLabel: "Thursday, September 24",
+    dateLabel: "Thursday, September 11",
   },
   "micoticas-rinosinusales-hadad": {
     topic: "Rhinosinusal mycotic diseases",
@@ -18,11 +18,11 @@ const en: Record<string, WebinarText> = {
   },
   "perforaciones-septales-cataldo": {
     topic: "Management of septal perforations",
-    dateLabel: "Thursday, August 27",
+    dateLabel: "Thursday, September 25",
   },
   "onlay-tip-grafts-urquiola": {
     topic: "Onlay tip grafts",
-    dateLabel: "Thursday, April 2",
+    dateLabel: "Thursday, October 2",
   },
   "rinoplastia-secundaria-kochol": {
     topic: "Redesigning the nose: advances in secondary rhinoplasty",
@@ -119,7 +119,7 @@ const pt: Record<string, WebinarText> = {
   },
   "rinoplastia-preservacion-z-flap-ragoni": {
     topic: "Rinoplastia de preservação em Z flap",
-    dateLabel: "Quinta-feira, 24 de setembro",
+    dateLabel: "Quinta-feira, 11 de setembro",
   },
   "micoticas-rinosinusales-hadad": {
     topic: "Doenças micóticas rinossinusais",
@@ -127,11 +127,11 @@ const pt: Record<string, WebinarText> = {
   },
   "perforaciones-septales-cataldo": {
     topic: "Manejo de perfurações septais",
-    dateLabel: "Quinta-feira, 27 de agosto",
+    dateLabel: "Quinta-feira, 25 de setembro",
   },
   "onlay-tip-grafts-urquiola": {
     topic: "Onlay tip grafts",
-    dateLabel: "Quinta-feira, 2 de abril",
+    dateLabel: "Quinta-feira, 2 de outubro",
   },
   "rinoplastia-secundaria-kochol": {
     topic: "Redesenhando o nariz: avanços em rinoplastia secundária",

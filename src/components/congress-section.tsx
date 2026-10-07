@@ -11,6 +11,7 @@ import { DoctorCard } from "@/components/doctor-card";
 import { SponsorLogos } from "@/components/sponsor-logos";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { congress, normalizePersonName, speakerPhotoUrl } from "@/data/congress";
+import { trackFileEvent } from "@/lib/analytics-files";
 
 function SectionIntro({
   kicker,
@@ -57,6 +58,13 @@ function CongressProgram() {
           target="_blank"
           rel="noopener noreferrer"
           className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase transition hover:bg-navy/90"
+          onClick={() =>
+            trackFileEvent("view", {
+              fileName: "RHINOSCOPY MEET 2026 programa",
+              fileUrl: congress.assets.programPdf,
+              category: "program",
+            })
+          }
         >
           {congressCopy.program.pdfCta}
           <span aria-hidden="true">↗</span>

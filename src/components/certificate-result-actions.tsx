@@ -5,6 +5,7 @@ import {
   CertificateViewIcon,
 } from "@/components/certificate-pdf-icon";
 import { useLocaleData } from "@/hooks/use-locale-data";
+import { trackFileEvent } from "@/lib/analytics-files";
 
 type CertificateResultActionsProps = {
   displayName: string;
@@ -31,6 +32,13 @@ export function CertificateResultActions({
         title={constanciasCopy.viewCta}
         aria-label={`${constanciasCopy.viewCta} — ${displayName}`}
         className={actionClassName}
+        onClick={() =>
+          trackFileEvent("view", {
+            fileName: displayName,
+            fileUrl: downloadUrl,
+            category: "certificate",
+          })
+        }
       >
         <CertificateViewIcon className={iconClass} />
       </a>
@@ -40,6 +48,13 @@ export function CertificateResultActions({
         title={constanciasCopy.downloadCta}
         aria-label={`${constanciasCopy.downloadCta} — ${displayName}`}
         className={actionClassName}
+        onClick={() =>
+          trackFileEvent("download", {
+            fileName: displayName,
+            fileUrl: downloadUrl,
+            category: "certificate",
+          })
+        }
       >
         <CertificateDownloadIcon className={iconClass} />
       </a>

@@ -1,4 +1,5 @@
 import { rootMetadataBase } from "@/lib/seo";
+import { VercelAnalytics } from "@/components/vercel-analytics";
 import { Marck_Script, Montserrat } from "next/font/google";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -40,7 +41,10 @@ export default function RootLayout({ children }: Props) {
           type="image/png"
         />
       </head>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        {children}
+        <VercelAnalytics />
+      </body>
     </html>
   );
 }

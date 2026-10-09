@@ -141,7 +141,7 @@ function ogLocale(locale: string): string {
 /** Imagen OG/Twitter vía `opengraph-image.tsx` (App Router). */
 export function openGraphImageAlt(locale: string): string {
   const map: Record<string, string> = {
-    es: "Otorrinolaringología, rinología y rinoscopia",
+    es: "Endoscopía nasal, rinoplastia, base de cráneo y actividades conexas",
     en: "Otolaryngology, rhinology and rhinoscopy",
     pt: "Otorrinolaringologia, rinologia e rinoscopia",
   };

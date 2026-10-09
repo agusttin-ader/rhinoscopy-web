@@ -63,7 +63,8 @@ export const es = {
   },
   meta: {
     home: {
-      title: "Rhinoscopy | Otorrinolaringología, rinología y rinoscopia",
+      title:
+        "Rhinoscopy | Endoscopía nasal, rinoplastia, base de cráneo y actividades conexas",
       description:
         "Rhinoscopy es la comunidad de formación en otorrinolaringología (ORL), rinología, rinoscopia y endoscopía nasal: webinars, cirugía rinológica, congreso Meet 2026 y recursos para profesionales.",
       keywords: [

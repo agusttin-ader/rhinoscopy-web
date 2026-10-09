@@ -4,6 +4,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { MobileNav } from "@/components/mobile-nav";
 import { useLocaleData } from "@/hooks/use-locale-data";
+import { HeaderWebinarsNavLink } from "@/components/header-webinars-nav-link";
 import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -19,7 +20,11 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
   const homeLinks = useMemo(
     () => [
       { href: "/#congreso", label: nav.congress },
-      { href: "/#webinars", label: nav.webinars },
+      {
+        href: "/#webinars",
+        label: nav.webinars,
+        accent: "webinars" as const,
+      },
       { href: "/constancias", label: nav.certificates },
       { href: "/#contacto", label: nav.contact },
     ],
@@ -89,6 +94,16 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
 
         <nav className="hidden min-w-0 items-center gap-0.5 min-[1024px]:flex min-[1024px]:gap-1">
           {homeLinks.map((link) => {
+            if (link.accent === "webinars") {
+              return (
+                <HeaderWebinarsNavLink
+                  key={link.href}
+                  variant="desktop"
+                  label={link.label}
+                />
+              );
+            }
+
             const NavLink = link.href.startsWith("/#") ? SmoothNavLink : Link;
             return (
               <NavLink

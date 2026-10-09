@@ -1,5 +1,6 @@
 "use client";
 
+import { HeaderWebinarsNavLink } from "@/components/header-webinars-nav-link";
 import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
@@ -11,6 +12,7 @@ const MOBILE_MENU_LOGO = "/images/rhinoscopy-logo-hero-sombra.png";
 type NavLink = {
   href: string;
   label: string;
+  accent?: "webinars";
 };
 
 function MenuIcon({ open }: { open: boolean }) {
@@ -111,7 +113,14 @@ export function MobileNav({
                   transitionDelay: open ? `${140 + index * 72}ms` : "0ms",
                 }}
               >
-                {link.href.startsWith("/#") ? (
+                {link.accent === "webinars" ? (
+                  <HeaderWebinarsNavLink
+                    variant="mobile"
+                    label={link.label}
+                    onAfterNavigate={() => setOpen(false)}
+                    onClick={() => setOpen(false)}
+                  />
+                ) : link.href.startsWith("/#") ? (
                   <SmoothNavLink
                     href={link.href}
                     className="block border-b border-white/10 py-4 text-2xl font-bold tracking-[0.08em] text-white uppercase transition-colors hover:text-cyan-200"

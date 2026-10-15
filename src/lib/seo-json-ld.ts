@@ -105,7 +105,7 @@ export function breadcrumbJsonLd(
 
 export function rhinoscopyMeetEventJsonLd(locale: AppLocale): JsonLdGraph {
   const base = getSiteUrl();
-  const eventUrl = absoluteUrl(localePath(locale, "/#congreso"));
+  const eventUrl = absoluteUrl(localePath(locale, "/congreso"));
 
   return {
     "@context": "https://schema.org",

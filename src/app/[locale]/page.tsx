@@ -1,6 +1,4 @@
 import { HomeHashScroll } from "@/components/home-hash-scroll";
-import { CertificateTeaser } from "@/components/certificate-teaser";
-import { CongressSection } from "@/components/congress-section";
 import { Contact } from "@/components/contact";
 import { Hero } from "@/components/hero";
 import { JsonLd } from "@/components/json-ld";
@@ -8,11 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WebinarsSection } from "@/components/webinars-section";
 import { getLocaleData } from "@/data/locales";
-import {
-  mergeJsonLdGraphs,
-  rhinoscopyMeetEventJsonLd,
-  webPageJsonLd,
-} from "@/lib/seo-json-ld";
+import { webPageJsonLd } from "@/lib/seo-json-ld";
 import { createLocalizedMetadata } from "@/lib/seo";
 import type { AppLocale } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -38,15 +32,12 @@ export default async function Home({ params }: Props) {
 
   const { meta } = getLocaleData(locale);
   const appLocale = locale as AppLocale;
-  const jsonLd = mergeJsonLdGraphs(
-    webPageJsonLd({
-      locale: appLocale,
-      path: "/",
-      title: meta.home.title,
-      description: meta.home.description,
-    }),
-    rhinoscopyMeetEventJsonLd(appLocale),
-  );
+  const jsonLd = webPageJsonLd({
+    locale: appLocale,
+    path: "/",
+    title: meta.home.title,
+    description: meta.home.description,
+  });
 
   return (
     <>
@@ -55,9 +46,7 @@ export default async function Home({ params }: Props) {
       <main className="flex-1">
         <HomeHashScroll />
         <Hero />
-        <CongressSection />
         <WebinarsSection />
-        <CertificateTeaser />
         <Contact />
       </main>
       <SiteFooter />

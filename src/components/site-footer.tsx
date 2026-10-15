@@ -84,7 +84,7 @@ export async function SiteFooter() {
               <li>{meet2026.city}</li>
               <li>
                 <Link
-                  href="/#congreso"
+                  href="/congreso"
                   className="text-cyan-300/90 transition-colors hover:text-cyan-200"
                 >
                   {footerPage.viewCongress}

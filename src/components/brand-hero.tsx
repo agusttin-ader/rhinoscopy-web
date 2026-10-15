@@ -1,5 +1,6 @@
 import { BrandHeroEnterGate } from "@/components/brand-hero-enter-gate";
 import { getLocaleData } from "@/data/locales";
+import { Link } from "@/i18n/navigation";
 import { getLocale } from "next-intl/server";
 import Image from "next/image";
 
@@ -99,13 +100,13 @@ export async function BrandHero() {
             </p>
 
             <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:justify-center lg:max-w-md lg:justify-start">
-              <a
-                href="#congreso"
+              <Link
+                href="/congreso"
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-navy uppercase transition hover:bg-cyan-50"
               >
                 {brandHeroCopy.ctaCongress}
-                <span aria-hidden="true">↓</span>
-              </a>
+                <span aria-hidden="true">→</span>
+              </Link>
               <a
                 href="#webinars"
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition hover:border-brand-sky/50 hover:bg-white/10"

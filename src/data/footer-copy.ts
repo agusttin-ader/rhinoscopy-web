@@ -4,9 +4,9 @@ export const footerCopy = {
   contactTitle: "Contacto",
   followTitle: "Seguinos",
   blurb:
-    "Formación en otorrinolaringología, rinología, rinoscopia y endoscopía nasal. Webinars, congreso Rhinoscopy Meet y educación continua en ORL.",
+    "Comunidad médica dedicada a la rinología y actividades conexas. Webinars y congreso Rhinoscopy Meet.",
   legal:
-    "Educación médica. Los contenidos del sitio son informativos y no reemplazan el criterio profesional.",
+    "Los contenidos del sitio son informativos y no reemplazan el criterio profesional.",
 } as const;
 
 export const footerNav = [

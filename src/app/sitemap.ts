@@ -3,7 +3,13 @@ import { absoluteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
 import type { MetadataRoute } from "next";
 
-const PUBLIC_PATHS = ["", "/constancias"] as const;
+const PUBLIC_PATHS = ["", "/congreso", "/constancias"] as const;
+
+const PRIORITY: Record<(typeof PUBLIC_PATHS)[number], number> = {
+  "": 1,
+  "/congreso": 0.9,
+  "/constancias": 0.75,
+};
 
 function alternatesForPath(path: string): Record<string, string> {
   const languages: Record<string, string> = {};

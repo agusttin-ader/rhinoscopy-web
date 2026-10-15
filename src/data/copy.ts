@@ -1,9 +1,9 @@
 export const copy = {
-  kicker: "Comunidad de educación médica",
+  kicker: "Comunidad médica",
   heroTitle: "Un evento de pura endoscopía nasal.",
   heroAccent: "Rhinoscopy Meet 2026",
   heroLead:
-    "Comunidad de educación médica dedicada a la rinología y actividades conexas.",
+    "Comunidad médica dedicada a la rinología y actividades conexas.",
   heroNote: "Próximo encuentro",
   heroMeetDates: "17, 18 y 19 de septiembre",
   heroMeetVenue: "Hotel Cassa Lepage · Buenos Aires",

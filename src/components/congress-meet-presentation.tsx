@@ -1,10 +1,11 @@
 "use client";
 
+import { SmoothNavLink } from "@/components/smooth-nav-link";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { meetLogoHeight, meetLogoSrc, meetLogoWidth } from "@/data/meet-brand";
 import Image from "next/image";
 
-/** Presentación visual de Rhinoscopy Meet 2026 dentro de #congreso (no es el hero de marca). */
+/** Presentación visual de Rhinoscopy Meet 2026 en `/congreso` (no es el hero de marca). */
 export function CongressMeetPresentation() {
   const { copy, meetPresentation } = useLocaleData();
   return (
@@ -83,13 +84,13 @@ export function CongressMeetPresentation() {
           </p>
 
           <div className="mt-6 flex w-full max-w-sm flex-col items-stretch gap-2.5 sm:mt-7 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 lg:mt-8 lg:gap-4">
-            <a
-              href="#contacto"
+            <SmoothNavLink
+              href="/#contacto"
               className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[0.65rem] font-bold tracking-[0.16em] text-navy uppercase transition hover:bg-cyan-50 sm:w-auto sm:px-7 sm:py-3.5 sm:text-[0.7rem] sm:tracking-[0.18em]"
             >
               {copy.heroCta}
               <span aria-hidden="true">→</span>
-            </a>
+            </SmoothNavLink>
             <a
               href="#programa"
               className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 px-6 py-3 text-[0.65rem] font-bold tracking-[0.16em] text-white uppercase transition hover:border-white/40 hover:bg-white/5 sm:w-auto sm:px-7 sm:py-3.5 sm:text-[0.7rem] sm:tracking-[0.18em]"

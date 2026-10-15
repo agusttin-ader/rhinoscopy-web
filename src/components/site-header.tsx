@@ -19,7 +19,7 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
 
   const homeLinks = useMemo(
     () => [
-      { href: "/#congreso", label: nav.congress },
+      { href: "/congreso", label: nav.congress },
       {
         href: "/#webinars",
         label: nav.webinars,

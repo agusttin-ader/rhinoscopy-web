@@ -2,11 +2,11 @@ import type { LocaleData } from "@/data/locales/es";
 
 export const en = {
   copy: {
-    kicker: "Medical education community",
+    kicker: "Medical community",
     heroTitle: "A pure nasal endoscopy event.",
     heroAccent: "Rhinoscopy Meet 2026",
     heroLead:
-      "Medical education community dedicated to rhinology and related activities.",
+      "Medical community dedicated to rhinology and related activities.",
     heroNote: "Upcoming event",
     heroMeetDates: "September 17, 18 and 19",
     heroMeetVenue: "Hotel Cassa Lepage · Buenos Aires",
@@ -44,14 +44,13 @@ export const en = {
     kicker: "About us",
     titleScript: "We are",
     titleDisplay: "Rhinoscopy",
-    lead:
-      "A medical education community in otolaryngology, rhinology, rhinoscopy and nasal endoscopy, based in Argentina and open to ENT professionals across the region.",
+    lead: "Medical community dedicated to rhinology and related activities.",
     paragraphs: [
-      "We bring quality training in rhinology and otolaryngology closer: in-person meetings, live webinars, and content for endoscopic sinus surgery and daily ORL practice. On Instagram we share congress updates, webinar announcements, and community news.",
+      "Nasal endoscopy, rhinoplasty, skull base and related activities. On Instagram we share congress updates and webinar announcements.",
     ],
     highlights: [
-      "Rhinoscopy Meet — nasal endoscopy congress",
-      "Weekly webinars with the community",
+      "Rhinoscopy Meet — a pure nasal endoscopy event",
+      "Webinars on YouTube",
       "Attendance certificates for the Meet",
     ],
     instagramCta: "View on Instagram",
@@ -59,11 +58,10 @@ export const en = {
     instagramUrl: "https://www.instagram.com/rhinoscopyofficial/",
   },
   brandHeroCopy: {
-    kicker: "Medical education in rhinology",
-    headlineImpact: "Excellence in rhinology training",
-    tagline: "Medical education community in rhinology and nasal endoscopy",
-    lead:
-      "Webinars, congress, and resources for professionals who want to deepen their practice in nasal endoscopy and rhinologic surgery.",
+    kicker: "Medical community",
+    headlineImpact: "Rhinology and related activities",
+    tagline: "Nasal endoscopy, rhinoplasty and skull base",
+    lead: "Webinars and the Rhinoscopy Meet congress: a pure nasal endoscopy event.",
     ctaCongress: "View Congress",
     ctaWebinars: "View Webinars",
   },
@@ -238,9 +236,9 @@ export const en = {
     contactTitle: "Contact",
     followTitle: "Follow us",
     blurb:
-      "Medical education community in rhinology and nasal endoscopy. Webinars, congress, and continuing education.",
+      "Medical community dedicated to rhinology and related activities. Webinars and the Rhinoscopy Meet congress.",
     legal:
-      "Medical education. Site content is informational and does not replace professional judgment.",
+      "Site content is informational and does not replace professional judgment.",
   },
   webinarsCopy: {
     kicker: "Rhinoscopy",
@@ -268,10 +266,10 @@ export const en = {
     contactCta: "Contact",
   },
   footerNav: [
-    { href: "/#congreso", label: "Congress" },
-    { href: "/#programa", label: "Program" },
-    { href: "/#speakers", label: "Speakers" },
-    { href: "/#galeria", label: "Gallery" },
+    { href: "/congreso", label: "Congress" },
+    { href: "/congreso#programa", label: "Program" },
+    { href: "/congreso#speakers", label: "Speakers" },
+    { href: "/congreso#galeria", label: "Gallery" },
     { href: "/#webinars", label: "Webinars" },
     { href: "/constancias", label: "Certificates" },
     { href: "/#contacto", label: "Contact" },
@@ -295,7 +293,7 @@ export const en = {
     en: "English",
     pt: "Português",
   },
-  siteTagline: "Otolaryngology, rhinology and rhinoscopy.",
+  siteTagline: "Nasal endoscopy, rhinoplasty, skull base and related activities.",
   meet2026: {
     title: "Rhinoscopy Meet 2026",
     dates: "September 17, 18 and 19",
@@ -323,6 +321,22 @@ export const en = {
         "rhinology congress",
         "Rhinoscopy Meet 2026",
         "medical webinars",
+        "Buenos Aires",
+      ],
+    },
+    congreso: {
+      title: "Rhinoscopy Meet 2026 | Rhinology and nasal endoscopy congress",
+      description:
+        "Rhinoscopy Meet 2026: rhinology, nasal endoscopy, rhinoplasty and skull base congress. September 17, 18 and 19 at Hotel Cassa Lepage, Buenos Aires. Program, speakers, committee and gallery.",
+      keywords: [
+        "Rhinoscopy Meet 2026",
+        "rhinology congress",
+        "ENT congress",
+        "otolaryngology congress Argentina",
+        "nasal endoscopy",
+        "rhinoplasty",
+        "skull base endoscopy",
+        "rhinology speakers",
         "Buenos Aires",
       ],
     },

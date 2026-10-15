@@ -24,10 +24,10 @@ export const es = {
     contactCta: "Contacto",
   },
   footerNav: [
-    { href: "/#congreso", label: "Congreso" },
-    { href: "/#programa", label: "Programa" },
-    { href: "/#speakers", label: "Disertantes" },
-    { href: "/#galeria", label: "Galería" },
+    { href: "/congreso", label: "Congreso" },
+    { href: "/congreso#programa", label: "Programa" },
+    { href: "/congreso#speakers", label: "Disertantes" },
+    { href: "/congreso#galeria", label: "Galería" },
     { href: "/#webinars", label: "Webinars" },
     { href: "/constancias", label: "Certificados" },
     { href: "/#contacto", label: "Contacto" },
@@ -51,7 +51,7 @@ export const es = {
     en: "English",
     pt: "Português",
   },
-  siteTagline: "Otorrinolaringología, rinología y rinoscopia.",
+  siteTagline: "Endoscopía nasal, rinoplastia, base de cráneo y actividades conexas.",
   meet2026: {
     title: "Rhinoscopy Meet 2026",
     dates: "17, 18 y 19 de septiembre",
@@ -85,6 +85,22 @@ export const es = {
         "congreso rinología",
         "Rhinoscopy Meet 2026",
         "Argentina",
+      ],
+    },
+    congreso: {
+      title: "Rhinoscopy Meet 2026 | Congreso de rinología y endoscopía nasal",
+      description:
+        "Rhinoscopy Meet 2026: congreso de rinología, endoscopía nasal, rinoplastia y base de cráneo. 17, 18 y 19 de septiembre en Hotel Cassa Lepage, Buenos Aires. Programa, disertantes, comité y galería.",
+      keywords: [
+        "Rhinoscopy Meet 2026",
+        "congreso rinología",
+        "congreso otorrinolaringología",
+        "congreso ORL Argentina",
+        "endoscopía nasal",
+        "rinoplastia",
+        "base de cráneo endoscópica",
+        "disertantes rinología",
+        "Buenos Aires",
       ],
     },
     constancias: {

@@ -1,18 +1,17 @@
 import { site } from "@/data/site";
 
-/** Quiénes somos — alineado a footer, hero de marca y presencia en Instagram. */
+/** Quiénes somos — textos tomados de la bio de Instagram y de la app del Meet. */
 export const aboutCopy = {
   kicker: "Quiénes somos",
   titleScript: "Somos",
   titleDisplay: "Rhinoscopy",
-  lead:
-    "Comunidad de educación médica en otorrinolaringología, rinología, rinoscopia y endoscopía nasal, con base en Argentina y alcance para profesionales de toda la región.",
+  lead: "Comunidad médica dedicada a la rinología y actividades conexas.",
   paragraphs: [
-    "Nacimos para acercar formación de calidad en rinología y ORL: jornadas presenciales, webinars en vivo y contenido pensado para la práctica clínica en cirugía endoscópica nasal y rinosinusitis. En Instagram compartimos novedades del congreso, avisos de webinars y material de la comunidad.",
+    "Endoscopía nasal, rinoplastia, base de cráneo y actividades conexas. En Instagram compartimos novedades del congreso y avisos de webinars.",
   ],
   highlights: [
-    "Rhinoscopy Meet — congreso de endoscopía nasal",
-    "Webinars semanales con la comunidad",
+    "Rhinoscopy Meet — un evento de pura endoscopía nasal",
+    "Webinars en YouTube",
     "Certificados de asistencia al Meet",
   ],
   instagramCta: "Ver en Instagram",

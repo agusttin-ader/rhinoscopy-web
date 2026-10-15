@@ -47,6 +47,9 @@ yarn-error.log*
 # editor
 .cursor/
 
+# notas internas (no se suben al repo)
+/notas/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

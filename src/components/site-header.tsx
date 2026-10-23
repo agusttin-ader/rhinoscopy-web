@@ -6,16 +6,22 @@ import { MobileNav } from "@/components/mobile-nav";
 import { useLocaleData } from "@/hooks/use-locale-data";
 import { HeaderWebinarsNavLink } from "@/components/header-webinars-nav-link";
 import { SmoothNavLink } from "@/components/smooth-nav-link";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const SCROLL_THRESHOLD = 72;
 
 export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" }) {
   const { nav, mobileNav } = useLocaleData();
+  const router = useRouter();
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+
+  useEffect(() => {
+    router.prefetch("/congreso");
+    router.prefetch("/constancias");
+  }, [router]);
 
   const homeLinks = useMemo(
     () => [
@@ -109,6 +115,7 @@ export function SiteHeader({ variant = "bar" }: { variant?: "overlay" | "bar" })
               <NavLink
                 key={link.href}
                 href={link.href}
+                prefetch
                 className="group relative px-2 py-2.5 text-[0.62rem] font-semibold tracking-[0.14em] text-navy/65 uppercase transition-colors hover:text-navy lg:px-3 lg:text-[0.68rem] lg:tracking-[0.16em]"
               >
                 {link.label}

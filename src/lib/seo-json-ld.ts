@@ -1,8 +1,11 @@
 import type { AppLocale } from "@/i18n/routing";
 import { meet2026, site } from "@/data/site";
 import { SEO_KNOWS_ABOUT } from "@/data/seo-copy";
+import { webinars } from "@/data/webinars";
+import { localizeWebinars } from "@/data/webinars-i18n";
 import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/seo-paths";
+import { youtubeVideoId } from "@/lib/youtube";
 
 export type JsonLdGraph = Record<string, unknown> | Record<string, unknown>[];
 
@@ -100,6 +103,42 @@ export function breadcrumbJsonLd(
       name: item.name,
       item: absoluteUrl(localePath(locale, item.path)),
     })),
+  };
+}
+
+export function webinarsVideoJsonLd(locale: AppLocale): JsonLdGraph {
+  const pageUrl = absoluteUrl(localePath(locale, "/"));
+  const items = localizeWebinars(webinars, locale)
+    .map((webinar, index) => {
+      const videoId = youtubeVideoId(webinar.youtubeUrl);
+      if (!videoId) return null;
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "VideoObject",
+          name: webinar.topic,
+          description: `${webinar.topic}. ${webinar.speaker}. ${webinar.dateLabel}.`,
+          thumbnailUrl: [
+            `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+            absoluteUrl(webinar.flyerSrc),
+          ],
+          contentUrl: webinar.youtubeUrl,
+          embedUrl: `https://www.youtube.com/embed/${videoId}`,
+          publisher: { "@id": `${getSiteUrl()}/#organization` },
+        },
+      };
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Rhinoscopy Webinars",
+    url: `${pageUrl}#webinars`,
+    numberOfItems: items.length,
+    itemListElement: items,
   };
 }
 

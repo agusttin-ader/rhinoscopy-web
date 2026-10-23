@@ -404,6 +404,7 @@ export function WebinarsSection() {
                   key={webinar.id}
                   webinar={webinar}
                   index={index}
+                  lazyImage={index > 0}
                   onPlay={openPlayer}
                   revealDelay={Math.min(index, 5) * 40}
                   className={`${listItemPadding} ${

@@ -11,6 +11,13 @@ const PRIORITY: Record<(typeof PUBLIC_PATHS)[number], number> = {
   "/constancias": 0.75,
 };
 
+/** Último cambio real de contenido, no la fecha de cada build. */
+const LAST_MODIFIED: Record<(typeof PUBLIC_PATHS)[number], Date> = {
+  "": new Date("2026-10-23"),
+  "/congreso": new Date("2026-10-15"),
+  "/constancias": new Date("2026-09-19"),
+};
+
 function alternatesForPath(path: string): Record<string, string> {
   const languages: Record<string, string> = {};
   for (const locale of routing.locales) {
@@ -23,14 +30,12 @@ function alternatesForPath(path: string): Record<string, string> {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
   return PUBLIC_PATHS.flatMap((path) =>
     routing.locales.map((locale) => ({
       url: absoluteUrl(localePath(locale, path)),
-      lastModified,
+      lastModified: LAST_MODIFIED[path],
       changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
-      priority: path === "" ? 1 : 0.75,
+      priority: PRIORITY[path],
       alternates: {
         languages: alternatesForPath(path),
       },

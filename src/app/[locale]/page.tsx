@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WebinarsSection } from "@/components/webinars-section";
 import { getLocaleData } from "@/data/locales";
-import { webPageJsonLd } from "@/lib/seo-json-ld";
+import { mergeJsonLdGraphs, webPageJsonLd, webinarsVideoJsonLd } from "@/lib/seo-json-ld";
 import { createLocalizedMetadata } from "@/lib/seo";
 import type { AppLocale } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -32,12 +32,15 @@ export default async function Home({ params }: Props) {
 
   const { meta } = getLocaleData(locale);
   const appLocale = locale as AppLocale;
-  const jsonLd = webPageJsonLd({
-    locale: appLocale,
-    path: "/",
-    title: meta.home.title,
-    description: meta.home.description,
-  });
+  const jsonLd = mergeJsonLdGraphs(
+    webPageJsonLd({
+      locale: appLocale,
+      path: "/",
+      title: meta.home.title,
+      description: meta.home.description,
+    }),
+    webinarsVideoJsonLd(appLocale),
+  );
 
   return (
     <>

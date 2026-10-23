@@ -30,7 +30,7 @@ export const webinarsCopy = {
 } as const;
 
 /** Cuántos se muestran antes del desplegable */
-export const webinarsVisibleCount = 3;
+export const webinarsVisibleCount = 10;
 
 /** Orden inverso al listado del canal @RhinoscopyArg (abajo en YouTube = primero acá). */
 export const webinars: Webinar[] = [

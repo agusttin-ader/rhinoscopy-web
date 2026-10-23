@@ -156,11 +156,7 @@ function WebinarRow({
             }`
       }
     >
-      <div
-        className={`${WEBINAR_THUMB_CLASS} ${
-          isHeader ? "max-w-full" : ""
-        }`}
-      >
+      <div className={isHeader ? "w-full min-w-0 max-w-full" : WEBINAR_THUMB_CLASS}>
         {hasVideo ? (
           <button
             type="button"
@@ -249,9 +245,9 @@ function WebinarsDesktopHeader({
 
   return (
     <div
-      className="hidden md:grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:items-start md:gap-x-6 lg:gap-x-10"
+      className="hidden md:grid md:grid-cols-1 md:items-start md:gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-10 xl:gap-x-14"
     >
-      <div className="min-w-0">
+      <div className="@container min-w-0 pr-2">
         <p className="text-[0.72rem] font-semibold tracking-[0.38em] text-cyan-300/80 uppercase">
           {webinarsCopy.kicker}
         </p>
@@ -259,13 +255,13 @@ function WebinarsDesktopHeader({
         <h2 className="mt-3 leading-[0.95] sm:mt-4">
           {webinarsCopy.titleScript ? (
             <span
-              className="font-script block text-[clamp(2.85rem,11vw,6.5rem)] leading-none text-cyan-400"
+              className="font-script block max-w-full text-[clamp(2.35rem,18cqi,4.75rem)] leading-none text-cyan-400"
             >
               {webinarsCopy.titleScript}
             </span>
           ) : null}
           <span
-            className="font-display -mt-0.5 block text-[clamp(2.35rem,8.5vw,5.5rem)] uppercase tracking-[0.02em] text-white"
+            className="font-display -mt-0.5 block max-w-full text-[clamp(1.85rem,14cqi,3.75rem)] uppercase tracking-[0.02em] text-white"
           >
             {webinarsCopy.titleDisplay}
           </span>
@@ -277,8 +273,8 @@ function WebinarsDesktopHeader({
       </div>
 
       {latestWebinar ? (
-        <div className="min-w-0 lg:pt-1">
-          <div className="mx-auto w-full max-w-[32rem] lg:ms-auto lg:me-0">
+        <div className="relative z-[1] min-w-0 overflow-hidden lg:pt-1">
+          <div className="mx-auto w-full max-w-[32rem] lg:ms-auto lg:me-0 lg:max-w-none">
             <WebinarRow
               webinar={latestWebinar}
               index={0}
